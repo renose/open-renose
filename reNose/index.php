@@ -6,8 +6,15 @@
     </head>
     <body>
         <?php
-          // put your code here
-          echo("hello world!");
+        	include('.\system\core\cms\settings.php');
+        	
+        	// put your code here
+        	echo("hello world!");
+        	echo("<br><br>");
+        	
+        	echo("Simple DB-Test:<br>");
+        	echo("site_title = ".getSetting("cms", "site_title")."<br>");
+  			echo("version = ".getSetting("cms", "version")."<br>");
         ?>
     </body>
 </html>
