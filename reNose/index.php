@@ -17,5 +17,8 @@
     $tpl->dbtest = $dbtest;
     $tpl->version = $version;
 
+    $tpl->display('tpl/header.tpl.php'); // load tpl file
     $tpl->display('tpl/index.tpl.php'); // load tpl file
-?>
+    $tpl->display('tpl/footer.tpl.php'); // load tpl file
+
+    ?>
