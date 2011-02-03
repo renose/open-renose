@@ -1,5 +1,5 @@
 <?PHP
-	include('system/core/database/dbconnect.php');
+	include('system\core\database\dbconnect.php');
 
 	function getSetting($module, $property)
 	{
