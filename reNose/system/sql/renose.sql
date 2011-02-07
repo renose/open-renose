@@ -1,23 +1,35 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 07. Februar 2011 um 19:59
--- Server Version: 5.5.8
--- PHP-Version: 5.3.5
+-- Erstellungszeit: 07. Februar 2011 um 22:52
+-- Server Version: 5.1.44
+-- PHP-Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `renose`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `cms_pages`
+--
+
+CREATE TABLE IF NOT EXISTS `cms_pages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `value` varchar(5000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `cms_pages`
+--
+
 
 -- --------------------------------------------------------
 
@@ -39,6 +51,10 @@ CREATE TABLE IF NOT EXISTS `cms_path` (
 INSERT INTO `cms_path` (`module`, `dir`, `path`) VALUES
 ('cms', 'root', 'system/core/cms/'),
 ('cms', 'tpl', 'tpl/'),
+('errorPage', 'root', 'system/core/error/'),
+('errorPage', 'tpl', 'tpl/'),
+('register', 'root', 'system/core/register/'),
+('register', 'tpl', 'tpl/'),
 ('test', 'root', 'system/core/test/'),
 ('test', 'tpl', 'system/core/test/tpl/');
 
@@ -83,3 +99,22 @@ CREATE TABLE IF NOT EXISTS `cms_settings` (
 INSERT INTO `cms_settings` (`module`, `property`, `value`) VALUES
 ('cms', 'site_title', 'open reNose'),
 ('cms', 'version', '0.0.0.1');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `cms_users`
+--
+
+CREATE TABLE IF NOT EXISTS `cms_users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `mail` varchar(200) NOT NULL,
+  `password` varchar(50) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `cms_users`
+--
+

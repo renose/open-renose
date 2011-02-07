@@ -29,8 +29,8 @@
     div#header {
         height: 80px;
         width: 100%;
-        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.3, rgb(107,131,148)),color-stop(1, rgb(211,227,237)));
-        background-image: -moz-linear-gradient(center bottom,rgb(107,131,148) 30%,rgb(211,227,237) 100%);
+        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.3, rgb(25,156,212)),color-stop(1, rgb(211,227,237)));
+        background-image: -moz-linear-gradient(center bottom,rgb(25,156,212) 30%,rgb(211,227,237) 100%);
         border-bottom: 1px solid #000;
     }
 
@@ -73,6 +73,14 @@
         height: 40px;
         background-color: #ccc;
         width: 100%;
+    }
+
+    div#content {
+	margin-top:15px;
+    }
+
+    div#content div.sidebox {
+	float:right;
     }
 
     div#footer {
