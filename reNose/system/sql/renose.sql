@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 05. Februar 2011 um 12:55
+-- Erstellungszeit: 07. Februar 2011 um 19:59
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -22,10 +22,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `path`
+-- Tabellenstruktur für Tabelle `cms_path`
 --
 
-CREATE TABLE IF NOT EXISTS `path` (
+CREATE TABLE IF NOT EXISTS `cms_path` (
   `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `dir` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root',
   `path` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
@@ -33,20 +33,43 @@ CREATE TABLE IF NOT EXISTS `path` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `path`
+-- Daten für Tabelle `cms_path`
 --
 
-INSERT INTO `path` (`module`, `dir`, `path`) VALUES
+INSERT INTO `cms_path` (`module`, `dir`, `path`) VALUES
 ('cms', 'root', 'system/core/cms/'),
-('cms', 'tpl', 'tpl/');
+('cms', 'tpl', 'tpl/'),
+('test', 'root', 'system/core/test/'),
+('test', 'tpl', 'system/core/test/tpl/');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `settings`
+-- Tabellenstruktur für Tabelle `cms_plugins`
 --
 
-CREATE TABLE IF NOT EXISTS `settings` (
+CREATE TABLE IF NOT EXISTS `cms_plugins` (
+  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `classname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `filename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` enum('ON','OFF') COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`module`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Daten für Tabelle `cms_plugins`
+--
+
+INSERT INTO `cms_plugins` (`module`, `classname`, `filename`, `state`) VALUES
+('test', 'trash_content', 'test.php', 'ON');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `cms_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `cms_settings` (
   `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `property` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `value` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
@@ -54,9 +77,9 @@ CREATE TABLE IF NOT EXISTS `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Hier werden Einstellungen der Module gespeichert.';
 
 --
--- Daten für Tabelle `settings`
+-- Daten für Tabelle `cms_settings`
 --
 
-INSERT INTO `settings` (`module`, `property`, `value`) VALUES
+INSERT INTO `cms_settings` (`module`, `property`, `value`) VALUES
 ('cms', 'site_title', 'open reNose'),
 ('cms', 'version', '0.0.0.1');
