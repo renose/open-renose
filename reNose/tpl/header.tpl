@@ -8,14 +8,16 @@
   <body>
       <div id="nonfooter">
       <div id="header">
-          <div class="center"><a href="<?php echo $this->eprint(BASE_URL); ?>/index.php"><img src="tpl/files/images/logo_hq.png" alt="" title="<?php echo $this->eprint($this->title); ?>" /></a>
+          <div class="center"><a href="<?php echo $this->eprint(BASE_URL); ?>/index.php"><img src="<?php echo $this->eprint(BASE_URL); ?>/tpl/files/images/logo_hq.png" alt="" title="<?php echo $this->eprint($this->title); ?>" /></a>
               <p>Willkommen zurück, <strong>Foo Bar!</strong> Es gibt 3 <a href="#">Neuigkeiten</a>.
               <ul>
-                  <li><a href="<?php echo $this->eprint(BASE_URL); ?>/index.php">Home</a></li>
-                  <li><a href="#">Über das Projekt</a></li>
-                  <li><a href="#">FAQ</a></li>
-                  <li><a href="#">Hilfe</a></li>
-                  <li><a href="<?php echo $this->eprint(BASE_URL); ?>/register.php">Registrieren</a></li>
+              	<?php foreach ($this->navigation as $key => $navi): ?>
+					<li>
+						<a href="<?php $this->eprint(BASE_URL . '/' . $navi['link']); ?>">
+							<?php $this->eprint($navi['text']); ?>
+						</a>
+					</li>
+				<?php endforeach; ?>
               </ul>
           </div>
       </div>

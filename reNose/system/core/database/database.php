@@ -9,6 +9,7 @@ class database
 	{
 		$connection = mysql_connect(dbconfig::dbhost, dbconfig::dbuser, dbconfig::dbpassword);
 		mysql_select_db(dbconfig::dbname, $connection);
+		mysql_set_charset('utf8');
 	}
 	
 	public static function getSetting($module, $property)

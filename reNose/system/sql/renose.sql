@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. Februar 2011 um 19:49
+-- Erstellungszeit: 08. Februar 2011 um 21:29
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -18,6 +18,30 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Datenbank: `renose`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `cms_navi`
+--
+
+CREATE TABLE IF NOT EXISTS `cms_navi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(256) NOT NULL,
+  `text` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Daten für Tabelle `cms_navi`
+--
+
+INSERT INTO `cms_navi` (`id`, `link`, `text`) VALUES
+(1, 'index.php', 'Home'),
+(2, 'index.php?module=about', 'Über das Projekt'),
+(3, 'index.php?module=faq', 'FAQ'),
+(4, 'index.php?module=help', 'Hilfe'),
+(5, 'index.php?module=register', 'Registrieren');
 
 -- --------------------------------------------------------
 
@@ -44,11 +68,11 @@ CREATE TABLE IF NOT EXISTS `cms_pages` (
 --
 
 CREATE TABLE IF NOT EXISTS `cms_path` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `dir` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root',
-  `path` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `dir` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root',
+  `path` varchar(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`module`,`dir`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `cms_path`
@@ -71,12 +95,12 @@ INSERT INTO `cms_path` (`module`, `dir`, `path`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `cms_plugins` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `classname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `filename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `state` enum('ON','OFF') COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `classname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `filename` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` enum('ON','OFF') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`module`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `cms_plugins`
@@ -94,11 +118,11 @@ INSERT INTO `cms_plugins` (`module`, `classname`, `filename`, `state`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `cms_settings` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `property` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
+  `module` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `property` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(512) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`module`,`property`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Hier werden Einstellungen der Module gespeichert.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Hier werden Einstellungen der Module gespeichert.';
 
 --
 -- Daten für Tabelle `cms_settings`

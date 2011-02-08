@@ -49,10 +49,18 @@ class renose
 	    $site_title = database::getSetting("cms", "site_title"); // get site title from db
 	    $version = database::getSetting("cms", "version"); // get version from db
 	    $name = "$site_title [$version] - " . $myPlugin->getTitle(); // <title>
+	    
+	    //Navigation
+	    $res = mysql_query("SELECT link, text FROM " . database::praefix . "navi");
+		while($row = mysql_fetch_array($res))
+		{
+			$navigation[] = array('link' => $row[0], 'text' => $row[1]);
+		}
 	
 	    // register to tpl engine
 	    $this->tpl->title = $name;
 	    $this->tpl->version = $version;
+	    $this->tpl->navigation = $navigation;
 	    	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'header.tpl')); // load tpl file
 	    
