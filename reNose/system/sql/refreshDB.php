@@ -18,7 +18,7 @@
 	$sqlFile = "renose.sql"; // .sql Filename #
 	// ########################################
 
-	if ($_POST['del']) {
+	if ($_POST) {
 	    $sql = mysql_query("DROP DATABASE $dbName");
 	    if ($sql) {
 		echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde gel&ouml;scht.</p>";
@@ -54,7 +54,7 @@
 	}
 	?>
 	<hr />
-	<p>Built on 8th February 2010 12:15pm</p>
+	<p>Built on 8th February 2010 09:41pm</p>
 
     </body>
 </html>
