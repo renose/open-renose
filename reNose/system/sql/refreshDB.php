@@ -33,7 +33,7 @@
 	    mysql_real_escape_string($sqlText);
 	    $sqlText = explode(";", $sqlText);
 
-	    $sqlCreate = mysql_query("CREATE DATABASE `$dbName`;");
+	    $sqlCreate = mysql_query("CREATE DATABASE $dbName");
 
 	    if ($sqlCreate) {
 		echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde neu erstellt.</p>";

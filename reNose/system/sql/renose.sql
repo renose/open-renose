@@ -152,5 +152,5 @@ CREATE TABLE IF NOT EXISTS `cms_users` (
 --
 
 INSERT INTO `cms_users` (`id`, `username`, `mail`, `password`) VALUES
-(1, 'SWW13', 'Simon@renose.de', '5fc7e38bffe00ca46add89145464a2eaf759d5c2');
+(1, 'SWW13', 'Simon@renose.de', '5fc7e38bffe00ca46add89145464a2eaf759d5c2'),
 (2, 'patstylez', 'patrick@renose.de', '634320de0c8cf37fa366e8c0df5faf57ad2ab2f8');
