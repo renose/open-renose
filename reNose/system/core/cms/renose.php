@@ -10,9 +10,6 @@ class renose
 	{
 		database::init();
 		
-		//TODO: FIX BASE_PATH include ERRORS!!!
-		//require_once(BASE_PATH . database::getModulePath('cms', 'root') . "/autoloader.php");
-		//require_once(BASE_PATH . database::getModulePath('cms', 'root') . "/Savant3.php");
 		require_once(database::getModulePath('cms', 'root') . "/autoloader.php");
 		require_once(database::getModulePath('cms', 'root') . "/plugin.php");
 		require_once(database::getModulePath('cms', 'root') . "/Savant3.php");
