@@ -30,13 +30,18 @@ class renose
 	
 	public function show()
 	{
-		if(empty($_GET) || $_GET["module"] == NULL || $_GET["module"] == 'main')
+		if(!isset($_GET["module"]))
+			$moduleName = 'main';
+		else
+			$moduleName = mysql_real_escape_string($_GET["module"]);
+		
+		if($moduleName == 'main')
 	    {
 		    $myPlugin = new content_test($this->tpl);
 	    }
 	    else
 	    {
-	    	$query = mysql_query("SELECT classname FROM " . database::praefix . "plugins WHERE module = '" . $_GET["module"] . "' AND state = 'ON'");
+	    	$query = mysql_query("SELECT classname FROM " . database::praefix . "plugins WHERE module = '" . $moduleName . "' AND state = 'ON'");
 			$row = mysql_fetch_row($query);
 			$className = $row[0];
 			
