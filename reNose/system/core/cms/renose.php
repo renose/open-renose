@@ -20,7 +20,7 @@ class renose
 	
 	function __autoload($class_name)
 	{
-		$res = mysql_query("SELECT value FROM " . database::praefix . "settings WHERE module = '" . $module . "' AND property = '" . $property . "'");
+		$res = mysql_query(database::escapeSQL("SELECT value FROM " . database::praefix . "settings WHERE module = '" . $module . "' AND property = '" . $property . "'"));
 		$row = mysql_fetch_row($res);
 		require_once "system/classes/".strtolower($class_name).".php";
 	}
@@ -38,7 +38,7 @@ class renose
 	    }
 	    else
 	    {
-	    	$query = mysql_query("SELECT classname FROM " . database::praefix . "plugins WHERE module = '" . $moduleName . "' AND state = 'ON'");
+	    	$query = mysql_query(database::escapeSQL("SELECT classname FROM " . database::praefix . "plugins WHERE module = '" . $moduleName . "' AND state = 'ON'"));
 			$row = mysql_fetch_row($query);
 			$className = $row[0];
 			
@@ -53,7 +53,7 @@ class renose
 	    $name = "$site_title [$version] - " . $myPlugin->getTitle(); // <title>
 	    
 	    //Navigation
-	    $res = mysql_query("SELECT link, text FROM " . database::praefix . "navi");
+	    $res = mysql_query(database::escapeSQL("SELECT link, text FROM " . database::praefix . "navi"));
 		while($row = mysql_fetch_array($res))
 		{
 			$navigation[] = array('link' => $row[0], 'text' => $row[1]);

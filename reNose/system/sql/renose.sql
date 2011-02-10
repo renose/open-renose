@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. Februar 2011 um 21:29
--- Server Version: 5.5.8
--- PHP-Version: 5.3.5
+-- Erstellungszeit: 10. Februar 2011 um 10:07
+-- Server Version: 5.1.44
+-- PHP-Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -37,11 +37,12 @@ CREATE TABLE IF NOT EXISTS `cms_navi` (
 --
 
 INSERT INTO `cms_navi` (`id`, `link`, `text`) VALUES
-(1, 'index.php', 'Home'),
-(2, 'index.php?module=about', 'Über das Projekt'),
-(3, 'index.php?module=faq', 'FAQ'),
-(4, 'index.php?module=help', 'Hilfe'),
-(5, 'index.php?module=register', 'Registrieren');
+(1, '', 'Home'),
+(2, 'about', 'Über das Projekt'),
+(3, 'faq', 'FAQ'),
+(4, 'help', 'Hilfe'),
+(5, 'register', 'Registrieren');
+
 
 -- --------------------------------------------------------
 
@@ -54,12 +55,15 @@ CREATE TABLE IF NOT EXISTS `cms_pages` (
   `title` varchar(200) NOT NULL,
   `value` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `cms_pages`
 --
 
+INSERT INTO `cms_pages` (`id`, `title`, `value`) VALUES
+(1, 'Willkommen auf reNose', 'Hier steht der Text'),
+(2, 'FAQ', 'Hier steht noch mehr Text');
 
 -- --------------------------------------------------------
 
@@ -82,9 +86,11 @@ INSERT INTO `cms_path` (`module`, `dir`, `path`) VALUES
 ('cms', 'root', 'system/core/cms/'),
 ('cms', 'tpl', 'tpl/'),
 ('errorPage', 'root', 'system/core/error/'),
-('errorPage', 'tpl', 'tpl/'),
+('errorPage', 'tpl', 'system/core/error/tpl/'),
+('page', 'root', 'system/core/page/'),
+('page', 'tpl', 'system/core/page/tpl/'),
 ('register', 'root', 'system/core/register/'),
-('register', 'tpl', 'tpl/'),
+('register', 'tpl', 'system/core/register/tpl/'),
 ('test', 'root', 'system/core/test/'),
 ('test', 'tpl', 'system/core/test/tpl/');
 
@@ -108,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `cms_plugins` (
 
 INSERT INTO `cms_plugins` (`module`, `classname`, `filename`, `state`) VALUES
 ('errorPage', 'errorPage', 'error.php', 'ON'),
+('page', 'page', NULL, 'ON'),
 ('register', 'register', NULL, 'ON'),
 ('test', 'trash_content', 'test.php', 'ON');
 
@@ -145,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `cms_users` (
   `password` varchar(50) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `cms_users`

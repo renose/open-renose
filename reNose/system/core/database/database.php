@@ -39,5 +39,15 @@ class database
 		
 		return $path;
 	}
+
+
+	// security function
+	public static function escapeSQL($query)
+	{
+		$query = mysql_real_escape_string($query);
+		$query = stripslashes($query);
+
+		return $query;
+	}
 }
 ?>

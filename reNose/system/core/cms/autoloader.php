@@ -2,7 +2,7 @@
 
 	function __autoload($class_name)
 	{
-		$res = mysql_query("SELECT module, filename FROM " . database::praefix . "plugins WHERE classname = '" . $class_name . "' AND state = 'ON'");
+		$res = mysql_query(database::escapeSQL("SELECT module, filename FROM " . database::praefix . "plugins WHERE classname = '" . $class_name . "' AND state = 'ON'"));
 		$row = mysql_fetch_row($res);
 		
 		$moduleName = $row[0];

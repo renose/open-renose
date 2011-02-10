@@ -13,32 +13,20 @@ class page extends plugin
 		return "Seitenmodul";
 	}
 
-	public static function getAllSitesFromDB() {
-	    database::init();
-	    $res = mysql_query(database::escapeSQL("SELECT * FROM ". database::praefix . "pages;"));
-	    while ($row = mysql_fetch_assoc($res)) {
-		return $foo = $row['title'];
-		$bar = $row['value'];
-	    }
-
-
-	}
-
-
 	public function show()
 	{
-	    $test = array(
-		array(
-		    "foo" => "bar",
-		    "baaz" => "joo"
-		),
-		array(
-		    "foo" => "footest",
-		    "baaz" => "test"
-		)
-	    );
-	    $this->tpl->array = $test;
-		$this->tpl->display(database::getModuleTpl('page', 'page.tpl')); // load tpl file
+
+	    //get all pages from DB
+	    database::init();
+	    $res = mysql_query(database::escapeSQL("SELECT * FROM ". database::praefix . "pages;"));
+		while($row = mysql_fetch_array($res))
+		{
+			$pageList[] = array('id' => $row[0], 'title' => $row[1], 'value' => $row[2]);
+		}
+
+	    // register to tpl engine
+	    $this->tpl->pageList = $pageList;
+	    $this->tpl->display(database::getModuleTpl('page', 'page.tpl')); // load tpl file
 	}
 }
 

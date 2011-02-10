@@ -28,19 +28,16 @@ class register extends plugin
 	public function registerNewUser()
 	{
 	    $rNUusername = $_POST['username'];
-	    $rNUusername = stripslashes($rNUusername);
 
 	    $rNUmail = $_POST['mail'];
-	    $rNUmail = stripslashes($rNUmail);
 
 	    $rNUpassword = $_POST['password'];
-	    $rNUpassword = stripslashes($rNUpassword);
 	    $rNUpassword = sha1($rNUpassword);
 	    
 	    if ($rNUusername && $rNUmail && $rNUpassword != "")
 	    {
-			$res = mysql_query("INSERT INTO " . database::praefix . "users (id, username, mail, password)
-		    	VALUES ('NULL', '". $rNUusername ."', '". $rNUmail ."', '". $rNUpassword ."');");
+			$res = mysql_query(database::escapeSQL("INSERT INTO " . database::praefix . "users (id, username, mail, password)
+		    	VALUES ('NULL', '". $rNUusername ."', '". $rNUmail ."', '". $rNUpassword ."');"));
 	    }
 	    else
 	    {
