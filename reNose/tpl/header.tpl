@@ -26,6 +26,5 @@
 		    <?php endforeach; ?>
 		</ul>
 	    </div>
-<?php echo $this->eprint($this->foo); ?>
 	    <div id="content">
 		<p class="breadcrumb"><a href="<?php echo $this->eprint(BASE_URL); ?>">Home</a> &raquo; Seiten &raquo; Bearbeiten (ID 4)</p>
