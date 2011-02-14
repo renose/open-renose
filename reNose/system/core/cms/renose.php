@@ -16,7 +16,7 @@ class renose
 		$this->tpl->setPath('template', BASE_PATH);
 	}
 
-	public static function anredeLoggedIn()
+	public static function anrede()
 	{
 	    date_default_timezone_set('Europe/Berlin');
 	    
@@ -28,6 +28,22 @@ class renose
 	    return $anrede;
 	}
 
+	public static function getUsernameAndName() {
+	    if($_SESSION['userid']) {
+		return $_SESSION['prename'] . " " . $_SESSION['name'];
+ 	    } else {
+		return "Gast";
+	    }
+	}
+
+	public static function userLoggedIn() {
+	    if($_SESSION['userid']) {
+		return true;
+ 	    } else {
+		return false;
+	    }
+	}
+	
 	public function show()
 	{
 		if(!isset($_GET["module"]))
@@ -67,20 +83,29 @@ class renose
 	    $name = "$site_title [$version] - " . $myPlugin->getTitle(); // <title>
 	    
 	    //Navigation
-    	$database = database::get();
+	    $database = database::get();
+	    if($this->userLoggedIn()) { //wenn eingeloggt elemente ausblenden, die hide_loggedin = 1 haben
+	        $sql = "SELECT link, text
+			FROM ".dbconfig::praefix."navi
+		        WHERE !hide_loggedin";
+	    } else { //wenn nicht eingeloggt elemente ausblenden, die hide_notloggedin = 1 haben
 		$sql = "SELECT link, text
-				FROM ".dbconfig::praefix."navi";
-		
-		foreach ($database->query($sql) as $row)
-		{
-			$navigation[] = array('link' => $row['link'], 'text' => $row['text']);
+			FROM ".dbconfig::praefix."navi
+			WHERE !hide_notloggedin";
 		}
-	
+		
+	    foreach ($database->query($sql) as $row)
+	    {
+		$navigation[] = array('link' => $row['link'], 'text' => $row['text']);
+	    }
+
 	    // register to tpl engine
 	    $this->tpl->title = $name;
 	    $this->tpl->version = $version;
 	    $this->tpl->navigation = $navigation;
-	    $this->tpl->anredeLoggedIn = $this->anredeLoggedIn();
+	    $this->tpl->anrede = $this->anrede();
+	    $this->tpl->getUsernameAndName = $this->getUsernameAndName();
+	    $this->tpl->userLoggedIn = $this->userLoggedIn();
 	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'header.tpl')); // load tpl file
 	    

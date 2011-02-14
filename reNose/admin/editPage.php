@@ -1,5 +1,5 @@
 <?php
-
+login::checkAdmin();
 class editPage extends plugin {
 
     public $name = "editPage";
@@ -68,8 +68,8 @@ class editPage extends plugin {
 }
 
 if ($_POST['updatePage'] && $_GET['new']) {
-    $query = editPage::createSiteToDB($_POST['headline'], $_POST['description'], $_POST['pageEdit']);
+    $query = editPage::createSiteToDB($_POST['headline'], $_POST['description'], htmlspecialchars($_POST['pageEdit']));
 } else if ($_POST['updatePage']) {
-   editPage::updateSiteToDB($_GET['id'], $_POST['headline'], $_POST['description'], $_POST['pageEdit']);
+   editPage::updateSiteToDB($_GET['id'], $_POST['headline'], $_POST['description'], htmlspecialchars($_POST['pageEdit']));
 }
 ?>

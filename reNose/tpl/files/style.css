@@ -140,6 +140,10 @@ div#content {
 	padding: 15px;
 }
 
+div#content h1 {
+	margin-bottom: 15px;
+}
+
 div#content p {
 	margin: 0;
 	padding: 0;

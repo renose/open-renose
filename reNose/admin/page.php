@@ -1,5 +1,5 @@
 <?php
-
+login::checkAdmin();
 class page extends plugin {
 
     public $name = "page";
