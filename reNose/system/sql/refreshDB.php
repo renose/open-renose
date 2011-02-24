@@ -62,7 +62,8 @@
 		    echo "<p style='color:lime;margin:0;padding:0;'>Tabellen eingetragen</p>";
 		} catch (PDOException $e) {
 		    echo "<p style='color:red;margin:0;padding:0;'>Tabellen eintragen fehlgeschlagen</p>";
-		    echo $e->getMessage();
+		    echo "<b>" . $e->getMessage() . "</b>";
+			echo "<br/>" . $imp"; //Echo failed Statment
 		}
 	    } catch (PDOException $e) {
 		echo "<p style='color:red;margin:0;padding:0;'>Datenbank konnte nicht neu erstellt werden.</p>";
