@@ -73,7 +73,7 @@
  */
 class DATABASE_CONFIG {
 
-	var $default = array(
+	/*var $default = array(
 		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',
@@ -84,6 +84,15 @@ class DATABASE_CONFIG {
 	);
 
 	var $develop = array(
+		'driver' => 'mysql',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'renose',
+		'password' => 'open',
+		'database' => 'renose_dev',
+		'prefix' => '',
+	);*/
+	var $default = array(
 		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',

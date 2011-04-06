@@ -22,8 +22,8 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('CakePHP: the rapid development php framework:'); ?>
 		<?php echo $title_for_layout; ?>
+		<?php __(' - open reNose'); ?>
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
@@ -43,10 +43,18 @@
 			<span>open</span>reNose
 		  </h1>
         </a>
-        <div id="headerinfo">*Links*</div>
+        <div id="headerinfo">*Info*</div>
       </div>
-      <div id="navigation">*Navi*</div>
+      <div id="navigation">
+      	<ul>
+      		<li><a>*Navi*</a></li>
+      	</ul>
+	  </div>
       <div id="content">
+      	<p class="breadcrumb">
+      		*breadcrumb*
+		</p>
+		
 		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $content_for_layout; ?>
@@ -55,7 +63,12 @@
     <div id="trenner"></div>
     <div id="footer">
       <div id="footerwrapper">
-        <div class="footerbox">*Navi*</div>
+        <div class="footerbox">
+        	<ul>
+        		<li class="headline">Navigation</li>
+      			<li><a>*Navi*</a></li>
+      		</ul>
+		</div>
         <div class="footerbox">
           <?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
