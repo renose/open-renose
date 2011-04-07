@@ -38,7 +38,7 @@
   <div id="container">
     <div id="wrapper">
       <div id="header">
-        <a href="http://fail/">
+        <a href="<?php echo $this->Html->url('/', true); ?>">
           <h1 id="logo">
 			<span>open</span>reNose
 		  </h1>

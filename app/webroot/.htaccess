@@ -1,3 +1,6 @@
+AddType application/x-javascript .js 
+AddType text/css .css
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-d
