@@ -18,7 +18,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Datenbank: `renose_dev`
 --
-ALTER DATABASE CHARACTER SET utf8
+ALTER DATABASE CHARACTER SET utf8;
 
 -- --------------------------------------------------------
 
