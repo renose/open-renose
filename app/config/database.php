@@ -81,6 +81,7 @@ class DATABASE_CONFIG {
 		'password' => 'open',
 		'database' => 'renose',
 		'prefix' => 'cms_',
+		'encoding' => 'utf8'
 	);
 
 	var $develop = array(
@@ -91,7 +92,9 @@ class DATABASE_CONFIG {
 		'password' => 'open',
 		'database' => 'renose_dev',
 		'prefix' => '',
+		'encoding' => 'utf8'
 	);*/
+	
 	var $default = array(
 		'driver' => 'mysql',
 		'persistent' => false,
@@ -100,5 +103,6 @@ class DATABASE_CONFIG {
 		'password' => 'open',
 		'database' => 'renose_dev',
 		'prefix' => '',
+		'encoding' => 'utf8'
 	);
 }
