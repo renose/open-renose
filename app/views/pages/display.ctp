@@ -29,4 +29,6 @@
 
 </table>
 
-<?php echo $html->link('Page hinzufügen', array('controller' => 'pages', 'action' => 'add'))?>
+<?php
+    echo $html->link('Page hinzufügen', array('controller' => 'pages', 'action' => 'add'));
+?>

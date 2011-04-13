@@ -47,7 +47,7 @@
       </div>
       <div id="navigation">
       	<ul>
-      		<li><a>*Navi*</a></li>
+            <?php echo $this->element('navigation', array('cache' => '+3 hour')); ?>
       	</ul>
 	  </div>
       <div id="content">
@@ -80,7 +80,7 @@
         <div class="footerbox lastbox">
           <p class="floatright">2011 by 
           <a href="mailto:simon@renose.de">Simon W&#246;rner</a> und
-          <a href="mailto:patrick@renose.de">Patrick Hafner</a>| 
+          <a href="mailto:patrick@renose.de">Patrick Hafner</a> | 
           <a href="http://www.renose.de">renose.de</a></p>
         </div>
       </div>
