@@ -47,13 +47,13 @@
       </div>
       <div id="navigation">
       	<ul>
-            <?php echo $this->element('navigation', array('cache' => '+3 hour')); ?>
+            <?php echo $this->element('navigation', array('menu' => 'main', 'cache' => '+3 hour')); ?>
       	</ul>
 	  </div>
       <div id="content">
-      	<p class="breadcrumb">
-      		*breadcrumb*
-		</p>
+          <p class="breadcrumb">
+              *breadcrumb*
+          </p>
 		
 		<?php echo $this->Session->flash(); ?>
 
@@ -64,19 +64,26 @@
     <div id="footer">
       <div id="footerwrapper">
         <div class="footerbox">
-        	<ul>
-        		<li class="headline">Navigation</li>
-      			<li><a>*Navi*</a></li>
-      		</ul>
-		</div>
-        <div class="footerbox">
-          <?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-			?>
+            <ul>
+                <li class="headline">Navigation</li>
+                <?php echo $this->element('navigation', array('menu' => 'footer', 'cache' => '+3 hour')); ?>
+            </ul>
         </div>
+
+        <div class="footerbox">
+            <ul>
+                <li class="headline">Dev Links</li>
+                <?php echo $this->element('navigation', array('menu' => 'dev', 'cache' => '+3 hour')); ?>
+            </ul><br/>
+
+              <?php echo $this->Html->link(
+                                $this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
+                                'http://www.cakephp.org/',
+                                array('target' => '_blank', 'escape' => false)
+                        );
+                ?>
+        </div>
+          
         <div class="footerbox lastbox">
           <p class="floatright">2011 by 
           <a href="mailto:simon@renose.de">Simon W&#246;rner</a> und

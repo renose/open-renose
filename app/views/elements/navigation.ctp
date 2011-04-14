@@ -1,10 +1,10 @@
 <?php
-    $menulinks = $this->requestAction('/menu_links/main');
+    $menu = $this->requestAction("/menus/get_items/$menu");
     
-    foreach($menulinks as $menulink)
+    foreach($menu['MenuItem'] as $menuitem)
     {
         echo '<li>';
-        echo $this->Html->link($menulink['MenuLink']['title'], $menulink['MenuLink']['link']);
+        echo $this->Html->link($menuitem['title'], $menuitem['link']);
         echo '</li>';
     }
 ?>

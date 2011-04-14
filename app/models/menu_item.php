@@ -1,8 +1,9 @@
 <?php
 
-class MenuLink extends AppModel
+class MenuItem extends AppModel
 {
-    var $name = 'MenuLink';
+    var $name = 'MenuItem';
+    //var $belongsTo = 'Menu';
 
     var $validate = array(
 		'title' => array(
