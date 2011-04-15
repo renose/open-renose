@@ -2,7 +2,7 @@
     <?php echo $title_for_layout; ?>
 </h1>
 
-<table width="100%">
+<table width="100%" class="admintable">
 	<tr>
 		<th>ID</th>
 		<th>URL-Titel</th>
@@ -23,13 +23,13 @@
 		<td>
 			<?php
                             echo $html->link(
-                                $this->Html->image("icon/edit.png", array("alt" => "Seite erstellen")) . 'Bearbeiten',
+                                $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")) . '',
                                 array('action' => 'edit', $page['Page']['id']), array('escape' => false) );
 
                             echo " ";
 
                             echo $html->link(
-                                $this->Html->image("icon/delete.png", array("alt" => "Seite erstellen")) . 'Löschen',
+                                $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")) . '',
                                 array('action' => 'delete', $page['Page']['id']), array('escape' => false),
                                 'Wollen Sie die Seite "' . $page['Page']['description'] . '" wirklich löschen?' );
                         ?>
@@ -43,7 +43,7 @@
 
 <?php
     echo $html->link(
-            $this->Html->image("icon/add.png", array("alt" => "Seite erstellen")) . 'Seite erstellen',
+            $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")) . '',
             array('controller' => 'pages', 'action' => 'add'),
             array('escape' => false));
     //icon/add.png

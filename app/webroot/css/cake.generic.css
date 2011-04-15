@@ -37,7 +37,7 @@ div.actions h3 {
 
 
 /** Tables **/
-table {
+/*table {
 	background: #fff;
 	border-right:0;
 	clear: both;
@@ -55,20 +55,20 @@ th a {
 	display: block;
 	padding: 2px 4px;
 	text-decoration: none;
-}
+}*/
 th a.asc:after {
 	content: ' ⇣';
 }
 th a.desc:after {
 	content: ' ⇡';
 }
-table tr td {
+/*table tr td {
 	background: #fff;
 	padding: 6px;
 	text-align: left;
 	vertical-align: top;
 	border-bottom:1px solid #ddd;
-}
+}*/
 table tr:nth-child(2n) td {
 	background: #f5f5f5;
 }

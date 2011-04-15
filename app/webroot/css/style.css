@@ -305,3 +305,16 @@ div#footer div#footerwrapper {
 	div#footer div.lastbox {
 		margin-right: 15px !important;
 	}
+
+
+        /* admin part, meh */
+
+        /* Admintable - overview */
+        .admintable th, .admintable td {
+            text-align: center;
+        }
+
+        img#ico-addpage {
+            margin-top: 20px;
+            margin-left: 7px;
+        }
