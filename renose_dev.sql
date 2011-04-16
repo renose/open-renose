@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. April 2011 um 19:48
+-- Erstellungszeit: 16. April 2011 um 15:42
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -19,6 +19,28 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Datenbank: `renose_dev`
 --
 ALTER DATABASE CHARACTER SET utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `jobs`
+--
+
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `specialization` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `job_name` (`name`,`specialization`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Daten für Tabelle `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `name`, `specialization`) VALUES
+(1, 'Fachinformatiker', 'Anwendungsentwicklung'),
+(2, 'Fachinformatiker', 'Systemintegration');
 
 -- --------------------------------------------------------
 
@@ -56,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
   `title` varchar(127) NOT NULL,
   `link` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Daten für Tabelle `menu_items`
@@ -71,7 +93,10 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `position`, `title`, `link`) VALUES
 (6, 2, 2, 'Hilfe', '/page/help'),
 (7, 2, 3, 'Kontakt', '/page/contact'),
 (8, 2, 4, 'Impressum', '/page/imprint'),
-(9, 3, 1, 'Pages - Admin-Panel', '/pages/display');
+(9, 3, 1, 'Admin-Panel - Pages', '/pages/display'),
+(10, 3, 2, 'User - Login', '/users/login'),
+(11, 3, 3, 'User - Logout', '/users/logout'),
+(12, 3, 4, 'User - Test', '/users/test');
 
 -- --------------------------------------------------------
 
@@ -100,3 +125,54 @@ INSERT INTO `pages` (`id`, `title`, `description`, `body`, `created`, `modified`
 (3, 'faq', 'Häufig gestellte Fragen', '<p>\r\n	Seit wann macht ihr dieses Projekt?</p>\r\n<ul>\r\n	<li>\r\n		Das Projekt ist seit dem 1. Februar 2011 in Google Code zu finden.</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Unter Welcher Lizenz habt ihr den Quellcode freigegeben?</p>\r\n<ul>\r\n	<li>\r\n		open reNose ist unter der Mozilla Lizenz freigegeben</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Darf ich das Copyright auf meiner eigenen Kopie &auml;ndern?</p>\r\n<ul>\r\n	<li>\r\n		Die Lizenz erlaubt es, den Quellcode beliebig zu &auml;ndern, allerdings w&uuml;rde der Vermerk ein Zeichen sein, dass ihr das Projekt unterst&uuml;tzt. Danke im Voraus!</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Kann ich das Script auf eurem Server laufen lassen?</p>\r\n<ul>\r\n	<li>\r\n		Kurz und knapp: Nein, sorry!</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Welche Anforderungen hat das Script an den Server?</p>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	<meta charset="utf-8" />\r\n</p>\r\n<ul>\r\n	<li>\r\n		PHP 5.3 und mySQL 5.1 sind erforderlich. Desweiteren sind die aktivierten Apache Erweiterungen&nbsp;mod_rewrite und mysql PDO n&ouml;tig.</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Ich habe einen Bug entdeckt</p>\r\n<ul>\r\n	<li>\r\n		Dann sei so freundlich und schreibe diesen in den Bugtracker auf unserer Projektseite: renose.de oder sende eine Mail an patrick@renose.de</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Der Quellcode ist schei&szlig;e, ich w&uuml;rde es besser machen</p>\r\n<ul>\r\n	<li>\r\n		Dann schreib ihn selber ;-)</li>\r\n</ul>\r\n', '2011-04-07 00:40:30', '2011-04-15 19:24:44'),
 (4, 'help', 'Hilfe', '<p>Hilfe</p>', '2011-04-07 00:48:23', '2011-04-07 00:48:23'),
 (5, 'test', 'My Test Page', '<p>\r\n	This<br />\r\n	is<br />\r\n	my<br />\r\n	<b>TEST</b>-Page! |2|</p>\r\n', '2011-04-07 23:04:14', '2011-04-15 18:58:11');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `profiles`
+--
+
+CREATE TABLE IF NOT EXISTS `profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `job_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Daten für Tabelle `profiles`
+--
+
+INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `job_id`) VALUES
+(1, 1, 'Admin', 'reNose', NULL),
+(2, 2, 'Simon', '', 1),
+(3, 3, 'Patrick', '', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Daten für Tabelle `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `created`, `modified`) VALUES
+(1, 'admin@renose.de', '67ef003adb4b7da80cf36e17fad6260b94dbcb16', '2011-04-15 23:17:20', '2011-04-15 23:17:20'),
+(2, 'simon@renose.de', '492a4d8fbf9da1a0aa036b948ff5cef09ce6b6eb', '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
+(3, 'patrick@renose.de', 'ead2222b5def6d0223d8685f38cc3736be8887bf', '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
+(4, 'unknown@renose.de', 'a190da62efb76d5b0b740d291655b0d1a483c321', '2011-04-16 12:57:17', '2011-04-16 12:57:17');
