@@ -23,19 +23,13 @@
 ?>
 
 <?php
-class User extends AppModel {
-	var $name = 'User';
-	var $displayField = 'email';
+class Group extends AppModel {
+	var $name = 'Group';
+	var $displayField = 'description';
 	var $validate = array(
-		'email' => array( 'rule' =>'email' ),
-		'password' => array( 'rule' =>'notempty' ) );
+		'name' => array( 'rule' =>'notempty' ) );
 
-        var $hasOne = array(
-            'Profile' => array(
-                'dependent' => true
-                )
-            );
-
-        var $hasAndBelongsToMany = array('Group');
+        var $hasMany = array('GroupPermission');
+        var $hasAndBelongsToMany = array('User');
 }
 ?>

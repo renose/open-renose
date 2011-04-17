@@ -79,8 +79,7 @@ class UsersController extends AppController
 
         function get_name()
         {
-            $User = $this->Auth->user();
-            $Profile = $this->User->Profile->findByUserId($User['User']['id']);
+            $Profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
             //Vorname bekannt
             if($Profile['Profile']['first_name'])
@@ -96,13 +95,13 @@ class UsersController extends AppController
             else if($Profile['Profile']['last_name'])
             {
                 //Setze Nachname mit Herr/Frau
-                $name .= ' ' . $Profile['Profile']['last_name'];
+                $name .= 'Herr/Frau' . $Profile['Profile']['last_name'];
             }
             //Beides Unbekannt
             else
             {
                 //Registriter User
-                if($User['User']['id'])
+                if($this->Auth->user())
                     $name = 'Ninja';
                 //Gast
                 else
@@ -122,7 +121,18 @@ class UsersController extends AppController
         function test()
         {
             $user = $this->Auth->user();
-            $profile = $this->User->Profile->findByUserId($user['User']['id']);
+            $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+
+            //debug($this->User->findById($this->Auth->user('id')));
+
+            $user = $this->User->findById($this->Auth->user('id'));
+            debug($user);
+
+            $this->loadModel('Group');
+            foreach($user['Group'] as $group)
+            {
+                debug($this->Group->findById($group['id']));
+            }
 
             //debug($profile);
             //debug($this->User->find('all'));
