@@ -28,6 +28,13 @@
     {
         var $name = 'Menus';
 
+        function beforeFilter()
+        {
+            parent::beforeFilter();
+
+            $this->Auth->allow('get_items');
+        }
+
         function get_items($menu)
         {
             $menu = $this->Menu->find('first', array(

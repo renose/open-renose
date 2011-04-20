@@ -31,7 +31,7 @@ class UsersController extends AppController
         {
             parent::beforeFilter();
 
-            $this->Auth->deny('test');
+            $this->Auth->allow('login', 'logout', 'get_name');
         }
 
         function login()
@@ -45,8 +45,16 @@ class UsersController extends AppController
         }
         function logout()
         {
-            $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
-            $this->redirect($this->Auth->logout());
+            if($this->Auth->user())
+            {
+                $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
+                $this->redirect($this->Auth->logout());
+            }
+            else
+            {
+                $this->Session->setFlash('Sie sind nicht eingeloggt, Sie können sich nicht ausloggen.', 'flash_notice');
+                $this->redirect('/');
+            }
         }
         
         function get($request)

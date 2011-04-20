@@ -28,6 +28,13 @@ class PagesController extends AppController
 {
 	var $name = 'Pages';
 	var $helpers = array('Javascript', 'Fck');
+
+        function beforeFilter()
+        {
+            parent::beforeFilter();
+
+            $this->Auth->allow('index', 'view');
+        }
 	
 	function index()
 	{
@@ -73,36 +80,38 @@ class PagesController extends AppController
             {
                 if ($this->Page->save($this->data))
                 {
-                    $this->Session->setFlash('Ihre Seite wurde erstellt.');
+                    $this->Session->setFlash('Ihre Seite wurde erstellt.', 'flash_success');
                     $this->redirect( array('action' => 'view', $this->data['Page']['title']) );
                 }
             }
 	}
 	
-	function edit($id = null)
+	function edit($title)
 	{
             $this->set('title_for_layout', 'Seite bearbeiten');
-            
-            $this->Page->id = $id;
 
             if (empty($this->data))
             {
+                $page = $this->Page->findByTitle($title);
+                $this->Page->id = $page['Page']['id'];
                 $this->data = $this->Page->read();
             }
             else if ($this->Page->save($this->data))
             {
-                $this->Session->setFlash('Ihre Änderungen wurden übernommen.');
+                $this->Session->setFlash('Ihre Änderungen wurden übernommen.', 'flash_success');
                 $this->redirect( array('action' => 'view', $this->data['Page']['title']) );
             }
 	}
 	
 	
-	function delete($id)
+	function delete($title)
 	{
             $this->set('title_for_layout', 'Seite löschen');
-            
-            $this->Page->delete($title);
-            $this->Session->setFlash('Die Seite "'.$title.'" wurde gelöscht.');
+
+            $page = $this->Page->findByTitle($title);
+
+            $this->Page->delete($page['Page']['id']);
+            $this->Session->setFlash('Die Seite "'.$page['Page']['description'].'" ('.$page['Page']['title'].') wurde gelöscht.', 'flash_success');
             $this->redirect( array('action' => 'display') );
 	}
 	

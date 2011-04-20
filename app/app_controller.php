@@ -33,7 +33,7 @@ class AppController extends Controller
             //$this->Auth->userScope = array('User.active' => true);
             $this->Auth->loginRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'welcome');
             $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'pages', '/view/home');
-            //$this->Auth->authorize = 'controller';
+            $this->Auth->authorize = 'controller';
             //$this->Auth->autoRedirect = false;
             
             $this->Auth->fields = array(
@@ -44,23 +44,81 @@ class AppController extends Controller
             $this->Auth->loginError = "Email Adresse oder Passwort falsch! Bitte versuche es erneut.";
             $this->Auth->authError = "Sie haben keine Berechtigung für diese Seite.";
 
-            $this->Auth->allow('*');
+            //Allowed Actions setzen
+            $this->setAllow();
         }
 
-        /*function isAuthorized()
+        function setAllow()
         {
-            if ($this->action == 'delete')
+            $this->loadModel('Group');
+            
+            //Nicht eingeloggt - Gästerechte prüfen
+            $group = $this->Group->findByName('anonymous');
+            //debug($group);
+
+            foreach($group['GroupPermission'] as $permission)
             {
-                if ($this->Auth->user('role') == 'admin')
-                    return true;
+                if(strcasecmp($permission['controller'], $this->name) == 0 &&
+                        strcasecmp($permission['action'], $this->action) == 0)
+                {
+                    if($permission['type'] == 1)
+                        $this->Auth->allow($permission['action']);
+                    else
+                        $this->Auth->deny($permission['action']);
+                }
             }
-            if ($this->action == 'view')
-                return true;
+        }
+        function isAuthorized()
+        {
+            $allow = false;
+            $this->loadModel('User');
+            $this->loadModel('Group');
+            
+            $user = $this->User->findById($this->Auth->user('id'));
+            /*debug($user);
+            debug($this->name);
+            debug($this->action);*/
 
-            //...
+            if($user)
+            {
+                //Alle Speziell zu geteilten Gruppen prüfen
+                foreach($user['Group'] as $group)
+                {
+                    $group = $this->Group->findById($group['id']);
+                    //debug($group);
 
-            return false;
-        }*/
+                    foreach($group['GroupPermission'] as $permission)
+                    {
+                        if(strcasecmp($permission['controller'], $this->name) == 0 &&
+                                strcasecmp($permission['action'], $this->action) == 0)
+                        {
+                            if($permission['type'] == 1)
+                                $allow = true;
+                            else
+                                return false;
+                        }
+                    }
+                }
+
+                //Als User zusätzlich die
+                $group = $this->Group->findByName('users');
+                //debug($group);
+                
+                foreach($group['GroupPermission'] as $permission)
+                {
+                    if(strcasecmp($permission['controller'], $this->name) == 0 &&
+                            strcasecmp($permission['action'], $this->action) == 0)
+                    {
+                        if($permission['type'] == 1)
+                            $allow = true;
+                        else
+                            return false;
+                    }
+                }
+            }
+
+            return $allow;
+        }
 }
 
 ?>

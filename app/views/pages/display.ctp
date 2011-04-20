@@ -47,15 +47,15 @@
 		<td>
 			<?php
                             echo $html->link(
-                                $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")) . '',
-                                array('action' => 'edit', $page['Page']['id']), array('escape' => false) );
+                                $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")),
+                                array('action' => 'edit', $page['Page']['title']), array('escape' => false) );
 
                             echo " ";
 
                             echo $html->link(
-                                $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")) . '',
-                                array('action' => 'delete', $page['Page']['id']), array('escape' => false),
-                                'Wollen Sie die Seite "' . $page['Page']['description'] . '" wirklich löschen?' );
+                                $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")),
+                                array('action' => 'delete', $page['Page']['title']), array('escape' => false),
+                                'Wollen Sie die Seite <' . $page['Page']['description'] . '> wirklich löschen?');
                         ?>
 		</td>
 		<td><?php echo $page['Page']['created']; ?></td>
@@ -67,7 +67,7 @@
 
 <?php
     echo $html->link(
-            $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")) . '',
+            $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")),
             array('controller' => 'pages', 'action' => 'add'),
             array('escape' => false));
     //icon/add.png
