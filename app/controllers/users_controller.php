@@ -26,16 +26,25 @@
 class UsersController extends AppController
 {
 	var $name = 'Users';
+        var $components = array('Email');
 
         function beforeFilter()
         {
             parent::beforeFilter();
 
-            $this->Auth->allow('login', 'logout', 'get_name');
+            $this->Auth->allow('login', 'logout', 'activate', 'get_name');
         }
 
         function login()
         {
+            /*if($this->data)
+            {
+                //$this->Session->write("User", $this->Auth->user());
+                //$this->Session->write("User.Name", $this->get_name());
+
+                $this->redirect($this->Auth->redirect());
+            }*/
+
             //Bereits eingeloggt?
             if($this->Auth->user())
             {
@@ -47,6 +56,7 @@ class UsersController extends AppController
         {
             if($this->Auth->user())
             {
+                //$this->Session->delete('User');
                 $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
                 $this->redirect($this->Auth->logout());
             }
@@ -57,32 +67,83 @@ class UsersController extends AppController
             }
         }
         
-        function get($request)
+        function register()
         {
-            if (!empty($this->params['requested']))
+            //debug($this->User);
+            //debug($this->Auth);
+            
+            if ($this->data)
             {
-                $user = $this->Auth->user();
+                //Setze Activation Key
+                $activationkey = $this->data['User']['email'] . time() . $this->data['User']['password'];
+                $this->data['User']['activationkey'] = $this->Auth->password($activationkey);
 
-                switch(strtolower($request))
+                if ($this->User->save($this->data))
                 {
-                    case 'user':
-                        return $user;
-                        break;
+                    $User = $this->data;
+                    //$this->Email->delivery = 'mail';
+                    $this->Email->delivery = 'debug';
+                    $this->Email->to = $User['User']['email'];
+                    $this->Email->subject = 'Ihre Registrierung bei open reNose';
+                    $this->Email->replyTo = 'noreply@renose.de';
+                    $this->Email->from = 'open reNose <info@renose.de>';
+                    $this->Email->template = 'register';
+                    //Send as 'html', 'text' or 'both' (default is 'text')
+                    $this->Email->sendAs = 'both'; // because we like to send pretty mail
+                    //Set view variables as normal
+                    $this->set('User', $User);
+                    //Do not pass any args to send()
+                    $this->Email->send();
 
-                    case 'profile':
-                        $profile = $this->User->Profile->findByUserId($user['User']['id']);
-                        return $profile;
-                        break;
+                    $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');
+                    $this->redirect(array('controller' => 'users', 'action' => 'login'));
+                } else {
+                    $this->data['User']['password'] = null;
+                    $this->data['User']['password_confirm'] = null;
+                }
+            }
+        }
+        function activate($email, $activationkey)
+        {
+            if($email == null || $activationkey == null)
+            {
+                $this->Session->setFlash('Fehlerhafter Link.', 'flash_notice');
+                $this->redirect('/');
+            }
 
-                    default:
-                        return null;
-                        break;
+            $user = $this->User->findByEmail($email);
+
+            if($user)
+            {
+                if($user['User']['activationkey'] == $activationkey)
+                {
+                    $user['User']['is_active'] = 1;
+                    $user['User']['activationkey'] = NULL;
+                    $this->User->save($user);
+
+                    $this->Session->setFlash('Account erfolgreich aktiviert.', 'flash_success');
+                    $this->redirect(array('controller' => 'users', 'action' => 'login'));
+                }
+                else
+                {
+                    $this->Session->setFlash('Fehlerhafter Aktivierungscode. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+                    $this->redirect('/');
                 }
             }
             else
             {
-                $this->set(compact('User'));
+                $this->Session->setFlash('User nicht gefunden. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+                $this->redirect('/');
             }
+        }
+
+        function welcome()
+        {
+            $user = $this->User->findById($this->Auth->user('id'));
+            $profile = $this->User->Profile->findByUserId($user['User']['id']);
+
+            $this->set('User', $user);
+            $this->set('Profile', $profile);
         }
 
         function get_name()
@@ -115,15 +176,8 @@ class UsersController extends AppController
                 else
                     $name = 'Gast';
             }
-            
-            if (!empty($this->params['requested']))
-            {
-                return $name;
-            }
-            else
-            {
-                $this->set(compact('name'));
-            }
+
+            return $name;
         }
 
         function test()

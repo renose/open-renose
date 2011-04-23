@@ -27,8 +27,23 @@ class User extends AppModel {
 	var $name = 'User';
 	var $displayField = 'email';
 	var $validate = array(
-		'email' => array( 'rule' =>'email' ),
-		'password' => array( 'rule' =>'notempty' ) );
+                'email'=> array(
+                    'mustBeEmail'=> array(
+                        'rule' => array('email', true),
+                        'message' => 'Bitte geben Sie eine gültige Email ein.',
+                        'last'=>true),
+                    'mustUnique'=>array(
+                        'rule' =>'isUnique',
+                        'message' =>'Diese Email ist bereits registriert.')),
+		'password' => array( 'rule' =>'notempty' ),
+                'password_confirm'=>array(
+                        'mustBeLonger'=>array(
+                            'rule' => array('minLength', 5),
+                            'message'=> 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.'),
+                        'mustMatch'=>array(
+                            'rule' => array('verifies', 'password'),
+                            'message' => 'Sie haben unterschiedliche Passwörter eingegeben, bitte versuchen Sie es erneut.'))
+                    );
 
         var $hasOne = array(
             'Profile' => array(
@@ -37,5 +52,14 @@ class User extends AppModel {
             );
 
         var $hasAndBelongsToMany = array('Group');
+        
+        function verifies($check, $field)
+	{
+            $password = $this->data[$this->name][$field];
+            $password_confirm = $check['password_confirm'];
+            $password_confirm = Security::hash(Configure::read('Security.salt') . $password_confirm);
+
+            return $password == $password_confirm;
+	}
 }
 ?>

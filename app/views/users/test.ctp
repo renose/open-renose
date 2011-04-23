@@ -74,6 +74,7 @@
 
 <br/><br/>
 <?php
+    debug($session->read());
     debug($User);
     debug($Profile);
 ?>

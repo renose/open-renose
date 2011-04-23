@@ -22,7 +22,7 @@
  */
 ?>
 
-<h1><?php echo $page['Page']['description']?></h1>
+<h1><?php echo $title_for_layout; ?></h1>
 
 <p><small>Created: <?php echo $page['Page']['created']?></small></p>
 

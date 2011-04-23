@@ -33,13 +33,13 @@ class PagesController extends AppController
         {
             parent::beforeFilter();
 
-            $this->Auth->allow('index', 'view');
+            //$this->Auth->allow('index', 'view');
         }
 	
 	function index()
 	{
-		$this->redirect(array('controller' => 'pages', 'action' => 'view', 'home'));
-		//$this->flash('Auf Home-Seite weiterleiten...', array('controller' => 'pages', 'action' => 'view', 1));
+            $this->redirect(array('controller' => 'pages', 'action' => 'view', 'home'));
+            //$this->flash('Auf Home-Seite weiterleiten...', array('controller' => 'pages', 'action' => 'view', 1));
 	}
 
 	function display()
@@ -50,26 +50,26 @@ class PagesController extends AppController
 	
 	function view($title = null)
 	{
-		if($title == null)
-                    $this->redirect('/');
-		
-		$page = $this->Page->findByTitle($title);
+            if($title == null)
+                $this->redirect('/');
 
-                //Page not found?
-		if($page == null)
-		{
-                    //Try searching by id
-                    $this->Page->id = $title;
-                    $page = $this->Page->read();
+            $page = $this->Page->findByTitle($title);
 
-                    //Still not found? => Error
-                    if($page == null)
-                        $this->cakeError('error404');
-		}
+            //Page not found?
+            if($page == null)
+            {
+                //Try searching by id
+                $this->Page->id = $title;
+                $page = $this->Page->read();
 
-                //Set page title and content for layout
-                $this->set('title_for_layout', $page['Page']['description']);
-                $this->set('page', $page);
+                //Still not found? => Error
+                if($page == null)
+                    $this->cakeError('error404');
+            }
+
+            //Set page title and content for layout
+            $this->set('title_for_layout', $page['Page']['description']);
+            $this->set('page', $page);
 	}
 	
 	function add()

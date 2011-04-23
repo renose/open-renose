@@ -1,33 +1,38 @@
 <?php
-/*
- * login.ctp
- *
+/* 
+ * register.ctp
+ * 
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
- *
+ * 
  * This file is part of open reNose.
- *
+ * 
  * open reNose is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * open reNose is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
+<p>Hallo,<br/>
+Sie haben sich erfolgreich bei <i>opren reNose</i> (http://www.renose.de) registriert.</p>
 
-<h1>Login</h1>
-<?php
-    echo $form->create('User', array('action' => 'login'));
+<p>Bitte aktivieren Sie ihren Account über folgenden Link:<br/>
+    <?php echo $html->link(
+        $html->url(array('controller' => 'users', 'action' => 'activate', $User['User']['email'], $User['User']['activationkey']), true)); ?></p>
 
-    echo $form->input('email');
-    echo $form->input('password');
+<p>Sie haben sich mit folgender EMail angemeldet: <br/>
+    <?php echo $User['User']['email']; ?></p>
 
-    echo $form->end('Login');
-?>
+<p>Mit freundlichen Grüßen,<br/>
+    Ihr <i>open reNose</i> Team</p>
+
+<br/>
+<p>P.S.: Sollten Sie sich nicht registriert haben, ignorieren Sie diese Email einfach.</p>

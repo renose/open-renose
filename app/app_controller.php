@@ -30,7 +30,7 @@ class AppController extends Controller
 
         function beforeFilter()
         {
-            //$this->Auth->userScope = array('User.active' => true);
+            //$this->Auth->userScope = array('User.is_active' => true);
             $this->Auth->loginRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'welcome');
             $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'pages', '/view/home');
             $this->Auth->authorize = 'controller';
@@ -46,6 +46,7 @@ class AppController extends Controller
 
             //Allowed Actions setzen
             $this->setAllow();
+            //$this->Auth->allow('*');
         }
 
         function setAllow()
@@ -100,19 +101,22 @@ class AppController extends Controller
                     }
                 }
 
-                //Als User zusätzlich die
-                $group = $this->Group->findByName('users');
-                //debug($group);
-                
-                foreach($group['GroupPermission'] as $permission)
+                //Aktivierter User Account - User Gruppen Berechtigungen
+                if($user['User']['is_active'])
                 {
-                    if(strcasecmp($permission['controller'], $this->name) == 0 &&
-                            strcasecmp($permission['action'], $this->action) == 0)
+                    $group = $this->Group->findByName('users');
+                    //debug($group);
+
+                    foreach($group['GroupPermission'] as $permission)
                     {
-                        if($permission['type'] == 1)
-                            $allow = true;
-                        else
-                            return false;
+                        if(strcasecmp($permission['controller'], $this->name) == 0 &&
+                                strcasecmp($permission['action'], $this->action) == 0)
+                        {
+                            if($permission['type'] == 1)
+                                $allow = true;
+                            else
+                                return false;
+                        }
                     }
                 }
             }

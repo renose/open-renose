@@ -64,6 +64,7 @@
                     <?php
                         echo $this->Session->flash();
                         echo $this->Session->flash('auth');
+                        echo $this->Session->flash('email');
                     ?>
 
                     <?php echo $content_for_layout; ?>
@@ -99,6 +100,8 @@
                     </div>
 
                     <div class="footerbox lastbox">
+                        <p class="floatright">
+                            Page rendered in <?php echo round((getMicroTime() - $_SERVER['REQUEST_TIME']) * 1000) ?>ms</p>
                         <p class="floatright">2011 by
                             <a href="mailto:simon@renose.de">Simon W&#246;rner</a> und
                             <a href="mailto:patrick@renose.de">Patrick Hafner</a> |

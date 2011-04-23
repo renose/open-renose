@@ -22,9 +22,7 @@
  */
 ?>
 
-<h1>
-    <?php echo $title_for_layout; ?>
-</h1>
+<h1><?php echo $title_for_layout; ?></h1>
 
 <table width="100%" class="admintable">
 	<tr>

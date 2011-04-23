@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. April 2011 um 23:38
+-- Erstellungszeit: 23. April 2011 um 21:22
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `group_permissions` (
   `type` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permission` (`group_id`,`controller`,`action`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Daten für Tabelle `group_permissions`
@@ -89,11 +89,13 @@ INSERT INTO `group_permissions` (`id`, `group_id`, `controller`, `action`, `type
 (3, 1, 'pages', 'edit', '1'),
 (4, 1, 'pages', 'delete', '1'),
 (5, 2, 'users', 'test', '1'),
-(6, 3, 'pages', 'view', '0'),
+(6, 3, 'pages', 'view', '1'),
 (7, 2, 'pages', 'view', '1'),
 (8, 3, 'pages', 'index', '1'),
 (9, 2, 'users', 'logout', '1'),
-(10, 3, 'users', 'login', '1');
+(10, 3, 'users', 'login', '1'),
+(11, 3, 'users', 'register', '1'),
+(12, 2, 'users', 'welcome', '1');
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
   `title` varchar(127) NOT NULL,
   `link` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Daten für Tabelle `menu_items`
@@ -169,9 +171,8 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `position`, `title`, `link`) VALUES
 (7, 2, 3, 'Kontakt', '/page/contact'),
 (8, 2, 4, 'Impressum', '/page/imprint'),
 (9, 3, 1, 'Admin-Panel - Pages', '/pages/display'),
-(10, 3, 2, 'User - Login', '/users/login'),
-(11, 3, 3, 'User - Logout', '/users/logout'),
-(12, 3, 4, 'User - Test', '/users/test');
+(10, 3, 4, 'User - Welcome', '/users/welcome'),
+(11, 3, 4, 'User - Test', '/users/test');
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Daten für Tabelle `pages`
@@ -236,6 +237,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(40) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `activationkey` varchar(40) DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -246,8 +249,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `created`, `modified`) VALUES
-(1, 'admin@renose.de', '67ef003adb4b7da80cf36e17fad6260b94dbcb16', '2011-04-15 23:17:20', '2011-04-15 23:17:20'),
-(2, 'simon@renose.de', '492a4d8fbf9da1a0aa036b948ff5cef09ce6b6eb', '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
-(3, 'patrick@renose.de', 'ead2222b5def6d0223d8685f38cc3736be8887bf', '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
-(4, 'unknown@renose.de', 'a190da62efb76d5b0b740d291655b0d1a483c321', '2011-04-16 12:57:17', '2011-04-16 12:57:17');
+INSERT INTO `users` (`id`, `email`, `password`, `is_active`, `activationkey`, `created`, `modified`) VALUES
+(1, 'admin@renose.de', '67ef003adb4b7da80cf36e17fad6260b94dbcb16', 1, NULL, '2011-04-15 23:17:20', '2011-04-15 23:17:20'),
+(2, 'simon@renose.de', '492a4d8fbf9da1a0aa036b948ff5cef09ce6b6eb', 1, NULL, '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
+(3, 'patrick@renose.de', 'ead2222b5def6d0223d8685f38cc3736be8887bf', 1, NULL, '2011-04-16 11:45:53', '2011-04-16 11:45:53'),
+(4, 'unknown@renose.de', 'a190da62efb76d5b0b740d291655b0d1a483c321', 1, NULL, '2011-04-16 12:57:17', '2011-04-16 12:57:17');

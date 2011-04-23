@@ -23,9 +23,7 @@
 ?>
 
 <?php  echo $javascript->link('ckeditor/ckeditor', NULL, false);  ?> 
-<h1>
-    <?php echo $title_for_layout; ?>
-</h1>
+<h1><?php echo $title_for_layout; ?></h1>
 
 <?php
     echo $form->create('Page');
