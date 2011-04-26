@@ -21,13 +21,17 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
+<?php
+    $html->addCrumb('Pages', 'display');
+    $html->addCrumb('Edit', null);
+    //$html->addCrumb($page['Page']['description'], '/page/edit/' . $page['Page']['title']);
+?>
 
-<?php  echo $javascript->link('ckeditor/ckeditor', NULL, false);  ?> 
 <h1><?php echo $title_for_layout; ?></h1>
 
 <?php
     echo $form->create('Page');
-    
+
     echo $form->input('title', array('label' => 'URL-Titel'));
     echo $form->input('description', array('label' => 'Überschrift'));
 

@@ -23,6 +23,9 @@
 ?>
 
 <h1>Registrieren</h1>
+
+<div id="testdiv"></div>
+
 <?php
     echo $form->create('User', array('action' => 'register'));
 
@@ -31,5 +34,10 @@
     echo $form->input('password', array('label' => 'Passwort'));
     echo $form->input('password_confirm', array('required' => true, 'type' => 'password', 'label' => 'Passwort bestätigen'));
 
+    /*echo $ajax->submit('Submit',
+            array(
+                'url'=> array('controller'=>'users', 'action'=>'register'),
+                'update' => 'testdiv'));
+    echo $form->end();*/
     echo $form->end('Registrieren');
 ?>

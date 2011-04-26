@@ -27,6 +27,7 @@ class UsersController extends AppController
 {
 	var $name = 'Users';
         var $components = array('Email');
+        //var $helpers = array('Html', 'Ajax', 'Javascript');
 
         function beforeFilter()
         {

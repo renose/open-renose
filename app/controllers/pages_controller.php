@@ -27,12 +27,14 @@
 class PagesController extends AppController
 {
 	var $name = 'Pages';
-	var $helpers = array('Javascript', 'Fck');
+        var $components = array('RequestHandler');
+	var $helpers = array('Html', 'Ajax', 'Javascript', 'Fck');
 
         function beforeFilter()
         {
             parent::beforeFilter();
 
+            //$this->Html->addCrumb('Page', '/pages');
             //$this->Auth->allow('index', 'view');
         }
 	
@@ -89,10 +91,15 @@ class PagesController extends AppController
 	function edit($title)
 	{
             $this->set('title_for_layout', 'Seite bearbeiten');
-
+            if($this->params['isAjax'])
+                $this->layout = NULL;
+            
             if (empty($this->data))
             {
                 $page = $this->Page->findByTitle($title);
+                if($page == null)
+                    $this->cakeError('error404');
+                
                 $this->Page->id = $page['Page']['id'];
                 $this->data = $this->Page->read();
             }
@@ -109,6 +116,8 @@ class PagesController extends AppController
             $this->set('title_for_layout', 'Seite löschen');
 
             $page = $this->Page->findByTitle($title);
+            if($page == null)
+                    $this->cakeError('error404');
 
             $this->Page->delete($page['Page']['id']);
             $this->Session->setFlash('Die Seite "'.$page['Page']['description'].'" ('.$page['Page']['title'].') wurde gelöscht.', 'flash_success');

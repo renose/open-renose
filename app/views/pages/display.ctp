@@ -21,6 +21,9 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
+<?php
+    $html->addCrumb('Pages', 'display');
+?>
 
 <h1><?php echo $title_for_layout; ?></h1>
 
@@ -68,5 +71,4 @@
             $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")),
             array('controller' => 'pages', 'action' => 'add'),
             array('escape' => false));
-    //icon/add.png
 ?>

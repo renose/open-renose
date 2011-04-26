@@ -36,6 +36,10 @@
             echo $this->Html->css('style');
             echo $this->Html->css('cake.generic');
 
+            echo $html->script('prototype');
+            echo $html->script('scriptaculous');
+            echo $html->script('ckeditor/ckeditor');
+
             echo $scripts_for_layout;
         ?>
         </head>
@@ -59,7 +63,7 @@
                 </div>
                 <div id="content">
                     <p class="breadcrumb">
-                        *breadcrumb*
+                        <?php echo $this->Html->getCrumbs(' > ','Home'); ?>
                     </p>
                     <?php
                         echo $this->Session->flash();
@@ -103,7 +107,7 @@
                         <p class="floatright">
                             Page rendered in <?php echo round((getMicroTime() - $_SERVER['REQUEST_TIME']) * 1000) ?>ms</p>
                         <p class="floatright">2011 by
-                            <a href="mailto:simon@renose.de">Simon W&#246;rner</a> und
+                            <a href="mailto:simon@renose.de">Simon Wörner</a> und
                             <a href="mailto:patrick@renose.de">Patrick Hafner</a> |
                             <a href="http://www.renose.de">renose.de</a></p>
                     </div>
