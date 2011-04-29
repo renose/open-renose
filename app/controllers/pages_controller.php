@@ -29,14 +29,6 @@ class PagesController extends AppController
 	var $name = 'Pages';
         var $components = array('RequestHandler');
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Fck');
-
-        function beforeFilter()
-        {
-            parent::beforeFilter();
-
-            //$this->Html->addCrumb('Page', '/pages');
-            //$this->Auth->allow('index', 'view');
-        }
 	
 	function index()
 	{
@@ -123,7 +115,6 @@ class PagesController extends AppController
             $this->Session->setFlash('Die Seite "'.$page['Page']['description'].'" ('.$page['Page']['title'].') wurde gelöscht.', 'flash_success');
             $this->redirect( array('action' => 'display') );
 	}
-	
 }
 
 ?>

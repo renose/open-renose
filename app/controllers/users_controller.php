@@ -29,13 +29,6 @@ class UsersController extends AppController
         var $components = array('Email');
         //var $helpers = array('Html', 'Ajax', 'Javascript');
 
-        function beforeFilter()
-        {
-            parent::beforeFilter();
-
-            $this->Auth->allow('login', 'logout', 'activate', 'get_name');
-        }
-
         function login()
         {
             /*if($this->data)
