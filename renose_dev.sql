@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 01. Mai 2011 um 23:09
+-- Erstellungszeit: 03. Mai 2011 um 22:39
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `group_permissions` (
   `type` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permission` (`group_id`,`controller`,`action`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Daten für Tabelle `group_permissions`
@@ -110,7 +110,8 @@ INSERT INTO `group_permissions` (`id`, `group_id`, `controller`, `action`, `type
 (24, 3, 'Menus', 'get_items', 1),
 (25, 1, 'Groups', 'add', 1),
 (26, 1, 'Groups', 'delete', 1),
-(27, 1, 'Groups', 'users', 1);
+(27, 1, 'Groups', 'users', 1),
+(28, 1, 'Groups', 'index', 1);
 
 -- --------------------------------------------------------
 
@@ -212,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 --
 
 INSERT INTO `pages` (`id`, `title`, `description`, `body`, `created`, `modified`) VALUES
-(1, 'home', 'Willkommen', '<h2>\r\n	Willkommen auf <cite>reNose.de</cite></h2>\r\n<p>\r\n	&nbsp;</p>\r\n<p style="text-align: justify; font-size: 11px; line-height: 14px; margin-top: 0px; margin-right: 0px; margin-bottom: 14px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">\r\n	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc semper, massa molestie faucibus facilisis, neque dui rutrum quam, in venenatis felis velit vitae diam. Ut blandit, quam a cursus lacinia, justo nunc sollicitudin magna, ut pharetra purus felis vitae nisi. Phasellus facilisis semper nisl, vel faucibus ligula venenatis at. Suspendisse potenti. Phasellus vitae purus ac justo semper hendrerit. Quisque malesuada, sem ut congue fringilla, eros libero varius tortor, ac interdum sem velit vitae eros. Quisque et purus nunc. Pellentesque id suscipit eros. Mauris pulvinar nisi eu nisl facilisis non congue lacus dignissim. Donec placerat congue odio ac rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus et tempus felis. Duis sit amet eros dui. Nulla eget velit erat. Nullam vitae ultricies purus. Nulla a tristique ligula.</p>\r\n<blockquote>\r\n	<p style="text-align: justify; font-size: 11px; line-height: 14px; margin-top: 0px; margin-right: 0px; margin-bottom: 14px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">\r\n		<code>Morbi tristique purus et orci facilisis porttitor. Fusce scelerisque, ipsum vitae laoreet suscipit, tortor ipsum mattis risus, eu tempor est nibh in lectus. Nam consequat interdum pretium. Sed tempor egestas metus, ac venenatis sapien dapibus ut. Fusce enim libero, congue ac porttitor id, dapibus non velit. Donec vitae dolor dolor. Sed quis felis at turpis suscipit pulvinar commodo vitae augue. Quisque congue cursus felis, sit amet dictum lectus sagittis ac. Curabitur a bibendum turpis. Integer eu neque nec lorem cursus lacinia. Mauris sagittis venenatis adipiscing.</code></p>\r\n</blockquote>\r\n<p style="text-align: justify; font-size: 11px; line-height: 14px; margin-top: 0px; margin-right: 0px; margin-bottom: 14px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">\r\n	Aliquam laoreet venenatis metus, non feugiat metus feugiat in. Duis rhoncus quam ac nulla pellentesque scelerisque. Aliquam semper consequat dictum. Donec ac ipsum vel enim eleifend vehicula. Quisque laoreet magna in tellus commodo sodales. Integer ultricies malesuada placerat. Nunc facilisis ante non augue tincidunt interdum. Vivamus elit ipsum, ultrices ac consectetur eget, rhoncus iaculis turpis. Nullam porta ullamcorper ultricies. Integer dignissim suscipit libero sed semper. Nam in dui sed turpis dapibus consectetur. Nulla interdum, velit imperdiet imperdiet ultrices, urna felis bibendum urna, vitae dignissim libero libero pharetra nisi.</p>\r\n<p style="text-align: justify; font-size: 11px; line-height: 14px; margin-top: 0px; margin-right: 0px; margin-bottom: 14px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">\r\n	Nullam non nibh id nunc fermentum molestie elementum eu lacus. Fusce fringilla iaculis dui non consequat. Aliquam erat volutpat. Nulla ac mi et tortor ornare porta. Nam quam augue, faucibus eu accumsan at, bibendum consequat nibh. Vivamus aliquet sagittis diam et luctus. Curabitur egestas leo tincidunt sapien tempus non auctor tortor rhoncus. Aliquam tincidunt, tortor vel molestie dictum, lectus quam faucibus tortor, quis condimentum risus erat vel odio. Sed dignissim tortor in purus lacinia mollis. Nam quis orci et lacus aliquam fermentum. Donec mollis imperdiet dui, in accumsan elit ullamcorper in. Duis posuere purus eget lorem aliquam sed posuere ipsum imperdiet. Integer quis dui ac leo tristique bibendum a ac sapien. Curabitur auctor cursus nulla, id rhoncus libero feugiat et.</p>\r\n<p style="text-align: justify; font-size: 11px; line-height: 14px; margin-top: 0px; margin-right: 0px; margin-bottom: 14px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">\r\n	<samp>Curabitur sagittis ipsum faucibus metus gravida tempor. Aliquam erat volutpat. Duis nec sollicitudin justo. Phasellus molestie metus et magna tempus eget sagittis lorem suscipit. Aenean et aliquam ante. Phasellus orci nunc, sollicitudin id rhoncus sit amet, auctor non libero. Aliquam hendrerit porttitor neque, vitae pharetra magna commodo in. Nam tincidunt imperdiet nisl, sed vestibulum orci dapibus eget. Nam id metus sed dolor vehicula rhoncus eu sed est. Cras tortor magna, porta eget fermentum quis, consequat pellentesque dolor. Nulla facilisi. Quisque eget pretium turpis. Nulla facilisi. Integer lacus massa, pretium nec luctus sed, ornare sit amet nunc. Nunc vehicula enim id mauris mollis lobortis. Curabitur eu urna id urna accumsan aliquam non sit amet mauris. Pellentesque fringilla varius eros, sit amet scelerisque ante lobortis in. Duis ornare lacinia mattis.</samp></p>\r\n<p>\r\n	&nbsp;</p>\r\n', '2011-04-06 23:10:55', '2011-04-26 22:25:11'),
+(1, 'home', 'Willkommen', '<p>\r\n	Die meisten Daten sind z.Z. noch &uuml;ber Scaffolding erreichbar.</p>\r\n<h2>\r\n	Umgesetzt:</h2>\r\n<ul>\r\n	<li>\r\n		Pages</li>\r\n	<li>\r\n		Users: Login/-out, Registrierung, Gruppenrechte</li>\r\n	<li>\r\n		Gruppen: Rechtemanagment, Admin Panel</li>\r\n</ul>\r\n<h2>\r\n	Scaffolding:</h2>\r\n<h3>\r\n	Berichtsheft:</h3>\r\n<ul style="padding-right: 40px; color: rgb(0, 0, 0); font-family: ''Times New Roman''; font-size: medium; ">\r\n	<li>\r\n		<a href="./reports">Reports</a>&nbsp;(Berichte)</li>\r\n	<li>\r\n		<a href="./report_activities">ReportActivities</a>&nbsp;(T&auml;tigkeit die im Bericht steht)</li>\r\n	<li>\r\n		<a href="./report_instructions">ReportInstructions&nbsp;</a>(Schulung / Einweisung die im Bericht steht)</li>\r\n</ul>\r\n<h3>\r\n	User:</h3>\r\n<ul>\r\n	<li>\r\n		<a href="./users">Users</a></li>\r\n	<li>\r\n		<a href="./profiles">Profiles</a></li>\r\n	<li>\r\n		<a href="./jobs">Jobs</a></li>\r\n</ul>\r\n<h3>\r\n	Men&uuml;:</h3>\r\n<ul>\r\n	<li>\r\n		<a href="./menus">Menus</a> (Men&uuml;)</li>\r\n	<li>\r\n		<a href="./menu_items">MenuItems</a> (Men&uuml;-Eintr&auml;ge)</li>\r\n</ul>\r\n', '2011-04-06 23:10:55', '2011-05-03 22:26:43'),
 (2, 'about', 'Über das Projekt', '<p>\r\n	Die Projekt Idee entstand Ende 2010, also Simon und Patrick ihre Ausbildung als <em>Fachinformatiker -&nbsp;Anwendungsentwicklung</em> anfingen. Wir m&uuml;ssen, wie in jeder Ausbildung, ein w&ouml;chentlichen Ausbildungsnachweis aka. Berichtsheft machen.</p>\r\n<p>\r\n	Patrick&nbsp;dachte sich, warum diese lokal auf dem PC nach einer Vorlage erstellen,&nbsp;wenn es die M&ouml;glichkeit gibt, von &uuml;berall darauf zugreifen zu k&ouml;nnen und am Ende aus den eingepflegten Daten eine PDF nach&nbsp;Standardanforderungen zu generieren, und diese dann auszudrucken.</p>\r\n<p>\r\n	Anfang 2011 wollte nun auch Simon das Projekt umzusetzen und gemeinsam mit Patrick began die Namensfindung. Patrick brachte den Vorschlag &quot;<em>reNose</em>&quot;, was sich aus dem englischen Wort f&uuml;r Bericht &quot;<em><strong>RE</strong>port</em>&quot; und dem Wort f&uuml;r Nase &quot;<strong><em>Nose</em></strong>&quot; zusammen setzt. Doch beide waren sich einig: es fehlt noch was! Nach langem probieren, &auml;ndern und letzendlich doch wieder verwefen kam Simon die Idee f&uuml;r den perfekten Schliff: &quot;<em>open</em>&quot;, den beiden war von Anfang an bewusst &nbsp;<em>Open Source</em> ist pflicht f&uuml;r ein solches Projekt und somit passte damit alles.</p>\r\n<p>\r\n	Direkt darauf legte Simon das Projekt auf auf Google Code an - am <em>1. Februar 2011</em> war <em>open reNose</em> geboren!</p>\r\n', '2011-04-07 00:47:15', '2011-04-20 23:33:46'),
 (3, 'faq', 'Häufig gestellte Fragen', '<p>\r\n	Seit wann macht ihr dieses Projekt?</p>\r\n<ul>\r\n	<li>\r\n		Das Projekt ist seit dem 1. Februar 2011 in Google Code zu finden.</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Unter Welcher Lizenz habt ihr den Quellcode freigegeben?</p>\r\n<ul>\r\n	<li>\r\n		open reNose ist unter der GNU GPLv3 freigegeben</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Darf ich das Copyright auf meiner eigenen Kopie &auml;ndern?</p>\r\n<ul>\r\n	<li>\r\n		Die Lizenz erlaubt es, den Quellcode beliebig zu &auml;ndern, allerdings w&uuml;rde der Vermerk ein Zeichen sein, dass ihr das Projekt unterst&uuml;tzt. Danke im Voraus!</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Kann ich das Script auf eurem Server laufen lassen?</p>\r\n<ul>\r\n	<li>\r\n		Kurz und knapp: Nein, sorry!</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Welche Anforderungen hat das Script an den Server?</p>\r\n<ul>\r\n	<li>\r\n		PHP 5 und eine mit cakePHP kompatible Datenbank (z.B. MySQL) sind erforderlich.</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Ich habe einen Bug entdeckt</p>\r\n<ul>\r\n	<li>\r\n		Dann sei so freundlich und schreibe diesen in den Bugtracker auf unserer Projektseite: renose.de oder sende eine Mail an info@renose.de</li>\r\n</ul>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	Der Quellcode ist schei&szlig;e, ich w&uuml;rde es besser machen</p>\r\n<ul>\r\n	<li>\r\n		Dann schreib ihn selber ;-)</li>\r\n</ul>\r\n', '2011-04-07 00:40:30', '2011-04-20 23:35:35'),
 (4, 'help', 'Hilfe', '<p>\r\n	Hilfe</p>\r\n', '2011-04-07 00:48:23', '2011-04-26 22:18:10'),
@@ -241,7 +242,71 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `job_id`) VALUES
 (1, 1, 'Admin', 'reNose', NULL),
 (2, 2, 'Simon', '', 1),
-(3, 3, 'Patrick', '', NULL);
+(3, 3, 'Patrick', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `reports`
+--
+
+CREATE TABLE IF NOT EXISTS `reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `year` year(4) NOT NULL,
+  `number` int(11) NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `reports`
+--
+
+INSERT INTO `reports` (`id`, `user_id`, `year`, `number`, `date`) VALUES
+(1, 1, 2010, 1, '2011-05-03');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `report_activities`
+--
+
+CREATE TABLE IF NOT EXISTS `report_activities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_id` int(11) NOT NULL,
+  `text` text NOT NULL,
+  `duration` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `report_activities`
+--
+
+INSERT INTO `report_activities` (`id`, `report_id`, `text`, `duration`) VALUES
+(1, 1, 'Report via Scaffolding getestet', '21:56:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `report_instructions`
+--
+
+CREATE TABLE IF NOT EXISTS `report_instructions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `report_instructions`
+--
+
+INSERT INTO `report_instructions` (`id`, `report_id`, `title`, `text`) VALUES
+(1, 1, 'Webentwicklung mit cakePHP', 'Prototyp mit cakePHP und Scaffolfing erstellen.');
 
 -- --------------------------------------------------------
 

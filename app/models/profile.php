@@ -31,6 +31,6 @@ class Profile extends AppModel
         var $virtualFields = array(
             'full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)");
 
-        var $belongsTo = 'Job';
+        var $belongsTo = array('User', 'Job');
 }
 ?>

@@ -27,7 +27,6 @@
 class Menu extends AppModel
 {
     var $name = 'Menu';
-    //var $hasMany = 'MenuItem';
     var $hasMany = array(
         'MenuItem' => array(
             'order' => 'MenuItem.position ASC') );

@@ -27,7 +27,7 @@
 class MenuItem extends AppModel
 {
     var $name = 'MenuItem';
-    //var $belongsTo = 'Menu';
+    var $belongsTo = array('Menu');
 
     var $validate = array(
 		'title' => array(

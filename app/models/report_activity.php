@@ -1,7 +1,7 @@
 <?php
 
 /*
- * job.php
+ * report_activity.php
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -25,15 +25,11 @@
 
 <?php
 
-class Job extends AppModel
+class ReportActivity extends AppModel
 {
 
-    var $name = 'Job';
-    var $displayField = 'full_name';
-    var $virtualFields = array(
-        'full_name' => "CONCAT(Job.name, ' - ', Job.specialization)");
-
-    var $hasMany = array('Profiles');
+    var $name = 'ReportActivity';
+    var $belongsTo = array('Report');
 
 }
 ?>
