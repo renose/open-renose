@@ -36,7 +36,3 @@
         echo $this->Html->link('einloggen', '/users/login') . '.';
     }
 ?>
-
-<a href="/#" style="vertical-align: middle">
-<?php echo $this->Html->image('icon/door open .png'); ?>
-</a>
