@@ -57,9 +57,7 @@
                     </div>
                 </div>
                 <div id="navigation">
-                    <ul>
-                        <?php echo $this->element('navigation', array('menu' => 'main', 'cache' => '+3 hour')); ?>
-                    </ul>
+                    <?php echo $this->element('navigation', array('menu' => 'main', 'cache' => '+3 hour')); ?>
                 </div>
                 <div id="content">
                     <p class="breadcrumb">

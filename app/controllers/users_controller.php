@@ -34,7 +34,7 @@ class UsersController extends AppController
 
     public function beforeFilter()
     {
-        //parent::beforeFilter();
+        parent::beforeFilter();
         $this->Auth->allow('*');
     }
 
@@ -73,8 +73,8 @@ class UsersController extends AppController
 
     function register()
     {
-        //debug($this->User);
-        //debug($this->Auth);
+        //pr($this->User);
+        //pr($this->Auth);
 
         if ($this->data)
         {
@@ -192,21 +192,21 @@ class UsersController extends AppController
         $user = $this->Auth->user();
         $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
-        //debug($this->User->findById($this->Auth->user('id')));
+        //pr($this->User->findById($this->Auth->user('id')));
 
         $user = $this->User->findById($this->Auth->user('id'));
-        debug($user);
+        pr($user);
 
         $this->loadModel('Group');
         foreach ($user['Group'] as $group)
         {
-            debug($this->Group->findById($group['id']));
+            pr($this->Group->findById($group['id']));
         }
 
-        //debug($profile);
-        //debug($this->User->find('all'));
-        //debug($this->User->Profile->find('all'));
-        //debug($this->Auth);
+        //pr($profile);
+        //pr($this->User->find('all'));
+        //pr($this->User->Profile->find('all'));
+        //pr($this->Auth);
 
         $this->set('User', $user);
         $this->set('Profile', $profile);
@@ -216,7 +216,7 @@ class UsersController extends AppController
           echo '<br/>';
           echo $this->Auth->password('patrick'); */
 
-        //debug($this->Auth);
+        //pr($this->Auth);
     }
 }
 ?>

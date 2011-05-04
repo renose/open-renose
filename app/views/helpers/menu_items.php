@@ -1,7 +1,7 @@
 <?php
 
 /*
- * menus_controller.php
+ * menu_items.php
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -25,28 +25,32 @@
 
 <?php
 
-class MenusController extends AppController
+class MenuItemsHelper extends Helper
 {
-    var $name = 'Menus';
-    var $scaffold;
 
-    public function beforeFilter()
+    var $helpers = Array('Html');
+
+    function show($data)
     {
-        //parent::beforeFilter();
-        $this->Auth->allow('*');
+        echo '<ul>';
+
+        foreach($data as $menuitem)
+        {
+            echo '<li>';
+
+            if($menuitem['MenuItem']['link'])
+                echo $this->Html->link($menuitem['MenuItem']['title'], $menuitem['MenuItem']['link']);
+            else
+                echo $menuitem['MenuItem']['title'];
+
+            if($menuitem['children'])
+                $this->show($menuitem['children']);
+
+            echo '</li>';
+        }
+
+        echo '</ul>';
     }
 
-    function get_items($menu)
-    {
-        $this->autoRender = false;
-
-        $menu = $this->Menu->findByTitle($menu);
-        $menu_items = $this->Menu->MenuItem->find('threaded', array(
-                    'conditions' => array('MenuItem.menu_id' => $menu['Menu']['id'])));
-
-        if (!empty($this->params['requested']))
-            return $menu_items;
-    }
 }
-
 ?>

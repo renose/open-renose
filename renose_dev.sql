@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 03. Mai 2011 um 22:39
+-- Erstellungszeit: 04. Mai 2011 um 21:54
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -167,29 +167,32 @@ INSERT INTO `menus` (`id`, `title`, `description`) VALUES
 CREATE TABLE IF NOT EXISTS `menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
   `position` int(3) NOT NULL,
   `title` varchar(127) NOT NULL,
-  `link` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Daten für Tabelle `menu_items`
 --
 
-INSERT INTO `menu_items` (`id`, `menu_id`, `position`, `title`, `link`) VALUES
-(1, 1, 1, 'Home', '/'),
-(2, 1, 2, 'Über das Projekt', '/page/about'),
-(3, 1, 3, 'FAQ', '/page/faq'),
-(4, 1, 4, 'Hilfe', '/page/help'),
-(5, 2, 1, 'FAQ', '/page/faq'),
-(6, 2, 2, 'Hilfe', '/page/help'),
-(7, 2, 3, 'Kontakt', '/page/contact'),
-(8, 2, 4, 'Impressum', '/page/imprint'),
-(9, 3, 1, 'Admin-Panel - Pages', '/pages/display'),
-(10, 3, 3, 'User - Welcome', '/users/welcome'),
-(11, 3, 4, 'User - Test', '/users/test'),
-(12, 3, 2, 'Admin-Panel - Groups', '/groups/display');
+INSERT INTO `menu_items` (`id`, `menu_id`, `parent_id`, `position`, `title`, `link`) VALUES
+(1, 1, 0, 1, 'Home', '/'),
+(2, 1, 0, 2, 'Über das Projekt', '/page/about'),
+(3, 1, 4, 3, 'FAQ', '/page/faq'),
+(4, 1, 0, 4, 'Hilfe', '/page/help'),
+(5, 2, 0, 1, 'FAQ', '/page/faq'),
+(6, 2, 0, 2, 'Hilfe', '/page/help'),
+(7, 2, 0, 3, 'Kontakt', '/page/contact'),
+(8, 2, 0, 4, 'Impressum', '/page/imprint'),
+(9, 3, 0, 1, 'Admin-Panel', NULL),
+(10, 3, 0, 1, 'User', NULL),
+(11, 3, 10, 3, 'Test', '/users/test'),
+(12, 3, 9, 2, 'Groups', '/groups/display'),
+(13, 3, 9, 1, 'Pages', '/pages/display'),
+(14, 3, 10, 1, 'Welcome', '/users/welcome');
 
 -- --------------------------------------------------------
 

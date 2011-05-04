@@ -1,4 +1,5 @@
 <?php
+
 /*
  * app_controller.php
  *
@@ -26,102 +27,105 @@
 
 class AppController extends Controller
 {
-        var $components = array('Auth', 'Session');
 
-        function beforeFilter()
+    var $components = array('Auth', 'Session');
+    var $helpers = array('Html', 'Javascript', 'Ajax', 'Session', 'MenuItems');
+    
+    function beforeFilter()
+    {
+        //$this->Auth->userScope = array('User.is_active' => true);
+        $this->Auth->loginRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'welcome');
+        $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'pages', '/view/home');
+        $this->Auth->authorize = 'controller';
+        //$this->Auth->autoRedirect = false;
+
+        $this->Auth->fields = array(
+            'username' => 'email',
+            'password' => 'password'
+        );
+
+        $this->Auth->loginError = "Email Adresse oder Passwort falsch! Bitte versuche es erneut.";
+        $this->Auth->authError = "Sie haben keine Berechtigung für diese Seite.";
+
+        //Allowed Actions setzen
+        $this->setAllowed();
+    }
+
+    function setAllowed()
+    {
+        $this->loadModel('Group');
+
+        //Nicht eingeloggt - Gästerechte prüfen
+        $group = $this->Group->findByName('anonymous');
+        //pr($group);
+
+        foreach ($group['GroupPermission'] as $permission)
         {
-            //$this->Auth->userScope = array('User.is_active' => true);
-            $this->Auth->loginRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'users', 'action' => 'welcome');
-            $this->Auth->logoutRedirect = array(Configure::read('Routing.admin') => false, 'controller' => 'pages', '/view/home');
-            $this->Auth->authorize = 'controller';
-            //$this->Auth->autoRedirect = false;
-            
-            $this->Auth->fields = array(
-                'username' => 'email',
-                'password' => 'password'
-                );
-
-            $this->Auth->loginError = "Email Adresse oder Passwort falsch! Bitte versuche es erneut.";
-            $this->Auth->authError = "Sie haben keine Berechtigung für diese Seite.";
-
-            //Allowed Actions setzen
-            $this->setAllowed();
-        }
-
-        function setAllowed()
-        {
-            $this->loadModel('Group');
-            
-            //Nicht eingeloggt - Gästerechte prüfen
-            $group = $this->Group->findByName('anonymous');
-            //debug($group);
-
-            foreach($group['GroupPermission'] as $permission)
+            if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                    strcasecmp($permission['action'], $this->action) == 0)
             {
-                if(strcasecmp($permission['controller'], $this->name) == 0 &&
-                        strcasecmp($permission['action'], $this->action) == 0)
-                {
-                    if($permission['type'] == 1)
-                        $this->Auth->allow($permission['action']);
-                    else
-                        $this->Auth->deny($permission['action']);
-                }
+                if ($permission['type'] == 1)
+                    $this->Auth->allow($permission['action']);
+                else
+                    $this->Auth->deny($permission['action']);
             }
         }
+    }
 
-        function isAuthorized()
-        {
-            return $this->isAllowed($this->name, $this->action);
-        }
-        function isAllowed($controller, $action)
-        {
-            $allow = false;
-            $this->loadModel('User');
-            $this->loadModel('Group');
-            
-            $user = $this->User->findById($this->Auth->user('id'));
+    function isAuthorized()
+    {
+        return $this->isAllowed($this->name, $this->action);
+    }
 
-            if($user)
+    function isAllowed($controller, $action)
+    {
+        $allow = false;
+        $this->loadModel('User');
+        $this->loadModel('Group');
+
+        $user = $this->User->findById($this->Auth->user('id'));
+
+        if ($user)
+        {
+            //Alle Speziell zu geteilten Gruppen prüfen
+            foreach ($user['Group'] as $group)
             {
-                //Alle Speziell zu geteilten Gruppen prüfen
-                foreach($user['Group'] as $group)
+                $group = $this->Group->findById($group['id']);
+
+                foreach ($group['GroupPermission'] as $permission)
                 {
-                    $group = $this->Group->findById($group['id']);
-
-                    foreach($group['GroupPermission'] as $permission)
+                    if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                            strcasecmp($permission['action'], $this->action) == 0)
                     {
-                        if(strcasecmp($permission['controller'], $this->name) == 0 &&
-                                strcasecmp($permission['action'], $this->action) == 0)
-                        {
-                            if($permission['type'] == 1)
-                                $allow = true;
-                            else
-                                return false;
-                        }
-                    }
-                }
-
-                //Aktivierter User Account - User Gruppen Berechtigungen
-                if($user['User']['is_active'])
-                {
-                    $group = $this->Group->findByName('users');
-
-                    foreach($group['GroupPermission'] as $permission)
-                    {
-                        if(strcasecmp($permission['controller'], $this->name) == 0 &&
-                                strcasecmp($permission['action'], $this->action) == 0)
-                        {
-                            if($permission['type'] == 1)
-                                $allow = true;
-                            else
-                                return false;
-                        }
+                        if ($permission['type'] == 1)
+                            $allow = true;
+                        else
+                            return false;
                     }
                 }
             }
 
-            return $allow;
+            //Aktivierter User Account - User Gruppen Berechtigungen
+            if ($user['User']['is_active'])
+            {
+                $group = $this->Group->findByName('users');
+
+                foreach ($group['GroupPermission'] as $permission)
+                {
+                    if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                            strcasecmp($permission['action'], $this->action) == 0)
+                    {
+                        if ($permission['type'] == 1)
+                            $allow = true;
+                        else
+                            return false;
+                    }
+                }
+            }
         }
+
+        return $allow;
+    }
+
 }
-
 ?>

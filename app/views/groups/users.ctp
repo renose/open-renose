@@ -52,5 +52,5 @@
 </table>
 
 <?php
-    debug($users);
+    pr($users);
 ?>
