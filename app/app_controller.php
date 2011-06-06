@@ -28,7 +28,7 @@
 class AppController extends Controller
 {
 
-    var $components = array('Auth', 'Session');
+    var $components = array('Auth', 'Security', 'Session');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Session', 'MenuItems');
     
     function beforeFilter()

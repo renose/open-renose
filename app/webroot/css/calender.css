@@ -1,0 +1,92 @@
+<!--
+/*
+ * calender.css
+ *
+ * Copyright (c) 2011 open reNose team <info at renose.de>.
+ * Simon Wörner and Patrick Hafner.
+ *
+ * This file is part of open reNose.
+ *
+ * open reNose is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * open reNose is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
+*/
+-->
+
+/*
+ * CSS Calendar
+ * Tim Wright
+ * Chris Coyier
+ -----------------------------*/
+
+ol.calendar
+{
+    width:68em;
+    margin:0 auto;
+    display:block;
+    min-height: 470px;
+    /*background: #D3D3D3;*/
+    padding: 12px 0 0 20px;
+}
+ol.calendar a
+{
+    text-decoration: none;
+}
+
+/*
+ * Day styles
+ -------------------------*/
+ol.calendar li
+{
+    list-style:none;
+    width:8em;
+    height:6em;
+    float:left;
+    margin:.2em;
+    padding:.2em;
+    overflow:auto;
+    background: #0A9ECE;
+}
+ol.calendar li:hover
+{
+    background: #86caff;
+}
+
+/*
+ * Day content (UL/OL & P)
+ -------------------------*/
+ol.calendar li p
+{
+    font-size:.7em;
+    display:block;
+}
+
+/*
+ * Holiday / Inactive class
+ -------------------------*/
+ol.calendar li.done
+{
+    background: #0a0;
+}
+ol.calendar li.done:hover
+{
+    background: #85e573;
+}
+
+ol.calendar li.uncreated
+{
+    background: #F0F0F0;
+}
+ol.calendar li.uncreated:hover
+{
+    background: #a0a0a0;
+}

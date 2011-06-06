@@ -34,6 +34,7 @@
             echo $this->Html->meta('icon');
 
             echo $this->Html->css('style');
+            echo $this->Html->css('calender');
             echo $this->Html->css('cake.generic');
 
             echo $html->script('prototype');

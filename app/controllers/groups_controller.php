@@ -38,6 +38,7 @@ class GroupsController extends AppController
     function display()
     {
         $this->set('title_for_layout', 'Gruppen Verwalten');
+        
         $this->set('groups', $this->Group->find('all'));
     }
 

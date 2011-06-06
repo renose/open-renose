@@ -31,7 +31,8 @@
 
 <?php
     echo $form->create('Page');
-
+    
+    echo $form->input('id');
     echo $form->input('title', array('label' => 'URL-Titel'));
     echo $form->input('description', array('label' => 'Überschrift'));
 
