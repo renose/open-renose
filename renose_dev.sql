@@ -257,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `year` year(4) NOT NULL,
+  `week` int(2) NOT NULL,
   `number` int(11) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -266,8 +267,8 @@ CREATE TABLE IF NOT EXISTS `reports` (
 -- Daten für Tabelle `reports`
 --
 
-INSERT INTO `reports` (`id`, `user_id`, `year`, `number`, `date`) VALUES
-(1, 1, 2010, 1, '2011-05-03');
+INSERT INTO `reports` (`id`, `user_id`, `year`, `week`, `number`, `date`) VALUES
+(1, 1, 2010, 35, 1, '2011-05-03');
 
 -- --------------------------------------------------------
 
