@@ -24,5 +24,75 @@
 ?>
 
 <?php
+    $html->addCrumb('Berichte', 'display');
+    $html->addCrumb('Bericht ' . $report['Report']['number']);
+    //$html->addCrumb('Bericht ' . $report['Report']['number'], '/reports/view/' . $report['Report']['year'] . '/' . $report['Report']['week']);
+?>
+
+<h1><?php echo $title_for_layout; ?></h1>
+
+<b>Tätigkeiten</b>
+<hr/><div>
+<?php
+    foreach ($report['ReportActivities'] as $reportActivity)
+    {
+        echo '<i>' . $reportActivity['duration'] . '</i> ';
+        echo $reportActivity['text'];
+        
+        echo $html->link(
+                $this->Html->image("icon/edit.png", array("alt" => "Tätigkeit bearbeiten", "align" => "center")),
+                array('controller' => 'report_activities', 'action' => 'edit', $reportActivity['id']), array('escape' => false) );
+        
+        echo ' ';
+        
+        echo $html->link(
+                $this->Html->image("icon/delete.png", array("alt" => "Tätigkeit löschen", "align" => "center")),
+                array('controller' => 'report_activities', 'action' => 'delete', $reportActivity['id']), array('escape' => false),
+                'Wollen Sie diese Tätigkeit wirklich löschen?');
+    }
+?>
+</div>
+<?php
+    echo $html->link(
+            $this->Html->image("icon/add.png", array("alt" => "Tätigkeit hinzufügen", "align" => "center", "id" => "ico-addpage")),
+            array('controller' => 'report_activities', 'action' => 'add', $report['Report']['id']),
+            array('escape' => false));
+?>
+
+<hr/>
+<br/>
+<br/>
+
+<b>Unterweisungen</b>
+<hr/><div>
+<?php
+    foreach ($report['ReportInstructions'] as $reportInstruction)
+    {
+        echo '<i>' . $reportInstruction['title'] . '</i> ';
+        
+        echo $html->link(
+                $this->Html->image("icon/edit.png", array("alt" => "Unterweisung bearbeiten", "align" => "center")),
+                array('controller' => 'report_instructions', 'action' => 'edit', $reportInstruction['id']), array('escape' => false) );
+        
+        echo ' ';
+        
+        echo $html->link(
+                $this->Html->image("icon/delete.png", array("alt" => "Unterweisung löschen", "align" => "center")),
+                array('controller' => 'report_instructions', 'action' => 'delete', $reportInstruction['id']), array('escape' => false),
+                'Wollen Sie diese Unterweisung wirklich löschen?');
+        
+        echo '<dir>' . $reportInstruction['text'] . '</dir>';
+    }
+?>
+</div>
+<?php
+    echo $html->link(
+            $this->Html->image("icon/add.png", array("alt" => "Unterweisung hinzufügen", "align" => "center", "id" => "ico-addpage")),
+            array('controller' => 'report_instructions', 'action' => 'add', $report['Report']['id']),
+            array('escape' => false));
+?>
+<hr/>
+
+<?php
     pr($report);
 ?>

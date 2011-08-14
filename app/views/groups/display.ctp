@@ -73,7 +73,7 @@
 
 <?php
     echo $html->link(
-            $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")),
+            $this->Html->image("icon/add.png", array("alt" => "Gruppe erstellen", "align" => "center", "id" => "ico-addpage")),
             array('controller' => 'groups', 'action' => 'add'),
             array('escape' => false));
 ?>

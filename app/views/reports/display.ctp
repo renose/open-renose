@@ -75,10 +75,16 @@
                 {
                     echo "<tr>";
                     
-                    if(isset($week_reports[$week]))
-                        echo "<td class='calendar-week-view' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year, $week)) . "</td>";
+                    //Erste Woche die noch zum letzten Jahr gehört
+                    if($day == 1 && $month == 1 && $week > 1)
+                        $year_link = $year - 1;
                     else
-                        echo "<td class='calendar-week-add' title='Woche $week'>" . $html->link($week, array('action' => 'add', $year, $week)) . "</td>";
+                        $year_link = $year;
+                    
+                    if(isset($week_reports[$week]))
+                        echo "<td class='calendar-week-view' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                    else
+                        echo "<td class='calendar-week-add' title='Woche $week'>" . $html->link($week, array('action' => 'add', $year_link, $week)) . "</td>";
                     
                     //Wenn erster Tag KEIN Montag ist Leertage einfügen
                     if($day == 1 && date('w', mkdate($day, $month, $year)) > 1)
