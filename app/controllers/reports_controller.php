@@ -37,6 +37,11 @@ class ReportsController extends AppController
         $this->Auth->allow('*');
     }
     
+    function index()
+    {
+        $this->redirect(array('action' => 'display'));
+    }
+    
     public function display($year = null)
     {
         $this->set('title_for_layout', 'Berichte Verwalten');

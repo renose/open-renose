@@ -34,6 +34,125 @@ class ReportActivitiesController extends AppController
         //parent::beforeFilter();
         $this->Auth->allow('*');
     }
+    
+    function add($report_id = null)
+    {
+        $this->set('title_for_layout', 'Tätigkeit hinzufügen');
+        
+        //Bericht Id aus Formular übernehmen
+        if(!empty($this->data['Report']['id']))
+            $report_id = $report_id = $this->data['Report']['id'];
+        
+        //Bericht laden
+        if($report_id)
+        {
+            $report = $this->ReportActivity->Report->find('first', array(
+                        'order' => 'Report.number ASC',
+                        'conditions' => array('User.id' => $this->Auth->user('id'), 'Report.id' => $report_id)));
+        }
+        
+        //Daten eingegeben? => Speichern
+        if (!empty($this->data))
+        {
+            if ($this->ReportActivity->saveAll($this->data))
+            {
+                $this->Session->setFlash('Die Tätigkeit wurde hinzugefügt.', 'flash_success');
+                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+            }
+            else
+            {
+                $this->Session->setFlash('Fehler beim Hinzufügen der Tätigkeit.');
+            }
+        }
+        
+        //Bericht nicht gefunden / nicht von diesem User => Abbrechen
+        if(!$report)
+        {
+            $this->Session->setFlash("Bericht mit ID '$report_id' nicht gefunden. Tätigkeit hinzufügen abgebrochen.");
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+        else
+        {
+            //Bericht setzen
+            $this->data['Report']['id'] = $report['Report']['id'];
+        }
+        
+        $this->set('report', $report);
+    }
+    
+    function edit($id = null)
+    {
+        $this->set('title_for_layout', 'Tätigkeit ändern');
+        
+        //Bericht Id aus Formular übernehmen
+        if(!empty($this->data['ReportActivity']['id']))
+            $id = $this->data['ReportActivity']['id'];
+        
+        //Bericht laden
+        if($id)
+            $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id' => $id)));
+        
+        //Daten eingegeben? => Speichern
+        if (!empty($this->data))
+        {
+            if ($this->ReportActivity->saveAll($this->data))
+            {
+                $this->Session->setFlash('Die Tätigkeit wurde hinzugefügt.', 'flash_success');
+                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+            }
+            else
+            {
+                $this->Session->setFlash('Fehler beim Ändern der Tätigkeit.');
+            }
+        }
+        else if($report)
+        {
+            //Gehört dem User?
+            if($report['Report']['user_id'] != $this->Auth->user('id'))
+            {
+                $this->Session->setFlash('Keine Berechtigung.');
+                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+            }
+            else
+                $this->data = $report;
+        }
+        else
+        {
+            $this->Session->setFlash('Tätigkeit nicht gefunden.');
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+        
+        $this->set('report', $report);
+    }
+    
+    function delete($id)
+    {
+        $this->set('title_for_layout', 'Tätigkeit löschen');
+
+        //Bericht laden
+        $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id' => $id)));
+        
+        //Bericht vorhanden
+        if($report)
+        {
+            //Gehört dem User?
+            if($report['Report']['user_id'] != $this->Auth->user('id'))
+            {
+                $this->Session->setFlash('Keine Berechtigung.');
+                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+            }
+        }
+        else
+        {
+            $this->Session->setFlash('Tätigkeit nicht gefunden.');
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+
+        //Löschen und zum Bericht zurückkehren
+        $this->ReportActivity->delete($report['ReportActivity']['id']);
+        $this->Session->setFlash('Die Tätigkeit wurde gelöscht.', 'flash_success');
+        $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+    }
 }
 
 ?>

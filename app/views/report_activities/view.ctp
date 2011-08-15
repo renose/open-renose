@@ -36,7 +36,7 @@
 <?php
     foreach ($report['ReportActivities'] as $reportActivity)
     {
-        printf('<i>%2u:%02uh</i> ', $reportActivity['duration'] / 60, $reportActivity['duration'] % 60);
+        echo '<i>' . $reportActivity['duration'] . '</i> ';
         echo $reportActivity['text'];
         
         echo $html->link(
@@ -49,8 +49,6 @@
                 $this->Html->image("icon/delete.png", array("alt" => "Tätigkeit löschen", "align" => "center")),
                 array('controller' => 'report_activities', 'action' => 'delete', $reportActivity['id']), array('escape' => false),
                 'Wollen Sie diese Tätigkeit wirklich löschen?');
-        
-        echo '<br/>';
     }
 ?>
 </div>
@@ -84,8 +82,6 @@
                 'Wollen Sie diese Unterweisung wirklich löschen?');
         
         echo '<dir>' . $reportInstruction['text'] . '</dir>';
-        
-        echo '<br/>';
     }
 ?>
 </div>
