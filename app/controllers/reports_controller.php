@@ -54,8 +54,8 @@ class ReportsController extends AppController
         $this->set('reports', $this->Report->find('all', array(
             'order' => 'Report.number ASC',
             'conditions' => array(
-                'User.id = ' . $this->Auth->user('id'),
-                "Report.year = $year")
+                'User.id = ' => $this->Auth->user('id'),
+                'Report.year = ' => $year)
         )));
     }
     
@@ -64,9 +64,9 @@ class ReportsController extends AppController
         $report =
             $this->Report->find('first', array(
                 'conditions' => array(
-                    'User.id = ' . $this->Auth->user('id'),
-                    "Report.year = $year",
-                    "Report.week = $week")
+                    'User.id = ' => $this->Auth->user('id'),
+                    'Report.year = ' => $year,
+                    'Report.week = ' => $week)
             ));
         
         $this->set('title_for_layout', 'Bericht Nr. ' . $report['Report']['number']);
@@ -102,7 +102,7 @@ class ReportsController extends AppController
             $first_report =
                 $this->Report->find('first', array(
                     'order' => 'Report.number ASC',
-                    'conditions' => array('User.id = ' . $this->Auth->user('id'))
+                    'conditions' => array('User.id = ' => $this->Auth->user('id'))
                 ));
             
             //Erster Bericht vorhanden? Nummer berechnen

@@ -49,7 +49,7 @@ class ReportActivitiesController extends AppController
         {
             $report = $this->ReportActivity->Report->find('first', array(
                         'order' => 'Report.number ASC',
-                        'conditions' => array('User.id' => $this->Auth->user('id'), 'Report.id' => $report_id)));
+                        'conditions' => array('User.id = ' => $this->Auth->user('id'), 'Report.id = ' => $report_id)));
         }
         
         //Daten eingegeben? => Speichern
@@ -91,7 +91,7 @@ class ReportActivitiesController extends AppController
         
         //Bericht laden
         if($id)
-            $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id' => $id)));
+            $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id = ' => $id)));
         
         //Daten eingegeben? => Speichern
         if (!empty($this->data))
@@ -131,7 +131,7 @@ class ReportActivitiesController extends AppController
         $this->set('title_for_layout', 'Tätigkeit löschen');
 
         //Bericht laden
-        $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id' => $id)));
+        $report = $this->ReportActivity->find('first', array('conditions' => array('ReportActivity.id = ' => $id)));
         
         //Bericht vorhanden
         if($report)
