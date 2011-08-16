@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. August 2011 um 23:11
+-- Erstellungszeit: 16. August 2011 um 23:13
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
   `title` varchar(127) NOT NULL,
   `link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Daten für Tabelle `menu_items`
@@ -174,8 +174,8 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `parent_id`, `position`, `title`, `link`) VALUES
 (1, 1, 0, 1, 'Home', '/'),
-(2, 1, 0, 2, 'Über das Projekt', '/page/about'),
-(3, 1, 4, 3, 'FAQ', '/page/faq'),
+(2, 1, 0, 3, 'Über das Projekt', '/page/about'),
+(3, 1, 4, 1, 'FAQ', '/page/faq'),
 (4, 1, 0, 4, 'Hilfe', '/page/help'),
 (5, 2, 0, 1, 'FAQ', '/page/faq'),
 (6, 2, 0, 2, 'Hilfe', '/page/help'),
@@ -186,7 +186,8 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `parent_id`, `position`, `title`, `li
 (11, 3, 10, 3, 'Test', '/users/test'),
 (12, 3, 9, 2, 'Groups', '/groups/display'),
 (13, 3, 9, 1, 'Pages', '/pages/display'),
-(14, 3, 10, 1, 'Welcome', '/users/welcome');
+(14, 3, 10, 1, 'Welcome', '/users/welcome'),
+(15, 1, 0, 2, 'Berichte', '/reports');
 
 -- --------------------------------------------------------
 
@@ -256,14 +257,15 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `date` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report` (`user_id`,`year`,`week`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `reports`
 --
 
 INSERT INTO `reports` (`id`, `user_id`, `year`, `week`, `number`, `date`) VALUES
-(1, 1, 2010, 35, 1, '2011-05-03');
+(1, 1, 2010, 35, 1, '2011-05-03'),
+(2, 1, 2011, 33, 51, '2011-08-16');
 
 -- --------------------------------------------------------
 
@@ -277,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
   `text` text NOT NULL,
   `duration` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `report_activities`
@@ -285,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
 
 INSERT INTO `report_activities` (`id`, `report_id`, `text`, `duration`) VALUES
 (1, 1, 'Report via Scaffolding getestet', 240),
-(2, 1, 'Test', 150);
+(2, 1, 'Test³²', 150);
 
 -- --------------------------------------------------------
 
