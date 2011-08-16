@@ -35,7 +35,7 @@
 <?php    
     echo $form->create('ReportActivity');
     
-    echo $form->input('Report.id');
+    echo $form->input('id');
     echo $form->input('duration', array('label' => 'Dauer (in Minuten)'));
     echo $form->input('text', array('label' => 'Tätigkeit'));
 

@@ -24,8 +24,8 @@
 
 <?php
     $html->addCrumb('Berichte', 'display');
-    $html->addCrumb('Add', 'add');
-    //$html->addCrumb($page['Page']['description'], '/page/edit/' . $page['Page']['title']);
+    $html->addCrumb($this->data['Report']['year'], array('action' =>'display', $this->data['Report']['year']));
+    $html->addCrumb('Bericht erstellen', 'add');
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>

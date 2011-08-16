@@ -56,6 +56,11 @@
 	Configure::write('App.encoding', 'UTF-8');
 
 /**
+ * Language
+ */
+        Configure::write('Config.language', 'deu');
+
+/**
  * To configure CakePHP *not* to use mod_rewrite and to
  * use CakePHP pretty URLs, remove these .htaccess
  * files:

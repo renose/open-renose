@@ -42,7 +42,9 @@ class MenusController extends AppController
 
         $menu = $this->Menu->findByTitle($menu);
         $menu_items = $this->Menu->MenuItem->find('threaded', array(
-                    'conditions' => array('MenuItem.menu_id' => $menu['Menu']['id'])));
+                    'order' => 'MenuItem.position ASC',
+                    'conditions' => array('MenuItem.menu_id' => $menu['Menu']['id'])
+            ));
 
         if (!empty($this->params['requested']))
             return $menu_items;

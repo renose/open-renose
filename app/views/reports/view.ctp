@@ -24,7 +24,8 @@
 ?>
 
 <?php
-    $html->addCrumb('Berichte', array('action' => 'display', $report['Report']['year']));
+    $html->addCrumb('Berichte', 'display');
+    $html->addCrumb($report['Report']['year'], array('action' => 'display', $report['Report']['year']));
     $html->addCrumb('Bericht ' . $report['Report']['number']);
 ?>
 

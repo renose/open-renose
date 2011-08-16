@@ -27,7 +27,6 @@
 class ReportActivitiesController extends AppController
 {
     public $name = 'ReportActivities';
-    public $scaffold;
 
     public function beforeFilter()
     {

@@ -24,6 +24,7 @@
 ?>
 <?php
     $html->addCrumb('Berichte', 'display');
+    $html->addCrumb($year, array('action' =>'display', $year));
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
