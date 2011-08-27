@@ -58,7 +58,7 @@
 <div class="calendar">
 <table class="calendar">
     <caption>
-        <b><?php echo date('F', mkdate(1, $month, $year)); ?></b>
+        <b><?php __(date('F', mkdate(1, $month, $year))); ?></b>
     </caption>
     
     <tbody>
