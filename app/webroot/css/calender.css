@@ -81,7 +81,7 @@ table.calendar tr td.calendar-week a:link, a:visited, a:active, a:hover
     text-decoration: none;
 }
 
-table.calendar tr td.calendar-week:hover,.calendar-day:hover
+table.calendar tr td.calendar-week:hover, .calendar-day:hover, .calendar-day-today:hover
 {
     font-weight: bold;
 }
