@@ -45,7 +45,7 @@ class EmailConfig {
 	public $default = array(
 		'transport' => 'Mail',
 		'from' => array('renose@localhost' => 'open reNose'),
-                'replyTo' = 'noreply@localhost'
+		'replyTo' = 'noreply@localhost',
 		'charset' => 'utf-8',
 		'headerCharset' => 'utf-8',
 	);
@@ -59,7 +59,7 @@ class EmailConfig {
 		'username' => 'user',
 		'password' => 'secret',
 		'client' => null,
-		'log' => false
+		'log' => false,
 		'charset' => 'utf-8',
 		'headerCharset' => 'utf-8',
 	);
