@@ -1,6 +1,6 @@
 <?php
         require_once("path.php");
-        setPath("./");
+        setPath(0);
 
         require_once(BASE_PATH . "/system/core/cms/rendertime.php");
         $start = renderTime();

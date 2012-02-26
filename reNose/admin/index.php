@@ -1,6 +1,6 @@
 <?php
 	require_once('../path.php');
-	setPath('./../');
+	setPath(1);
 	
 	require_once(BASE_PATH . './system/core/cms/renose.php');
 	
