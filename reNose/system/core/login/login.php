@@ -14,11 +14,6 @@ class login extends plugin
 
 	public static function checkUsernameandPassword($username, $password)
 	{
-	    $username = stripslashes($username);
-	    $username = mysql_real_escape_string($username);
-
-	    $password = stripslashes($password);
-	    $password = mysql_real_escape_string($password);
 	    $password = sha1($password);
 
 	    try {

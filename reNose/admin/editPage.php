@@ -20,7 +20,7 @@ class editPage extends plugin {
 	    
 	} else {
 	    $database = database::get();
-	    $sql = "SELECT title, description, value
+	    $sql = "SELECT title, description, value, url
 			FROM " . database::praefix . "pages
 		WHERE id =:id";
 	    $stmn = $database->prepare($sql);
@@ -34,12 +34,13 @@ class editPage extends plugin {
 	}
     }
 
-    public static function updateSiteToDB($id, $title, $description, $value) {
+    public static function updateSiteToDB($id, $title, $description, $value, $url) {
 	$database = database::get();
 	$sql = "UPDATE " . database::praefix . "pages
 		SET title =:title,
 		    description =:description,
-		    value =:value
+		    value =:value,
+		    url =:url
 		WHERE id =:id
 		    ";
 	$stmn = $database->prepare($sql);
@@ -47,6 +48,7 @@ class editPage extends plugin {
 	$stmn->bindValue(':title', $title, PDO::PARAM_STR);
 	$stmn->bindValue(':description', $description, PDO::PARAM_STR);
 	$stmn->bindValue(':value', $value, PDO::PARAM_STR);
+	$stmn->bindValue(':url', $url, PDO::PARAM_STR);
 	$stmn->execute();
 
 	$stmn->closeCursor();
@@ -68,8 +70,8 @@ class editPage extends plugin {
 }
 
 if ($_POST['updatePage'] && $_GET['new']) {
-    $query = editPage::createSiteToDB($_POST['headline'], $_POST['description'], htmlspecialchars($_POST['pageEdit']));
+    $query = editPage::createSiteToDB($_POST['headline'], $_POST['description'], htmlentities($_POST['pageEdit']));
 } else if ($_POST['updatePage']) {
-   editPage::updateSiteToDB($_GET['id'], $_POST['headline'], $_POST['description'], htmlspecialchars($_POST['pageEdit']));
+   editPage::updateSiteToDB($_GET['id'], $_POST['headline'], $_POST['description'], htmlentities($_POST['pageEdit']), $_POST['url']);
 }
 ?>
