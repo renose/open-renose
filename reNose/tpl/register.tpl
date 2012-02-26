@@ -7,15 +7,15 @@
 	<table>
 	    <tr>
 		<td>Username:</td>
-		<td><input type="text" name="username" value="<?php $_POST['username'] ?>" /></td>
+		<td><input type="text" name="username" value="<?php if(!empty($_POST)){ echo $_POST['username']; } ?>" /></td>
 	    </tr>
 	    <tr>
 		<td>E-Mail:</td>
-		<td><input type="text" name="mail" value="<?php $_POST['mail'] ?>" /></td>
+		<td><input type="text" name="mail" value="<?php if(!empty($_POST)){ echo $_POST['mail']; } ?>" /></td>
 	    </tr>
 	    <tr>
 		<td>Passwort:</td>
-		<td><input type="password" name="password" value="<?php $_POST['password'] ?>" /></td>
+		<td><input type="password" name="password" value="<?php if(!empty($_POST)){ echo $_POST['password']; } ?>" /></td>
 	    </tr>
 	    <tr>
 		<td colspan="2"><input type="submit" name="newRegistration" /></td>

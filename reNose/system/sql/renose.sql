@@ -1,13 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. Februar 2011 um 11:07
--- Server Version: 5.1.44
--- PHP-Version: 5.3.1
+-- Erstellungszeit: 08. Februar 2011 um 19:49
+-- Server Version: 5.5.8
+-- PHP-Version: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `renose`
@@ -77,6 +83,8 @@ CREATE TABLE IF NOT EXISTS `cms_plugins` (
 --
 
 INSERT INTO `cms_plugins` (`module`, `classname`, `filename`, `state`) VALUES
+('errorPage', 'errorPage', 'error.php', 'ON'),
+('register', 'register', NULL, 'ON'),
 ('test', 'trash_content', 'test.php', 'ON');
 
 -- --------------------------------------------------------
@@ -111,10 +119,13 @@ CREATE TABLE IF NOT EXISTS `cms_users` (
   `username` varchar(100) NOT NULL,
   `mail` varchar(200) NOT NULL,
   `password` varchar(50) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Daten für Tabelle `cms_users`
 --
 
+INSERT INTO `cms_users` (`id`, `username`, `mail`, `password`) VALUES
+(1, 'SWW13', 'Simon@renose.de', '5fc7e38bffe00ca46add89145464a2eaf759d5c2');

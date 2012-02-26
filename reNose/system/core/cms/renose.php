@@ -40,7 +40,10 @@ class renose
 			$row = mysql_fetch_row($query);
 			$className = $row[0];
 			
-			$myPlugin = new $className($this->tpl);
+			if($className != NULL)			
+				$myPlugin = new $className($this->tpl);
+			else
+				$myPlugin = new errorPage($this->tpl);
 	    }
 		
 	    $site_title = database::getSetting("cms", "site_title"); // get site title from db
