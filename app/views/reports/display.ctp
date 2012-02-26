@@ -28,85 +28,76 @@
 
 <h1><?php echo $title_for_layout; ?></h1>
 
-[<?php echo round($weeks / 7); ?> rows]
-<br/>
-(<?php echo round($weeks / 7); ?> * 88) + 44 =
-<br/>
-<?php echo (round($weeks / 7) * 88) + 44 ;?>px height
-
 <h1>
-    <center>Schuljahr <?php echo $year; ?> - <?php echo $year + 1; ?></center>
+    <center><?php echo $year; ?></center>
 </h1>
 
-<ol class="calendar" style="height: <?php echo (round($weeks / 7) * 88) + 44 ;?>px;">
-    <ul>
+<?php    
+    foreach($reports as $report)
+            $week_reports[$report['Report']['week']] = $report;
+    
+    function mkdate($day, $month, $year)
+    {
+        return mktime(0,0,0, $month, $day, $year);
+    }
+    
+    //Alle Monate durchlaufen
+    for($month = 1; $month <= 12; $month++) {
+?>
+<table>
+    <caption>
+        <b><?php echo date('F', mkdate(1, $month, $year)); ?></b>
+    </caption>
+    
+    <tbody>
+        <tr>
+            <th title="Wochennummer">Nr.</th>
+            <th title="Montag">Mo</th>
+            <th title="Dienstag">Di</th>
+            <th title="Mittwoch">Mi</th>
+            <th title="Donnerstag">Do</th>
+            <th title="Freitag">Fr</th>
+            <th title="Samstag">Sa</th>
+            <th title="Sonntag">So</th>
+        </tr>
+        
+        <tr></tr>
+        
         <?php
-        
-        //Reports in Array umschreiben
-        foreach($reports as $report)
-            $week_reports[$report['Report']['number']] = $report;
-        
-        //Datum test
-        $start = $firstDay;
-        
-        for($i = 1; $i <= $weeks; $i++)
-        {
-            //array_key_exists($i, $week_reports);
-            if(isset($week_reports[$i]))
+            //Alle Tage des Monats durchlaufen
+            for($day = 1; $day <= date('t', mkdate(1, $month, $year)); $day++)
             {
-                echo str_replace('</a>', '', $html->link('', array('action' => 'view', $year, $i)));
+                //Woche ermitteln
+                $week = date('W', mkdate($day, $month, $year));
                 
-                //TODO: -- check if done ---
-                if(count($week_reports[$i]['ReportActivities']) + count($week_reports[$i]['ReportInstructions']) > 0 )
-                    echo '<li class="done">';
-                else
-                    echo '<li>';
+                //Neue Woche am Montag anfangen (und am 1. des Monats) und Wochennummer anzeigen
+                if(date('N', mkdate($day, $month, $year)) == 1 || $day == 1)
+                {
+                    echo "<tr>";
+                    
+                    if(isset($week_reports[$week]))
+                        echo "<td class='calendar-week-view' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year, $week)) . "</td>";
+                    else
+                        echo "<td class='calendar-week-add' title='Woche $week'>" . $html->link($week, array('action' => 'add', $year, $week)) . "</td>";
+                    
+                    //Wenn erster Tag KEIN Montag ist Leertage einfügen
+                    if($day == 1 && date('w', mkdate($day, $month, $year)) > 1)
+                        echo "<td colspan='" . (date('w', mkdate($day, $month, $year)) - 1) . "'></td>";
+                }
                 
-                //week number
-                echo $i;
+                //Tag anzeigen
+                echo "<td>$day</td>";
                 
-                //echo $week_reports[$i]['Report']['date'];
-                echo '<p>';
-                
-                //week text
-                echo $week_reports[$i]['Report']['date'] . '<br/>';
-                echo 'Tätigkeiten: ' . count($week_reports[$i]['ReportActivities']) . '<br/>';
-                echo 'Schulungen: ' . count($week_reports[$i]['ReportInstructions']) . '<br/>';
-                //echo 'Status: Fertig';
-                
-                echo '</p>';
+                //Woche nach Sonntag beenden
+                if(date('N', mkdate($day, $month, $year)) == 7)
+                    echo "</tr>";
             }
-            else
-            {
-                echo str_replace('</a>', '', $html->link('', array('action' => 'add', $year, $i)));
-                echo '<li class="uncreated">';
-                echo $i;
-                
-                /*echo '<p>';
-                echo '<i>Status:</i> Nicht erstellt';
-                echo '</p>';*/
-            }
-            
-            echo '<p>';
-            echo '<i>' . date('d.m.Y l', $start) . '</i> <br/>';
-            echo '<i>' . date( 'd.m.Y l', $start + (5 - date('N', $start)) * (3600*24) ) . '</i>';
-            echo '</p>';
-            
-            $start = $start + (8 - date('N', $start)) * (3600*24);
-            
-            echo '</li>';                
-            echo '</a>';
-        }
-        
         ?>
-        <?php /*
-        <li class="inactive">1</li>
-        <li>2</li>
-        <a href="#"><li class="holiday">4 <p>You can use a paragraph element in here</p></li></a>
-         */
-        ?>
-    </ul>
-</ol>
+        </tr>
+    </tbody>
+</table>
+<?php } //Ende der Monatsschleife ?>
+
 <br/>
 
 <?php pr($reports); ?>

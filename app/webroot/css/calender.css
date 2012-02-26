@@ -22,71 +22,20 @@
 */
 -->
 
-/*
- * CSS Calendar
- * Tim Wright
- * Chris Coyier
- -----------------------------*/
-
-ol.calendar
-{
-    width:68em;
-    margin:0 auto;
-    display:block;
-    min-height: 470px;
-    /*background: #D3D3D3;*/
-    padding: 12px 0 0 20px;
-}
-ol.calendar a
-{
-    text-decoration: none;
-}
-
-/*
- * Day styles
- -------------------------*/
-ol.calendar li
-{
-    list-style:none;
-    width:8em;
-    height:6em;
-    float:left;
-    margin:.2em;
-    padding:.2em;
-    overflow:auto;
-    background: #0A9ECE;
-}
-ol.calendar li:hover
-{
-    background: #86caff;
-}
-
-/*
- * Day content (UL/OL & P)
- -------------------------*/
-ol.calendar li p
-{
-    font-size:.7em;
-    display:block;
-}
-
-/*
- * Holiday / Inactive class
- -------------------------*/
-ol.calendar li.done
+td.calendar-week-view
 {
     background: #0a0;
 }
-ol.calendar li.done:hover
+td.calendar-week-view:hover
 {
     background: #85e573;
 }
 
-ol.calendar li.uncreated
+td.calendar-week-add
 {
     background: #F0F0F0;
 }
-ol.calendar li.uncreated:hover
+td.calendar-week-add:hover
 {
     background: #a0a0a0;
 }
