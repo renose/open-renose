@@ -120,6 +120,35 @@ table.calendar tr td.calendar-week-view
         linear,
         left bottom,
         left top,
+        color-stop(0.09, rgb(205,186,35)),
+        color-stop(0.78, rgb(255,255,95))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(128,199,77) 9%,
+        rgb(147,245,98) 78%
+    );
+    
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+table.calendar tr td.calendar-week-view-full
+{
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
         color-stop(0.34, rgb(128,199,77)),
         color-stop(0.6, rgb(147,245,98))
     );

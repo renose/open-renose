@@ -73,28 +73,6 @@
  */
 class DATABASE_CONFIG {
 
-	/*var $default = array(
-		'driver' => 'mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'renose',
-		'password' => 'open',
-		'database' => 'renose',
-		'prefix' => 'cms_',
-		'encoding' => 'utf8'
-	);
-
-	var $develop = array(
-		'driver' => 'mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'renose',
-		'password' => 'open',
-		'database' => 'renose_dev',
-		'prefix' => '',
-		'encoding' => 'utf8'
-	);*/
-	
 	var $default = array(
 		'driver' => 'mysql',
 		'persistent' => false,

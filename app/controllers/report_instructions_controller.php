@@ -34,6 +34,125 @@ class ReportInstructionsController extends AppController
         //parent::beforeFilter();
         $this->Auth->allow('*');
     }
+    
+    function add($report_id = null)
+    {
+        $this->set('title_for_layout', 'Unterweisung hinzufügen');
+        
+        //Bericht Id aus Formular übernehmen
+        if(!empty($this->data['Report']['id']))
+            $report_id = $report_id = $this->data['Report']['id'];
+        
+        //Bericht laden
+        if($report_id)
+        {
+            $report = $this->ReportInstruction->Report->find('first', array(
+                        'order' => 'Report.number ASC',
+                        'conditions' => array('User.id = ' => $this->Auth->user('id'), 'Report.id = ' => $report_id)));
+        }
+        
+        //Daten eingegeben? => Speichern
+        if (!empty($this->data))
+        {
+            if ($this->ReportInstruction->saveAll($this->data))
+            {
+                $this->Session->setFlash('Die Unterweisung wurde hinzugefügt.', 'flash_success');
+                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+            }
+            else
+            {
+                $this->Session->setFlash('Fehler beim Hinzufügen der Unterweisung.');
+            }
+        }
+        
+        //Bericht nicht gefunden / nicht von diesem User => Abbrechen
+        if(!$report)
+        {
+            $this->Session->setFlash("Bericht mit ID '$report_id' nicht gefunden. Unterweisung hinzufügen abgebrochen.");
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+        else
+        {
+            //Bericht setzen
+            $this->data['Report']['id'] = $report['Report']['id'];
+        }
+        
+        $this->set('report', $report);
+    }
+    
+    function edit($id = null)
+    {
+        $this->set('title_for_layout', 'Unterweisung ändern');
+        
+        //Bericht Id aus Formular übernehmen
+        if(!empty($this->data['ReportInstruction']['id']))
+            $id = $this->data['ReportInstruction']['id'];
+        
+        //Bericht laden
+        if($id)
+            $report = $this->ReportInstruction->find('first', array('conditions' => array('ReportInstruction.id = ' => $id)));
+        
+        //Daten eingegeben? => Speichern
+        if (!empty($this->data))
+        {
+            if ($this->ReportInstruction->saveAll($this->data))
+            {
+                $this->Session->setFlash('Die Unterweisung wurde hinzugefügt.', 'flash_success');
+                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+            }
+            else
+            {
+                $this->Session->setFlash('Fehler beim Ändern der Unterweisung.');
+            }
+        }
+        else if($report)
+        {
+            //Gehört dem User?
+            if($report['Report']['user_id'] != $this->Auth->user('id'))
+            {
+                $this->Session->setFlash('Keine Berechtigung.');
+                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+            }
+            else
+                $this->data = $report;
+        }
+        else
+        {
+            $this->Session->setFlash('Unterweisung nicht gefunden.');
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+        
+        $this->set('report', $report);
+    }
+    
+    function delete($id)
+    {
+        $this->set('title_for_layout', 'Unterweisung löschen');
+
+        //Bericht laden
+        $report = $this->ReportInstruction->find('first', array('conditions' => array('ReportInstruction.id = ' => $id)));
+        
+        //Bericht vorhanden
+        if($report)
+        {
+            //Gehört dem User?
+            if($report['Report']['user_id'] != $this->Auth->user('id'))
+            {
+                $this->Session->setFlash('Keine Berechtigung.');
+                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+            }
+        }
+        else
+        {
+            $this->Session->setFlash('Unterweisung nicht gefunden.');
+            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+        }
+
+        //Löschen und zum Bericht zurückkehren
+        $this->ReportInstruction->delete($report['ReportInstruction']['id']);
+        $this->Session->setFlash('Die Unterweisung wurde gelöscht.', 'flash_success');
+        $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+    }
 }
 
 ?>

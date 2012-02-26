@@ -92,7 +92,12 @@
                         $year_link = $year;
 
                     if(isset($week_reports[$week]))
-                        echo "<td class='calendar-week calendar-week-view' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                    {
+                        if( count($week_reports[$week]['ReportActivity']) > 0 && count($week_reports[$week]['ReportInstruction']) > 0)
+                            echo "<td class='calendar-week calendar-week-view-full' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                        else
+                            echo "<td class='calendar-week calendar-week-view' title='Woche $week'>" . $html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                    }
                     else
                         echo "<td class='calendar-week calendar-week-add' title='Woche $week'>" . $html->link($week, array('action' => 'add', $year_link, $week)) . "</td>";
 
