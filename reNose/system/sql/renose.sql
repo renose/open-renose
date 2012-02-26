@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 02. Februar 2011 um 23:17
+-- Erstellungszeit: 05. Februar 2011 um 12:55
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -18,8 +18,27 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Datenbank: `renose`
 --
-CREATE DATABASE `renose` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `renose`;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `path`
+--
+
+CREATE TABLE IF NOT EXISTS `path` (
+  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dir` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root',
+  `path` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`module`,`dir`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Daten für Tabelle `path`
+--
+
+INSERT INTO `path` (`module`, `dir`, `path`) VALUES
+('cms', 'root', 'system/core/cms/'),
+('cms', 'tpl', 'tpl/');
 
 -- --------------------------------------------------------
 

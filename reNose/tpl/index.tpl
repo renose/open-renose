@@ -5,12 +5,11 @@
         <title><?php echo $this->eprint($this->title); ?></title>
     </head>
     <body>
-       <p><?php echo $this->eprint($this->helloworld); // we are alive ?></p>
-       <p>
-          DB-Test: <br />
-          <?php echo $this->eprint($this->dbtest); ?><br />
-          Version: <?php echo $this->eprint($this->version); ?>
-
-       </p>
-    </body>
-</html>
+        <div class="center">
+            <p><?php echo $this->eprint($this->helloworld); // we are alive ?></p>
+            <p>
+              DB-Test: <br />
+              <?php echo $this->eprint($this->dbtest); ?><br />
+              Version: <?php echo $this->eprint($this->version); ?>
+            </p>
+       
