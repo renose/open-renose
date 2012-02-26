@@ -24,9 +24,8 @@
 ?>
 
 <?php
-    $html->addCrumb('Berichte', 'display');
+    $html->addCrumb('Berichte', array('action' => 'display', $report['Report']['year']));
     $html->addCrumb('Bericht ' . $report['Report']['number']);
-    //$html->addCrumb('Bericht ' . $report['Report']['number'], '/reports/view/' . $report['Report']['year'] . '/' . $report['Report']['week']);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>

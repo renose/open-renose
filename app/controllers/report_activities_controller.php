@@ -35,6 +35,8 @@ class ReportActivitiesController extends AppController
         $this->Auth->allow('*');
     }
     
+    //view (?)
+    
     function add($report_id = null)
     {
         $this->set('title_for_layout', 'Tätigkeit hinzufügen');

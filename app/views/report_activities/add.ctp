@@ -23,7 +23,7 @@
 ?>
 
 <?php
-    $html->addCrumb('Berichte', array('controller' => 'reports', 'action' => 'display'));
+    $html->addCrumb('Berichte', array('action' => 'display', $report['Report']['year']));
     $html->addCrumb('Bericht ' . $report['Report']['number'], array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']));
     $html->addCrumb('Tätigkeiten');
     $html->addCrumb('Add');
