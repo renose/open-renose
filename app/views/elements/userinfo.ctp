@@ -1,6 +1,6 @@
 <?php
 /*
- * menu_item.php
+ * userinfo.ctp
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -23,20 +23,16 @@
 ?>
 
 <?php
-
-class MenuItem extends AppModel
-{
-    var $name = 'MenuItem';
-    //var $belongsTo = 'Menu';
-
-    var $validate = array(
-		'title' => array(
-			'rule' => 'notEmpty'
-		),
-		'link' => array(
-			'rule' => 'notEmpty'
-		)
-	);
-}
-
+    $name = $this->requestAction('/users/get_name');
+    echo "Hallo <b>$name</b>. ";
+    
+    if($session->check('Auth.User'))
+    {
+        echo $this->Html->link('Ausloggen', '/users/logout');
+    }
+    else
+    {
+        echo 'Bitte ' . $this->Html->link('registrieren', '/users/register') . ' oder ';
+        echo $this->Html->link('einloggen', '/users/login') . '.';
+    }
 ?>

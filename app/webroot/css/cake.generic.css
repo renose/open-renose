@@ -92,7 +92,7 @@ table td.actions a {
 	font-family: Monaco, Consolas, "Courier New", monospaced;
 }
 .cake-sql-log caption {
-	color:#fff;
+        color:black;
 }
 
 /** Paging **/

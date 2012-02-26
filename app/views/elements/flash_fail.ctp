@@ -1,6 +1,6 @@
 <?php
 /*
- * menu_item.php
+ * flash_fail.ctp
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -22,21 +22,6 @@
  */
 ?>
 
-<?php
-
-class MenuItem extends AppModel
-{
-    var $name = 'MenuItem';
-    //var $belongsTo = 'Menu';
-
-    var $validate = array(
-		'title' => array(
-			'rule' => 'notEmpty'
-		),
-		'link' => array(
-			'rule' => 'notEmpty'
-		)
-	);
-}
-
-?>
+<div class="message">
+    <?php echo $message ?>
+</div>
