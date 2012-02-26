@@ -13,75 +13,73 @@ class PagesController extends AppController
 
 	function display()
 	{
-		$this->set('pages', $this->Page->find('all'));
+            $this->set('title_for_layout', 'Seiten Verwalten');
+            $this->set('pages', $this->Page->find('all'));
 	}
 	
 	function view($title = null)
 	{
-		//$this->Page->id = $title;
-		//$this->set('page', $this->Page->read());
-		
-		//$this->Page->title = $title;
-		//$this->set('page', $this->Page->findByTitle($title));
-		
 		if($title == null)
-			$this->redirect('/');
+                    $this->redirect('/');
 		
 		$page = $this->Page->findByTitle($title);
-		
-		//$this->Page->title = $title;
-		//$page = $this->Page->read();
-		
-		if($page)
-			$this->set('page', $page);
-		else
+
+                //Page not found?
+		if($page == null)
 		{
-			$this->Page->id = $title;
-			$page = $this->Page->read();
-			
-			if($page)
-				$this->set('page', $page);
-			else
-				$this->cakeError('error404');
+                    //Try searching by id
+                    $this->Page->id = $title;
+                    $page = $this->Page->read();
+
+                    //Still not found? => Error
+                    if($page == null)
+                        $this->cakeError('error404');
 		}
+
+                //Set page title and content for layout
+                $this->set('title_for_layout', $page['Page']['description']);
+                $this->set('page', $page);
 	}
 	
 	function add()
 	{
-		if (!empty($this->data))
-		{
-			if ($this->Page->save($this->data))
-			{
-				$this->Session->setFlash('Your page has been saved.');
-				$this->redirect(array('action' => 'view', $this->Page->id));
-			}
-		}
+            $this->set('title_for_layout', 'Seite erstellen');
+
+            if (!empty($this->data))
+            {
+                if ($this->Page->save($this->data))
+                {
+                    $this->Session->setFlash('Ihre Seite wurde erstellt.');
+                    $this->redirect( array('action' => 'view', $this->data['Page']['title']) );
+                }
+            }
 	}
 	
 	function edit($id = null)
 	{
-		$this->Page->id = $id;
-		
-		if (empty($this->data))
-		{
-			$this->data = $this->Page->read();
-		}
-		else
-		{
-			if ($this->Page->save($this->data))
-			{
-				$this->Session->setFlash('Your page has been updated.');
-				$this->redirect( array('action' => 'view', $this->Page->t) );
-			}
-		}
+            $this->set('title_for_layout', 'Seite bearbeiten');
+            
+            $this->Page->id = $id;
+
+            if (empty($this->data))
+            {
+                $this->data = $this->Page->read();
+            }
+            else if ($this->Page->save($this->data))
+            {
+                $this->Session->setFlash('Ihre Änderungen wurden übernommen.');
+                $this->redirect( array('action' => 'view', $this->data['Page']['title']) );
+            }
 	}
 	
 	
 	function delete($id)
 	{
-		$this->Page->delete($title);
-		$this->Session->setFlash('The page with title: '.$title.' has been deleted.');
-		$this->redirect( array('action'=>'display') );
+            $this->set('title_for_layout', 'Seite löschen');
+            
+            $this->Page->delete($title);
+            $this->Session->setFlash('Die Seite "'.$title.'" wurde gelöscht.');
+            $this->redirect( array('action' => 'display') );
 	}
 	
 }

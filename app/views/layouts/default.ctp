@@ -53,8 +53,7 @@
       <div id="content">
           <p class="breadcrumb">
               *breadcrumb*
-          </p>
-		
+          </p>		
 		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $content_for_layout; ?>
