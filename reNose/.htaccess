@@ -55,7 +55,7 @@ DirectoryIndex index.php
   # VirtualDocumentRoot and the rewrite rules are not working properly.
   # For example if your site is at http://example.com/drupal uncomment and
   # modify the following line:
-  # RewriteBase /drupal
+  # RewriteBase /renose/trunk/reNose
   #
   # If your site is running in a VirtualDocumentRoot at http://example.com/,
   # uncomment the following line:
@@ -65,5 +65,7 @@ DirectoryIndex index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_URI} !=/favicon.ico
+  #RewriteRule ^admin/(.*)/(.*)$ index.php?module=$1&siteID=$2 [L]
   RewriteRule ^(.*)$ index.php?module=$1 [L,QSA]
+
 </IfModule>

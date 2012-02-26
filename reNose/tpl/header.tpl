@@ -12,7 +12,7 @@
 	    <div id="header">
 		<a href="<?php echo $this->eprint(BASE_URL); ?>"><h1 id="logo"><span>open</span>reNose</h1></a>
 		<div id="headerinfo">
-		    <?php echo $this->eprint($this->anredeLoggedIn); ?> <strong>Gast</strong>. Bitte registrieren oder einloggen.
+		    <?php echo $this->eprint($this->anredeLoggedIn); ?> <strong>Gast</strong>. Bitte <a href="<?php echo $this->eprint(BASE_URL); ?>/register">registrieren</a> oder <a href="<?php echo $this->eprint(BASE_URL); ?>/login">einloggen</a>.
 		</div>
 	    </div>
 

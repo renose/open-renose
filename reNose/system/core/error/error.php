@@ -5,7 +5,7 @@ class errorPage extends plugin
 {
 	public $name = "Error Module";
 	public $description = "Error Page";
-	public $version = "0.1.0.0";
+	public $version = "stable";
 	
 	public function getTitle()
 	{
