@@ -1,107 +1,224 @@
-    html, body {
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-        font-family: Arial;
-        font-size: 14px;
-        height: 100%;
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    font-family: Arial;
+    font-size: 14px;
+    background-image: url(images/1920_1080.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100%;
+}
 
-    #nonfooter {
-            position: relative;
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0 auto -60px;
-    }
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
 
-    h1, h2, h3, h4, h5, h6 {
-        margin: 0;
-        padding: 0;
-    }
+#container {
+	min-height:100%;
+	position:relative;
+}
 
-    .center {
-        width: 999px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+.floatright {
+	float: right;
+}
+.floatleft {
+	float: left;
+}
+.clearleft {
+	clear: left;
+}
+.clearright {
+	clear: right;
+}
+.clearboth {
+	clear: both;
+}
 
-    div#header {
-        height: 80px;
-        width: 100%;
-        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.3, rgb(25,156,212)),color-stop(1, rgb(211,227,237)));
-        background-image: -moz-linear-gradient(center bottom,rgb(25,156,212) 30%,rgb(211,227,237) 100%);
-        border-bottom: 1px solid #000;
-    }
+#wrapper {
+	margin: 15px auto 15px auto;
+    width: 999px;
+}
 
-    div#header img {
-        padding-top: 10px;
-        float: left;
-    }
+div#header {
+    height: 90px;
+    width: 100%;
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+	background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+}
 
-    div#header a img {
-	border:0;
-    }
 
-    div#header p {
-        float: right;
-        font-size: 11px;
-        margin: 15px 0 0;
-        padding: 0;
-    }
+div#header h1#logo {
+	margin: 28px 0 0 30px;
+	float: left;
+	font-family: Helvetica;
+	font-weight: normal;
+	letter-spacing: -2px;
+	color: #fff;
+	font-size: 34px;
+	cursor: pointer;
+	text-decoration: none;
+	padding: 0;
+	text-shadow: 0px 0px 5px #000;
+}
 
-    div#header ul {
-        clear: right;
-        float: right;
-        margin: 5px 0 0;
-        padding: 0;
-        list-style-type: none;
-    }
-    div#header ul li {
-        float: left;
-        display: inline;
-        margin-left: 20px;
-    }
+div#header h1#logo span {
+	color: #0A9ECE;
+}
 
-    div#header ul li a {
-        color: #333333;
-        text-decoration: none;
-    }
+div#header a {
+	text-decoration: none !important;
+}
 
-    div#header ul li a:hover {
-        color: #000;
-        text-decoration: underline;
-    }
+div#header div#headerinfo {
+	float: right;
+	margin: 15px 0px 0 0;
+	background-color: #fff;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-topleft: 3px;
+	padding: 10px 15px;
+	font-size: 11px;
+}
 
-    div#navigation {
-        height: 40px;
-        background-color: #ccc;
-        width: 100%;
-    }
+div#navigation {
+	height: 40px;
+	width: 100%;
+	background-color: rgb(8,47,79);
+    border-bottom: 1px solid #000;
+}
 
-    div#content {
-	margin-top:15px;
-    }
+	div#navigation ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		float: right;
+	}
+	
+	div#navigation ul li {
+		float: left;
+		display: inline;
+	}
+	
+		div#navigation ul li a {
+			text-decoration: none;
+			color: #8BFB23;
+			line-height: 30px;
+			padding:5px 15px;
+			display: block;	
+		}
+		
+		div#navigation ul li#active {
+			background-color: rgba(0, 0, 0, 0.1);
+			line-height: 17px;
+		}
+		
+		div#navigation ul li:hover {
+			background-color: rgba(0, 0, 0, 0.3) !important;
+			line-height: 17px;
+		}
+		
 
-    div#content div.sidebox {
-	float:right;
-    }
+div#content {
+	background-color: rgba(255, 255, 255, 0.8);
+	-moz-border-radius-bottomright: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	padding: 15px;
+}
 
-    div#footer {
-        height: 30px;
-        width: 100%;
-        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(20,127,184)),color-stop(1, rgb(25,168,207)));
-        background-image: -moz-linear-gradient(center bottom,rgb(20,127,184) 0%,rgb(25,168,207) 100%);
-        font-size: 80%;
-        position: relative;
-        margin: 0 auto;
-    }
-    div#footer p {
-        padding-top: 7px;
-    }
+div#content p {
+	margin: 0;
+	padding: 0;
+}
 
-    div#footer a {
-        text-decoration: none;
-        border-bottom: 1px dotted #000;
-        color: #000;
-    }
+div#content div.sidebox {
+	width: 200px;
+	float: right;
+}
+
+p.breadcrumb {
+	font-size: 10px;
+	margin-bottom: 15px !important;
+}
+
+p.breadcrumb a {
+	color: #000;
+	text-decoration: none;
+}
+
+div#trenner {
+	padding: 15px 15px 150px 15px; /*150px = footer */
+}
+
+
+div#footer {
+    height: 150px;
+    width: 100%;
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+	background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    font-size: 80%;
+    border-top: 1px solid #000;
+    position:absolute;
+	bottom:0;
+		
+}
+
+div#footer div#footerwrapper {
+	width: 999px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+	div#footer div.footerbox {
+		width: 313px;
+		color: #fff;
+		float: left;
+		margin-left: 15px;
+		margin-top: 25px;
+	}
+	
+	div#footer div.footerbox p a {
+		color: #fff;
+		border-bottom: 1px dotted #fff;
+		text-decoration: none;
+	}
+	
+	div#footer div.footerbox p a:hover {
+		color: #fff;
+		border-bottom: 1px dotted #8BFB23;
+		text-decoration: none;
+	}
+	
+	div#footer div.footerbox p {
+		margin: 0;
+		padding: 0;
+	}
+	
+	div#footer div.footerbox ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		font-size: 13px;
+		line-height: 19px;
+	}
+	
+	div#footer div.footerbox ul li a {
+		text-decoration: none;
+		color: #fff;
+	}
+	
+	div#footer div.footerbox ul li a:hover {
+		text-decoration: none;
+		border-bottom: 1px dotted #8BFB23;
+	}
+	
+	div#footer div.footerbox ul li.headline {
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	
+	div#footer div.lastbox {
+		margin-right: 15px !important;
+	}

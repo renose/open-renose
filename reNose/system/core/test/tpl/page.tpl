@@ -16,4 +16,4 @@
     	<td><a href="<?php $this->eprint(BASE_URL . '/deletePage/' . $page['id']); ?>">Del</a></td>
         </tr>
     <?php endforeach; ?>
-</table>\ No newline at end of file
+</table>

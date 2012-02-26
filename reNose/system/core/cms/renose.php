@@ -24,7 +24,18 @@ class renose
 		$row = mysql_fetch_row($res);
 		require_once "system/classes/".strtolower($class_name).".php";
 	}
-	
+
+	public static function anredeLoggedIn()
+	{
+	    date_default_timezone_set('Europe/Berlin');
+	    $time = date('G');
+	    if ($time < 12) $anrede = "Guten Morgen";
+	    if ($time <= 18 && $time >= 12) $anrede = "Guten Tag";
+	    if ($time >= 19) $anrede = "Guten Abend";
+
+	    return $anrede;
+	}
+
 	public function show()
 	{
 		if(!isset($_GET["module"]))
@@ -63,6 +74,7 @@ class renose
 	    $this->tpl->title = $name;
 	    $this->tpl->version = $version;
 	    $this->tpl->navigation = $navigation;
+	    $this->tpl->anredeLoggedIn = $this->anredeLoggedIn();
 	    	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'header.tpl')); // load tpl file
 	    
@@ -96,7 +108,7 @@ class content_test extends plugin
 	    
 		$this->tpl->helloworld = $helloworld;
 		$this->tpl->dbtest = $dbtest;
-		
+
 		$this->tpl->display(database::getModuleTpl('cms', 'index.tpl')); // load tpl file
 	    echo "BASE_PATH: " . BASE_PATH . "<br>";
 		echo "BASE_URL: " . BASE_URL . "<br>";
