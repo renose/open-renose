@@ -1,4 +1,5 @@
 <?php
+
 /*
  * users_controller.php
  *
@@ -23,187 +24,199 @@
 ?>
 
 <?php
+
 class UsersController extends AppController
 {
-	var $name = 'Users';
-        var $components = array('Email');
-        //var $helpers = array('Html', 'Ajax', 'Javascript');
+    var $name = 'Users';
+    var $components = array('Email');
+    //var $helpers = array('Html', 'Ajax', 'Javascript');
+    public $scaffold;
 
-        function login()
+    public function beforeFilter()
+    {
+        //parent::beforeFilter();
+        $this->Auth->allow('*');
+    }
+
+    function login()
+    {
+        /* if($this->data)
+          {
+          //$this->Session->write("User", $this->Auth->user());
+          //$this->Session->write("User.Name", $this->get_name());
+
+          $this->redirect($this->Auth->redirect());
+          } */
+
+        //Bereits eingeloggt?
+        if ($this->Auth->user())
         {
-            /*if($this->data)
-            {
-                //$this->Session->write("User", $this->Auth->user());
-                //$this->Session->write("User.Name", $this->get_name());
-
-                $this->redirect($this->Auth->redirect());
-            }*/
-
-            //Bereits eingeloggt?
-            if($this->Auth->user())
-            {
-                $this->Session->setFlash('Sie sind bereits eingeloggt. Bitte loggen Sie sich zuerst aus.', 'flash_notice');
-                $this->redirect($this->Auth->redirect());
-            }
+            $this->Session->setFlash('Sie sind bereits eingeloggt. Bitte loggen Sie sich zuerst aus.', 'flash_notice');
+            $this->redirect($this->Auth->redirect());
         }
-        function logout()
+    }
+
+    function logout()
+    {
+        if ($this->Auth->user())
         {
-            if($this->Auth->user())
+            //$this->Session->delete('User');
+            $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
+            $this->redirect($this->Auth->logout());
+        }
+        else
+        {
+            $this->Session->setFlash('Sie sind nicht eingeloggt, Sie können sich nicht ausloggen.', 'flash_notice');
+            $this->redirect('/');
+        }
+    }
+
+    function register()
+    {
+        //debug($this->User);
+        //debug($this->Auth);
+
+        if ($this->data)
+        {
+            //Setze Activation Key
+            $activationkey = $this->data['User']['email'] . time() . $this->data['User']['password'];
+            $this->data['User']['activationkey'] = $this->Auth->password($activationkey);
+
+            if ($this->User->save($this->data))
             {
-                //$this->Session->delete('User');
-                $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
-                $this->redirect($this->Auth->logout());
+                $User = $this->data;
+                //$this->Email->delivery = 'mail';
+                $this->Email->delivery = 'debug';
+                $this->Email->to = $User['User']['email'];
+                $this->Email->subject = 'Ihre Registrierung bei open reNose';
+                $this->Email->replyTo = 'noreply@renose.de';
+                $this->Email->from = 'open reNose <info@renose.de>';
+                $this->Email->template = 'register';
+                //Send as 'html', 'text' or 'both' (default is 'text')
+                $this->Email->sendAs = 'both'; // because we like to send pretty mail
+                //Set view variables as normal
+                $this->set('User', $User);
+                //Do not pass any args to send()
+                $this->Email->send();
+
+                $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');
+                $this->redirect(array('controller' => 'users', 'action' => 'login'));
             }
             else
             {
-                $this->Session->setFlash('Sie sind nicht eingeloggt, Sie können sich nicht ausloggen.', 'flash_notice');
-                $this->redirect('/');
+                $this->data['User']['password'] = null;
+                $this->data['User']['password_confirm'] = null;
             }
         }
-        
-        function register()
+    }
+
+    function activate($email, $activationkey)
+    {
+        if ($email == null || $activationkey == null)
         {
-            //debug($this->User);
-            //debug($this->Auth);
-            
-            if ($this->data)
-            {
-                //Setze Activation Key
-                $activationkey = $this->data['User']['email'] . time() . $this->data['User']['password'];
-                $this->data['User']['activationkey'] = $this->Auth->password($activationkey);
-
-                if ($this->User->save($this->data))
-                {
-                    $User = $this->data;
-                    //$this->Email->delivery = 'mail';
-                    $this->Email->delivery = 'debug';
-                    $this->Email->to = $User['User']['email'];
-                    $this->Email->subject = 'Ihre Registrierung bei open reNose';
-                    $this->Email->replyTo = 'noreply@renose.de';
-                    $this->Email->from = 'open reNose <info@renose.de>';
-                    $this->Email->template = 'register';
-                    //Send as 'html', 'text' or 'both' (default is 'text')
-                    $this->Email->sendAs = 'both'; // because we like to send pretty mail
-                    //Set view variables as normal
-                    $this->set('User', $User);
-                    //Do not pass any args to send()
-                    $this->Email->send();
-
-                    $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');
-                    $this->redirect(array('controller' => 'users', 'action' => 'login'));
-                } else {
-                    $this->data['User']['password'] = null;
-                    $this->data['User']['password_confirm'] = null;
-                }
-            }
+            $this->Session->setFlash('Fehlerhafter Link.', 'flash_notice');
+            $this->redirect('/');
         }
-        function activate($email, $activationkey)
+
+        $user = $this->User->findByEmail($email);
+
+        if ($user)
         {
-            if($email == null || $activationkey == null)
+            if ($user['User']['activationkey'] == $activationkey)
             {
-                $this->Session->setFlash('Fehlerhafter Link.', 'flash_notice');
-                $this->redirect('/');
-            }
+                $user['User']['is_active'] = 1;
+                $user['User']['activationkey'] = NULL;
+                $this->User->save($user);
 
-            $user = $this->User->findByEmail($email);
-
-            if($user)
-            {
-                if($user['User']['activationkey'] == $activationkey)
-                {
-                    $user['User']['is_active'] = 1;
-                    $user['User']['activationkey'] = NULL;
-                    $this->User->save($user);
-
-                    $this->Session->setFlash('Account erfolgreich aktiviert.', 'flash_success');
-                    $this->redirect(array('controller' => 'users', 'action' => 'login'));
-                }
-                else
-                {
-                    $this->Session->setFlash('Fehlerhafter Aktivierungscode. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
-                    $this->redirect('/');
-                }
+                $this->Session->setFlash('Account erfolgreich aktiviert.', 'flash_success');
+                $this->redirect(array('controller' => 'users', 'action' => 'login'));
             }
             else
             {
-                $this->Session->setFlash('User nicht gefunden. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+                $this->Session->setFlash('Fehlerhafter Aktivierungscode. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
                 $this->redirect('/');
             }
         }
-
-        function welcome()
+        else
         {
-            $user = $this->User->findById($this->Auth->user('id'));
-            $profile = $this->User->Profile->findByUserId($user['User']['id']);
-
-            $this->set('User', $user);
-            $this->set('Profile', $profile);
+            $this->Session->setFlash('User nicht gefunden. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+            $this->redirect('/');
         }
+    }
 
-        function get_name()
+    function welcome()
+    {
+        $user = $this->User->findById($this->Auth->user('id'));
+        $profile = $this->User->Profile->findByUserId($user['User']['id']);
+
+        $this->set('User', $user);
+        $this->set('Profile', $profile);
+    }
+
+    function get_name()
+    {
+        $Profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+
+        //Vorname bekannt
+        if ($Profile['Profile']['first_name'])
         {
-            $Profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+            //Setze Vornamen
+            $name = $Profile['Profile']['first_name'];
 
-            //Vorname bekannt
-            if($Profile['Profile']['first_name'])
-            {
-                //Setze Vornamen
-                $name = $Profile['Profile']['first_name'];
-
-                //Nachname auch bekannt? - setzen
-                if($Profile['Profile']['last_name'])
-                    $name .= ' ' . $Profile['Profile']['last_name'];
-            }
-            //Vorname nicht bekannt aber Nachname?
-            else if($Profile['Profile']['last_name'])
-            {
-                //Setze Nachname mit Herr/Frau
-                $name .= 'Herr/Frau' . $Profile['Profile']['last_name'];
-            }
-            //Beides Unbekannt
+            //Nachname auch bekannt? - setzen
+            if ($Profile['Profile']['last_name'])
+                $name .= ' ' . $Profile['Profile']['last_name'];
+        }
+        //Vorname nicht bekannt aber Nachname?
+        else if ($Profile['Profile']['last_name'])
+        {
+            //Setze Nachname mit Herr/Frau
+            $name .= 'Herr/Frau' . $Profile['Profile']['last_name'];
+        }
+        //Beides Unbekannt
+        else
+        {
+            //Registriter User
+            if ($this->Auth->user())
+                $name = 'Ninja';
+            //Gast
             else
-            {
-                //Registriter User
-                if($this->Auth->user())
-                    $name = 'Ninja';
-                //Gast
-                else
-                    $name = 'Gast';
-            }
-
-            return $name;
+                $name = 'Gast';
         }
 
-        function test()
+        return $name;
+    }
+
+    function test()
+    {
+        $user = $this->Auth->user();
+        $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+
+        //debug($this->User->findById($this->Auth->user('id')));
+
+        $user = $this->User->findById($this->Auth->user('id'));
+        debug($user);
+
+        $this->loadModel('Group');
+        foreach ($user['Group'] as $group)
         {
-            $user = $this->Auth->user();
-            $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
-
-            //debug($this->User->findById($this->Auth->user('id')));
-
-            $user = $this->User->findById($this->Auth->user('id'));
-            debug($user);
-
-            $this->loadModel('Group');
-            foreach($user['Group'] as $group)
-            {
-                debug($this->Group->findById($group['id']));
-            }
-
-            //debug($profile);
-            //debug($this->User->find('all'));
-            //debug($this->User->Profile->find('all'));
-            //debug($this->Auth);
-            
-            $this->set('User', $user);
-            $this->set('Profile', $profile);
-
-           //echo $this->Auth->password('unknown');
-           /*echo $this->Auth->password('simon');
-           echo '<br/>';
-           echo $this->Auth->password('patrick');*/
-
-            //debug($this->Auth);
+            debug($this->Group->findById($group['id']));
         }
+
+        //debug($profile);
+        //debug($this->User->find('all'));
+        //debug($this->User->Profile->find('all'));
+        //debug($this->Auth);
+
+        $this->set('User', $user);
+        $this->set('Profile', $profile);
+
+        //echo $this->Auth->password('unknown');
+        /* echo $this->Auth->password('simon');
+          echo '<br/>';
+          echo $this->Auth->password('patrick'); */
+
+        //debug($this->Auth);
+    }
 }
 ?>

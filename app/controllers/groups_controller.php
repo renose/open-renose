@@ -30,6 +30,11 @@ class GroupsController extends AppController
     var $components = array('ControllerList', 'RequestHandler');
     var $helpers = array('Html', 'Ajax', 'Javascript');
 
+    function index()
+    {
+         $this->redirect( array('action' => 'display') );
+    }
+
     function display()
     {
         $this->set('title_for_layout', 'Gruppen Verwalten');

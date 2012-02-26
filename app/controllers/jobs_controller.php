@@ -1,6 +1,7 @@
 <?php
+
 /*
- * userinfo.ctp
+ * jobs_controller.php
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -22,21 +23,18 @@
  */
 ?>
 
-<?php    
-    if($session->check('Auth.User'))
-    {
-        $name = $this->requestAction('/users/get_name');
-        echo "Hallo <b>$name</b>. ";
-        echo $this->Html->link('Ausloggen', '/users/logout');
-    }
-    else
-    {
-        echo 'Hallo <b>Gast</b>. Bitte ';
-        echo $this->Html->link('registrieren', '/users/register') . ' oder ';
-        echo $this->Html->link('einloggen', '/users/login') . '.';
-    }
-?>
+<?php
 
-<a href="/#" style="vertical-align: middle">
-<?php echo $this->Html->image('icon/door open .png'); ?>
-</a>
+class JobsController extends AppController
+{
+    public $name = 'Jobs';
+    public $scaffold;
+
+    public function beforeFilter()
+    {
+        //parent::beforeFilter();
+        $this->Auth->allow('*');
+    }
+}
+
+?>

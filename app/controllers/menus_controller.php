@@ -1,4 +1,5 @@
 <?php
+
 /*
  * menus_controller.php
  *
@@ -24,24 +25,31 @@
 
 <?php
 
-    class MenusController extends AppController
+class MenusController extends AppController
+{
+    var $name = 'Menus';
+    var $scaffold;
+
+    public function beforeFilter()
     {
-        var $name = 'Menus';
+        //parent::beforeFilter();
+        $this->Auth->allow('*');
+    }
 
-        function get_items($menu)
+    function get_items($menu)
+    {
+        $menu = $this->Menu->find('first', array(
+                    'conditions' => array('Menu.title' => $menu)));
+
+        if (!empty($this->params['requested']))
         {
-            $menu = $this->Menu->find('first', array(
-                'conditions' => array('Menu.title' => $menu)));
-
-            if (!empty($this->params['requested']))
-            {
-                return $menu;
-            }
-            else
-            {
-                $this->set(compact('menu'));
-            }
+            return $menu;
+        }
+        else
+        {
+            $this->set(compact('menu'));
         }
     }
+}
 
 ?>
