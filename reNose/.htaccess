@@ -66,6 +66,7 @@ DirectoryIndex index.php
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_URI} !=/favicon.ico
   #RewriteRule ^admin/(.*)/(.*)$ index.php?module=$1&siteID=$2 [L]
+  #RewriteRule ^page/(.*)$ ndex.php?module=viewPage?name=$1 [L]
   RewriteRule ^(.*)$ index.php?module=$1 [L,QSA]
 
 </IfModule>

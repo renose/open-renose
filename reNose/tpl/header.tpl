@@ -5,6 +5,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->eprint(BASE_URL); ?>/tpl/files/style.css" />
 	<script type="text/javascript" src="<?php echo $this->eprint(BASE_URL); ?>/system/core/cms/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<?php echo $this->eprint(BASE_URL); ?>/tpl/files/js/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo $this->eprint(BASE_URL); ?>/tpl/files/js/jqueryui.js"></script>
+	<script type="text/javascript" src="<?php echo $this->eprint(BASE_URL); ?>/tpl/files/js/jplugins.js"></script>
     </head>
     <body>
 	<div id="container">

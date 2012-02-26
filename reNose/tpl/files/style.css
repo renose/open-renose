@@ -10,9 +10,18 @@ html, body {
     height: 100%;
 }
 
+img {
+    border: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
+}
+
+th {
+    text-align: left;
+    background-color: rgba(0,0,0,0.1);
 }
 
 #container {
@@ -51,6 +60,8 @@ div#header {
     -moz-border-radius-topright: 6px;
     -webkit-border-top-left-radius: 6px;
     -webkit-border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 
@@ -84,6 +95,8 @@ div#header div#headerinfo {
 	-moz-border-radius-topleft: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	-webkit-border-top-left-radius: 3px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 	padding: 10px 15px;
 	font-size: 11px;
 }
@@ -137,10 +150,12 @@ div#content {
 	-moz-border-radius-bottomleft: 6px;
 	-webkit-border-bottom-left-radius: 6px;
 	-webkit-border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 	padding: 15px;
 }
 
-div#content h1 {
+div#content h1, div#content h2 {
 	margin-bottom: 15px;
 }
 
@@ -148,6 +163,56 @@ div#content p {
 	margin: 0;
 	padding: 0;
 }
+
+div#content div#menubox {
+	/*border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;*/
+	width: 100%;
+}
+
+div#content div#menubox p {
+	font-size: 12px;
+}
+
+div#content div#menubox ul {
+	/*border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-moz-border-radius-topright: 15px;
+	-webkit-border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;*/
+	list-style-type: none;
+	margin: 0 0 15px 0;
+	padding: 0;
+	width: 969px;
+	height: 30px;
+	background-color: #09385e;
+}
+
+div#content div#menubox ul li {
+	float: left;
+	line-height: 30px;
+	background-color: #09385e;
+	display: block;
+}
+
+div#content div#menubox ul li:hover {
+	background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+div#content div#menubox ul li a {
+	padding: 0 50px;
+	line-height: 30px;
+	color: #8BFB23;
+	text-decoration: none;
+	display: block;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: pointer; background-color: rgba(0, 0, 0, 0.4); line-height: 30px; display: block; }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+
+
 
 div#content div.sidebox {
 	width: 200px;
@@ -234,6 +299,7 @@ div#footer div#footerwrapper {
 	div#footer div.footerbox ul li.headline {
 		font-weight: bold;
 		margin-bottom: 5px;
+		cursor: default;
 	}
 	
 	div#footer div.lastbox {

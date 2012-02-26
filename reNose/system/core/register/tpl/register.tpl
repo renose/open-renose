@@ -18,8 +18,16 @@
 		<td><input type="password" name="password" value="<?php if(!empty($_POST)){ echo $_POST['password']; } ?>" /></td>
 	    </tr>
 	    <tr>
+		<td>Vorname:</td>
+		<td><input type="text" name="prename" value="<?php if(!empty($_POST)){ echo $_POST['prename']; } ?>" /></td>
+	    </tr>
+	    <tr>
+		<td>Nachname:</td>
+		<td><input type="text" name="name" value="<?php if(!empty($_POST)){ echo $_POST['name']; } ?>" /></td>
+	    </tr>
+	    <tr>
 		<td colspan="2"><input type="submit" name="newRegistration" /></td>
 	    </tr>
 	</table>
     </form>
-    <p>Ihre IP Adresse (<?php echo $_SERVER['REMOTE_ADDR'] ?>) wird aus Sicherheitsgründen 14 Tage lang gespeichert.</p>
+    <!--<p>Ihre IP Adresse (<?php echo $_SERVER['REMOTE_ADDR'] ?>) wird aus Sicherheitsgründen 14 Tage lang gespeichert.</p>-->

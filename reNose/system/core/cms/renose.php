@@ -87,12 +87,18 @@ class renose
 	    if($this->userLoggedIn()) { //wenn eingeloggt elemente ausblenden, die hide_loggedin = 1 haben
 	        $sql = "SELECT link, text
 			FROM ".dbconfig::praefix."navi
-		        WHERE !hide_loggedin";
+		        WHERE !hide_loggedin AND !show_ifAdmin";
 	    } else { //wenn nicht eingeloggt elemente ausblenden, die hide_notloggedin = 1 haben
 		$sql = "SELECT link, text
 			FROM ".dbconfig::praefix."navi
-			WHERE !hide_notloggedin";
+			WHERE !hide_notloggedin AND !show_ifAdmin";
 		}
+
+	    if($_SESSION['admin'] == 1) {
+		$sql = "SELECT link, text
+			FROM ".dbconfig::praefix."navi
+		        WHERE !hide_loggedin OR show_ifAdmin";
+	    }
 		
 	    foreach ($database->query($sql) as $row)
 	    {
@@ -108,11 +114,13 @@ class renose
 	    $this->tpl->userLoggedIn = $this->userLoggedIn();
 	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'header.tpl')); // load tpl file
-	    
+
+	    if($_GET['plugininfo']) {
 	    echo "<br><b>--- Plugin ---</b><br>";
 	    echo "<b>Name:</b> $myPlugin->name <br>";
 	    echo "<b>Description:</b> $myPlugin->description <br>";
 	    echo "<b>Version:</b> $myPlugin->version <br><br>";
+	    }
 	    $myPlugin->show();
 	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'footer.tpl')); // load tpl file

@@ -56,9 +56,21 @@ class editPage extends plugin {
 	return true;
     }
 
-    public static function createSiteToDB($headline, $description, $value) {
-	database::init();
-	$res = mysql_query("INSERT INTO " . database::praefix . "pages (id ,title ,description ,value) VALUES (NULL , '" . $headline . "', '" . $description . "', '" . $value . "');");
+    public static function createSiteToDB($headline, $description, $value, $url) {
+	$database = database::get();
+	$sql = "INSERT INTO " . database::praefix . "pages
+		(id, title, description, value, url)
+		VALUES (NULL,:headline,:description,:value,:url)
+		";
+
+	$stmn = $database->prepare($sql);
+	$stmn->bindValue(':headline', $headline, PDO::PARAM_STR);
+	$stmn->bindValue(':description', $description, PDO::PARAM_STR);
+	$stmn->bindValue(':value', $value, PDO::PARAM_STR);
+	$stmn->bindValue(':url', $url, PDO::PARAM_STR);
+	$stmn->execute();
+
+	$stmn->closeCursor();
 
 	return true;
     }
@@ -69,8 +81,8 @@ class editPage extends plugin {
 
 }
 
-if ($_POST['updatePage'] && $_GET['new']) {
-    $query = editPage::createSiteToDB($_POST['headline'], $_POST['description'], htmlentities($_POST['pageEdit']));
+if ($_POST['updatePage'] && $_GET['id'] == "new") {
+    editPage::createSiteToDB($_POST['headline'], $_POST['description'], htmlentities($_POST['pageEdit']), $_POST['url']);
 } else if ($_POST['updatePage']) {
    editPage::updateSiteToDB($_GET['id'], $_POST['headline'], $_POST['description'], htmlentities($_POST['pageEdit']), $_POST['url']);
 }

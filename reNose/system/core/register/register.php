@@ -27,7 +27,10 @@ class register extends plugin {
 	$rNUpassword = $_POST['password'];
 	$rNUpassword = sha1($rNUpassword);
 
-	if ($rNUusername && $rNUmail && $rNUpassword != "") {
+	$rNUprename = $_POST['prename'];
+	$rNUname = $_POST['name'];
+
+	if ($rNUusername && $rNUmail && $rNUpassword && $rNUprename && $rNUname!= "") {
 	    try {
 		$database = database::get();
 		$sql = "INSERT INTO " . dbconfig::praefix . "users
@@ -40,12 +43,13 @@ class register extends plugin {
 		$stmn->bindValue(':username', $rNUusername, PDO::PARAM_STR);
 		$stmn->bindValue(':mail', $rNUmail, PDO::PARAM_STR);
 		$stmn->bindValue(':password', $rNUpassword, PDO::PARAM_STR);
+		$stmn->bindValue(':prename', $rNUprename, PDO::PARAM_STR);
+		$stmn->bindValue(':name', $rNUname, PDO::PARAM_STR);
 
 		$stmn->execute();
 		$stmn->closeCursor();
 
 		echo "<b>Success</b>";
-
 		// start mailing with PHPMAILER:
 		// not working yet
 		/* $mail = new phpmailer();
