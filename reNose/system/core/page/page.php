@@ -15,13 +15,13 @@ class page extends plugin
 
 	public function show()
 	{
-
-	    //get all pages from DB
-	    database::init();
-	    $res = mysql_query(database::escapeSQL("SELECT * FROM ". database::praefix . "pages;"));
-		while($row = mysql_fetch_array($res))
+	    $database = database::get();
+		$sql = "SELECT *
+				FROM ".dbconfig::praefix."pages";
+		
+		foreach ($database->query($sql) as $row)
 		{
-			$pageList[] = array('id' => $row[0], 'title' => $row[1], 'value' => $row[2]);
+			$pageList[] = array('id' => $row['id'], 'title' => $row['title'], 'value' => $row['value']);
 		}
 
 	    // register to tpl engine

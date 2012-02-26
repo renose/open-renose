@@ -13,20 +13,40 @@ class editPage extends plugin
 		return "Seite bearbeiten";
 	}
 
-	public static function getSiteFromDB($id) {
-	    database::init();
-	    $res = mysql_query(database::escapeSQL("SELECT title, value FROM " . database::praefix . "pages WHERE id = '" . $id . "'"));
-	    $row = mysql_fetch_row($res);
+	public static function getSiteFromDB($id)
+	{
+		$database = database::get();
+		$sql = "SELECT title, value
+				FROM ".dbconfig::praefix."pages
+				WHERE id=:id";
+		
+		$stmn = $database->prepare($sql);
+		$stmn->bindValue(':module', $module, PDO::PARAM_STR);
+		$stmn->execute();
+		
+		$row = $stmn->fetch();
+		$stmn->closeCursor();
 
-	    echo $row[0] . "<br /><br />";
-	    echo $row[1];
+	    echo $row['title'] . "<br /><br />";
+	    echo $row['value'];
 
 	}
 
-	public static function updateSiteFromDB ($id, $headline, $value) {
-	    database::init();
-	    $res = mysql_query(database::escapeSQL("UPDATE " . database::praefix . "pages  SET 'title' = '". $headline ."', 'value' = '". $value ."' WHERE id = '" . $id . "'"));
-	    $row = mysql_fetch_row($res);
+	public static function updateSiteFromDB ($id, $headline, $value)
+	{
+		$database = database::get();
+		$sql = "UPDATE ".dbconfig::praefix."pages
+				SET title=:title
+				SET value=:value
+				WHERE id=:id";
+		
+		$stmn = $database->prepare($sql);
+		$stmn->bindValue(':title', $headline, PDO::PARAM_STR);
+		$stmn->bindValue(':value', $value, PDO::PARAM_STR);
+		$stmn->bindValue(':id', $id, PDO::PARAM_STR);
+		
+		$stmn->execute();
+		$stmn->closeCursor();
 	}
 
 

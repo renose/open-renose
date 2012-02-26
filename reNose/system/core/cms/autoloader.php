@@ -2,15 +2,25 @@
 
 	function __autoload($class_name)
 	{
-		$res = mysql_query(database::escapeSQL("SELECT module, filename FROM " . database::praefix . "plugins WHERE classname = '" . $class_name . "' AND state = 'ON'"));
-		$row = mysql_fetch_row($res);
+		$database = database::get();
+		$sql = "SELECT module, filename
+				FROM ".dbconfig::praefix."plugins
+				WHERE classname=:classname
+				AND state = 'ON'";
 		
-		$moduleName = $row[0];
+		$stmn = $database->prepare($sql);
+		$stmn->bindValue(':classname', $class_name, PDO::PARAM_STR);
+		$stmn->execute();
+		
+		$row = $stmn->fetch();		
+		$stmn->closeCursor();
+		
+		$moduleName = $row['module'];
 		$path = database::getModulePath($moduleName, 'root');
 		
 		//Alternativer Dateiname in der Datenbank hinterlegt?
-		if($row[1] != NULL)
-			$fileName = $row[1];
+		if($row['filename'] != NULL)
+			$fileName = $row['filename'];
 		else
 			$fileName = strtolower($class_name) . '.php';
 		

@@ -8,8 +8,6 @@ class renose
 	
 	public function __construct()
 	{
-		database::init();
-		
 		require_once(database::getModulePath('cms', 'root') . "/autoloader.php");
 		require_once(database::getModulePath('cms', 'root') . "/plugin.php");
 		require_once(database::getModulePath('cms', 'root') . "/Savant3.php");
@@ -17,17 +15,11 @@ class renose
 		$this->tpl = new Savant3();
 		$this->tpl->setPath('template', BASE_PATH);
 	}
-	
-	function __autoload($class_name)
-	{
-		$res = mysql_query(database::escapeSQL("SELECT value FROM " . database::praefix . "settings WHERE module = '" . $module . "' AND property = '" . $property . "'"));
-		$row = mysql_fetch_row($res);
-		require_once "system/classes/".strtolower($class_name).".php";
-	}
 
 	public static function anredeLoggedIn()
 	{
 	    date_default_timezone_set('Europe/Berlin');
+	    
 	    $time = date('G');
 	    if ($time < 12) $anrede = "Guten Morgen";
 	    if ($time <= 18 && $time >= 12) $anrede = "Guten Tag";
@@ -41,7 +33,7 @@ class renose
 		if(!isset($_GET["module"]))
 			$moduleName = 'main';
 		else
-			$moduleName = mysql_real_escape_string($_GET["module"]);
+			$moduleName = $_GET["module"];
 		
 		if($moduleName == 'main')
 	    {
@@ -49,9 +41,20 @@ class renose
 	    }
 	    else
 	    {
-	    	$query = mysql_query(database::escapeSQL("SELECT classname FROM " . database::praefix . "plugins WHERE module = '" . $moduleName . "' AND state = 'ON'"));
-			$row = mysql_fetch_row($query);
-			$className = $row[0];
+	    	$database = database::get();
+			$sql = "SELECT classname
+					FROM ".dbconfig::praefix."plugins
+					WHERE module=:module
+					AND state='ON'";
+			
+			$stmn = $database->prepare($sql);
+			$stmn->bindValue(':module', $moduleName, PDO::PARAM_STR);
+			$stmn->execute();
+			
+			$row = $stmn->fetch();			
+			$stmn->closeCursor();
+			
+			$className = $row['classname'];
 			
 			if($className != NULL)			
 				$myPlugin = new $className($this->tpl);
@@ -64,10 +67,13 @@ class renose
 	    $name = "$site_title [$version] - " . $myPlugin->getTitle(); // <title>
 	    
 	    //Navigation
-	    $res = mysql_query(database::escapeSQL("SELECT link, text FROM " . database::praefix . "navi"));
-		while($row = mysql_fetch_array($res))
+    	$database = database::get();
+		$sql = "SELECT link, text
+				FROM ".dbconfig::praefix."navi";
+		
+		foreach ($database->query($sql) as $row)
 		{
-			$navigation[] = array('link' => $row[0], 'text' => $row[1]);
+			$navigation[] = array('link' => $row['link'], 'text' => $row['text']);
 		}
 	
 	    // register to tpl engine
@@ -75,13 +81,13 @@ class renose
 	    $this->tpl->version = $version;
 	    $this->tpl->navigation = $navigation;
 	    $this->tpl->anredeLoggedIn = $this->anredeLoggedIn();
-	    	    
+	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'header.tpl')); // load tpl file
 	    
-	    echo "<b>--- Plugin ---</b><br>";
+	    echo "<br><b>--- Plugin ---</b><br>";
 	    echo "<b>Name:</b> $myPlugin->name <br>";
 	    echo "<b>Description:</b> $myPlugin->description <br>";
-	    echo "<b>Version:</b> $myPlugin->version <br>";
+	    echo "<b>Version:</b> $myPlugin->version <br><br>";
 	    $myPlugin->show();
 	    
 	    $this->tpl->display(database::getModuleTpl('cms', 'footer.tpl')); // load tpl file

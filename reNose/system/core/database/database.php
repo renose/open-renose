@@ -3,51 +3,89 @@ require_once('dbconfig.php');
 
 class database
 {
-	const praefix = dbconfig::dbpraefix;
+	const praefix = dbconfig::praefix;
+	private static $pdo_object = NULL;
 	
-	public static function init()
+	public static function get()
 	{
-		$connection = mysql_connect(dbconfig::dbhost, dbconfig::dbuser, dbconfig::dbpassword);
-		mysql_select_db(dbconfig::dbname, $connection);
-		mysql_set_charset('utf8');
+		if(self::$pdo_object == NULL)
+		{
+			self::$pdo_object = new PDO('mysql:host='.dbconfig::host.';dbname='.dbconfig::name,
+										dbconfig::user,
+										dbconfig::password,
+										array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+										
+			self::$pdo_object->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}
+		
+		return self::$pdo_object;
+	}
+	public static function close()
+	{
+		self::$pdo_object = NULL;
 	}
 	
 	public static function getSetting($module, $property)
 	{
-		$res = mysql_query("SELECT value FROM " . database::praefix . "settings WHERE module = '" . $module . "' AND property = '" . $property . "'");
-		$row = mysql_fetch_row($res);
+		$database = database::get();
 		
-		return $row[0];
+		//Datenbankverbindung aufbauen
+		$sql = "SELECT value
+				FROM ".dbconfig::praefix."settings
+				WHERE module=:module AND property=:property";
+		
+		//Abfrage vorbereiten
+		$stmn = $database->prepare($sql);
+		
+		//Parameter an PDO übergeben
+		$stmn->bindValue(':module', $module, PDO::PARAM_STR);
+		$stmn->bindValue(':property', $property, PDO::PARAM_STR);
+		
+		//Abfrage ausführen
+		$stmn->execute();
+		
+		$row = $stmn->fetch();
+		
+		//bereinige Abfrage
+		$stmn->closeCursor();
+		
+		return $row['value'];
 	}
 	
 	public static function getModulePath($module, $dir)
 	{
-		$res = mysql_query("SELECT path FROM " . database::praefix . "path WHERE module = '" . $module . "' AND dir = '" . $dir . "'");
-		$row = mysql_fetch_row($res);
+		$database = database::get();
+		$sql = "SELECT path
+				FROM ".dbconfig::praefix."path
+				WHERE module=:module AND dir=:dir";
 		
-		$path = BASE_PATH . '/' . $row[0];
+		$stmn = $database->prepare($sql);
+		$stmn->bindValue(':module', $module, PDO::PARAM_STR);
+		$stmn->bindValue(':dir', $dir, PDO::PARAM_STR);
+		$stmn->execute();
 		
-		return $path;
+		$row = $stmn->fetch();
+		$stmn->closeCursor();
+		
+		return BASE_PATH . '/' . $row['path'];
 	}
 	
 	public static function getModuleTpl($module, $tplFile)
 	{
-		$res = mysql_query("SELECT path FROM " . database::praefix . "path WHERE module = '" . $module . "' AND dir = 'tpl'");
-		$row = mysql_fetch_row($res);
+		$database = database::get();
+		$sql = "SELECT path
+				FROM ".dbconfig::praefix."path
+				WHERE module=:module
+				AND dir='tpl'";
 		
-		$path = $row[0] . $tplFile;
+		$stmn = $database->prepare($sql);
+		$stmn->bindValue(':module', $module, PDO::PARAM_STR);
+		$stmn->execute();
 		
-		return $path;
-	}
-
-
-	// security function
-	public static function escapeSQL($query)
-	{
-		$query = mysql_real_escape_string($query);
-		$query = stripslashes($query);
-
-		return $query;
+		$row = $stmn->fetch();
+		$stmn->closeCursor();
+		
+		return $row['path'] . '/' . $tplFile;
 	}
 }
 ?>

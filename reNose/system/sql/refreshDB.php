@@ -11,45 +11,74 @@
 
 	<?php
 	require_once("../core/database/database.php");
-	database::init();
 
 	// ########SETTINGS########################
 	$dbName = "renose";      // Name der DB   #
 	$sqlFile = "renose.sql"; // .sql Filename #
 	// ########################################
 
-	if ($_POST) {
-	    $sql = mysql_query("DROP DATABASE $dbName");
-	    if ($sql) {
-		echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde gel&ouml;scht.</p>";
-	    } else {
-		echo "<p style='color:red;margin:0;padding:0;'>Datenbank konnte nicht gel&ouml;scht werden.</p>";
+	if ($_POST)
+	{
+		try
+		{
+			$database = database::get();
+			$sql = "DROP DATABASE $dbName";
+			
+			$database->exec($sql);
+			
+			echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde gel&ouml;scht.</p>";
+		}
+		catch(PDOException $e)
+	    {
+	    	echo "<p style='color:red;margin:0;padding:0;'>Datenbank konnte nicht gel&ouml;scht werden.</p>";
+	    	echo $e->getMessage();
 	    }
-
-	    $sqlText = file_get_contents($sqlFile);
-	    $sqlText = preg_replace("%/\*(.*)\*/%Us", '', $sqlText);
-	    $sqlText = preg_replace("%^--(.*)\n%mU", '', $sqlText);
-	    $sqlText = preg_replace("%^$\n%mU", '', $sqlText);
-	    mysql_real_escape_string($sqlText);
-	    $sqlText = explode(";", $sqlText);
-
-	    $sqlCreate = mysql_query("CREATE DATABASE $dbName");
-
-	    if ($sqlCreate) {
-		echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde neu erstellt.</p>";
-		mysql_select_db("$dbName");
-
-		foreach ($sqlText as $imp) {
-		    if ($imp != '' && $imp != ' ') {
-			mysql_query($imp);
+	    
+		try
+		{
+			$database = new PDO('mysql:host='.dbconfig::host,
+										dbconfig::user,
+										dbconfig::password,
+										array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+			$database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			
+			$sql = "CREATE DATABASE $dbName";
+			$database->exec($sql);
+			
+			echo "<p style='color:lime;margin:0;padding:0;'>Datenbank wurde neu erstellt.</p>";
+			
+			try
+			{
+				database::close();
+				$database = database::get();
+				
+				$sqlText = file_get_contents($sqlFile);
+			    $sqlText = preg_replace("%/\*(.*)\*/%Us", '', $sqlText);
+			    $sqlText = preg_replace("%^--(.*)\n%mU", '', $sqlText);
+			    $sqlText = preg_replace("%^$\n%mU", '', $sqlText);
+			    mysql_real_escape_string($sqlText);
+			    $sqlText = explode(";", $sqlText);
+				
+				foreach ($sqlText as $imp)
+				{
+			    	if (!empty($imp) && trim($imp) !== '')
+			    	{
+						$database->exec($imp);
+			    	}
+				}
+				
+				echo "<p style='color:lime;margin:0;padding:0;'>Tabellen eingetragen</p>";
+			}
+			catch(PDOException $e)
+		    {
+		    	echo "<p style='color:red;margin:0;padding:0;'>Tabellen eintragen fehlgeschlagen</p>";
+		    	echo $e->getMessage();
 		    }
 		}
-	    }
-
-	    if ($imp) {
-		echo "<p style='color:lime;margin:0;padding:0;'>Tabellen eingetragen</p>";
-	    } else {
-		"<p style='color:red;margin:0;padding:0;'>Tabellen eintragen fehlgeschlagen</p>";
+		catch(PDOException $e)
+	    {
+	    	echo "<p style='color:red;margin:0;padding:0;'>Datenbank konnte nicht neu erstellt werden.</p>";
+	    	echo $e->getMessage();
 	    }
 	}
 	?>
