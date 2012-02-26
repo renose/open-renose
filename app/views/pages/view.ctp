@@ -28,17 +28,23 @@
 
 <p style="text-align: right">
 <?php
-    echo $ajax->link(
-            $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")),
-            array('action' => 'edit', $page['Page']['title']),
-            array('update' => 'page-content', 'escape' => false) );
+    if($can_edit)
+    {
+        echo $ajax->link(
+                $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")),
+                array('action' => 'edit', $page['Page']['title']),
+                array('update' => 'page-content', 'escape' => false) );
+    }
 
     echo " ";
 
-    echo $html->link(
-        $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")),
-        array('action' => 'delete', $page['Page']['title']), array('escape' => false),
-        'Wollen Sie die Seite <' . $page['Page']['description'] . '> wirklich löschen?');
+    if($can_delete)
+    {
+        echo $html->link(
+            $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")),
+            array('action' => 'delete', $page['Page']['title']), array('escape' => false),
+            'Wollen Sie die Seite <' . $page['Page']['description'] . '> wirklich löschen?');
+    }
 ?><br/>
 
 <small>Erstellt: <i><?php echo $page['Page']['created']?></i></small><br/>

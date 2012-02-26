@@ -45,11 +45,10 @@ class AppController extends Controller
             $this->Auth->authError = "Sie haben keine Berechtigung für diese Seite.";
 
             //Allowed Actions setzen
-            $this->setAllow();
-            //$this->Auth->allow('*');
+            $this->setAllowed();
         }
 
-        function setAllow()
+        function setAllowed()
         {
             $this->loadModel('Group');
             
@@ -69,16 +68,18 @@ class AppController extends Controller
                 }
             }
         }
+
         function isAuthorized()
+        {
+            return $this->isAllowed($this->name, $this->action);
+        }
+        function isAllowed($controller, $action)
         {
             $allow = false;
             $this->loadModel('User');
             $this->loadModel('Group');
             
             $user = $this->User->findById($this->Auth->user('id'));
-            /*debug($user);
-            debug($this->name);
-            debug($this->action);*/
 
             if($user)
             {
@@ -86,7 +87,6 @@ class AppController extends Controller
                 foreach($user['Group'] as $group)
                 {
                     $group = $this->Group->findById($group['id']);
-                    //debug($group);
 
                     foreach($group['GroupPermission'] as $permission)
                     {
@@ -105,7 +105,6 @@ class AppController extends Controller
                 if($user['User']['is_active'])
                 {
                     $group = $this->Group->findByName('users');
-                    //debug($group);
 
                     foreach($group['GroupPermission'] as $permission)
                     {

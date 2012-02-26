@@ -35,26 +35,35 @@
 		<th>Aktionen</th>
 	</tr>
 
-	<!-- Hier iterieren wir in einer Schleife durch den $posts Array und geben die Daten des aktuellen Elements ausHere -->
 	<?php foreach ($groups as $group): ?>
 	<tr>
 		<td><?php echo $group['Group']['id']; ?></td>
 		<td><?php echo $group['Group']['name']; ?></td>
-		<td>
-			<?php echo $html->link($group['Group']['description'], "/groups/view/".$group['Group']['name']); ?>
-		</td>
+		<td><?php echo $group['Group']['description']; ?></td>
 		<td>
 			<?php
                             echo $html->link(
-                                $this->Html->image("icon/edit.png", array("alt" => "Seite editieren", "align" => "center")),
+                                $this->Html->image("icon/key.png", array("alt" => "Gruppenrechte bearbeiten", "align" => "center")),
+                                array('action' => 'permissions', $group['Group']['name']), array('escape' => false) );
+
+                            echo " ";
+
+                            echo $html->link(
+                                $this->Html->image("icon/user.png", array("alt" => "Gruppenbenutzer bearbeiten", "align" => "center")),
+                                array('action' => 'users', $group['Group']['name']), array('escape' => false) );
+
+                            echo " ";
+
+                            echo $html->link(
+                                $this->Html->image("icon/edit.png", array("alt" => "Gruppe bearbeiten", "align" => "center")),
                                 array('action' => 'edit', $group['Group']['name']), array('escape' => false) );
 
                             echo " ";
 
                             echo $html->link(
-                                $this->Html->image("icon/delete.png", array("alt" => "Seite löschen", "align" => "center")),
+                                $this->Html->image("icon/delete.png", array("alt" => "Gruppe löschen", "align" => "center")),
                                 array('action' => 'delete', $group['Group']['name']), array('escape' => false),
-                                'Wollen Sie die Seite <' . $group['Group']['description'] . '> wirklich löschen?');
+                                'Wollen Sie die Gruppe <' . $group['Group']['description'] . '> wirklich löschen?');
                         ?>
 		</td>
 	</tr>
@@ -65,6 +74,6 @@
 <?php
     echo $html->link(
             $this->Html->image("icon/add.png", array("alt" => "Seite erstellen", "align" => "center", "id" => "ico-addpage")),
-            array('controller' => 'pages', 'action' => 'add'),
+            array('controller' => 'groups', 'action' => 'add'),
             array('escape' => false));
 ?>

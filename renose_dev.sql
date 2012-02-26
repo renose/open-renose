@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. April 2011 um 20:53
+-- Erstellungszeit: 01. Mai 2011 um 23:09
 -- Server Version: 5.5.8
 -- PHP-Version: 5.3.5
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `group_permissions` (
   `type` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permission` (`group_id`,`controller`,`action`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Daten für Tabelle `group_permissions`
@@ -98,7 +98,7 @@ INSERT INTO `group_permissions` (`id`, `group_id`, `controller`, `action`, `type
 (12, 2, 'users', 'welcome', 1),
 (13, 1, 'groups', 'display', 1),
 (14, 1, 'groups', 'edit', 1),
-(15, 1, 'groups', 'permission', 1),
+(15, 1, 'groups', 'permissions', 1),
 (16, 2, 'Pages', 'index', 1),
 (17, 2, 'Menus', 'get_items', 1),
 (18, 2, 'Users', 'get_name', 1),
@@ -107,7 +107,10 @@ INSERT INTO `group_permissions` (`id`, `group_id`, `controller`, `action`, `type
 (21, 2, 'Users', 'register', 0),
 (22, 3, 'Users', 'activate', 1),
 (23, 3, 'Users', 'get_name', 1),
-(24, 3, 'Menus', 'get_items', 1);
+(24, 3, 'Menus', 'get_items', 1),
+(25, 1, 'Groups', 'add', 1),
+(26, 1, 'Groups', 'delete', 1),
+(27, 1, 'Groups', 'users', 1);
 
 -- --------------------------------------------------------
 

@@ -1,6 +1,6 @@
 <?php
 /*
- * userinfo.ctp
+ * add.ctp
  *
  * Copyright (c) 2011 open reNose team <info at renose.de>.
  * Simon Wörner and Patrick Hafner.
@@ -21,18 +21,22 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
+<?php
+    $html->addCrumb('Groups', 'display');
+    $html->addCrumb('Edit', null);
+    //$html->addCrumb($page['Page']['description'], '/page/edit/' . $page['Page']['title']);
+?>
 
-<?php    
-    if($session->check('Auth.User'))
-    {
-        $name = $this->requestAction('/users/get_name');
-        echo "Hallo <b>$name</b>. ";
-        echo $this->Html->link('Ausloggen', '/users/logout');
-    }
-    else
-    {
-        echo 'Hallo <b>Gast</b>. Bitte ';
-        echo $this->Html->link('registrieren', '/users/register') . ' oder ';
-        echo $this->Html->link('einloggen', '/users/login') . '.';
-    }
+<h1><?php echo $title_for_layout; ?></h1>
+
+<?php
+    echo $form->create('Group');
+
+    echo $form->input('name', array('label' => 'Name'));
+    echo $form->input('description', array('label' => 'Beschreibung'));
+
+    //echo $form->input('body', array('rows' => '5', 'label' => 'Inhalt'));
+    //echo $fck->load('Page.body');
+
+    echo $form->end('Gruppe erstellen');
 ?>

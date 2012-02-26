@@ -1,4 +1,5 @@
 <?php
+
 /*
  * user.php
  *
@@ -23,13 +24,28 @@
 ?>
 
 <?php
-class Group extends AppModel {
-	var $name = 'Group';
-	var $displayField = 'description';
-	var $validate = array(
-		'name' => array( 'rule' =>'notempty' ) );
 
-        var $hasMany = array('GroupPermission');
-        var $hasAndBelongsToMany = array('User');
+class Group extends AppModel
+{
+    var $name = 'Group';
+    var $displayField = 'description';
+    
+    var $validate = array(
+        'name' => array(
+            'mustBeSet' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Bitte geben Sie einen Namen ein.',
+                'last' => true),
+            'mustUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'Dieser Name wird bereits verwendet.')),
+        'description' => array(
+            'mustBeSet' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Bitte geben Sie eine Beschreibung ein.',
+                'last' => true)));
+
+    var $hasMany = array('GroupPermission');
+    var $hasAndBelongsToMany = array('User');
 }
 ?>

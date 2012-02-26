@@ -61,6 +61,9 @@ class PagesController extends AppController
                     $this->cakeError('error404');
             }
 
+            $this->set('can_edit', $this->isAllowed($this->name, 'edit'));
+            $this->set('can_delete', $this->isAllowed($this->name, 'delete'));
+
             //Set page title and content for layout
             $this->set('title_for_layout', $page['Page']['description']);
             $this->set('page', $page);
