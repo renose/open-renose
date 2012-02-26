@@ -34,7 +34,7 @@
 <b>Tätigkeiten</b>
 <hr/><div>
 <?php
-    foreach ($report['ReportActivities'] as $reportActivity)
+    foreach ($report['ReportActivity'] as $reportActivity)
     {
         printf('<i>%2u:%02uh</i> ', $reportActivity['duration'] / 60, $reportActivity['duration'] % 60);
         echo $reportActivity['text'];
@@ -68,7 +68,7 @@
 <b>Unterweisungen</b>
 <hr/><div>
 <?php
-    foreach ($report['ReportInstructions'] as $reportInstruction)
+    foreach ($report['ReportInstruction'] as $reportInstruction)
     {
         echo '<i>' . $reportInstruction['title'] . '</i> ';
         

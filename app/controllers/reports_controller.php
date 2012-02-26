@@ -90,7 +90,7 @@ class ReportsController extends AppController
             if ($this->Report->save($this->data))
             {
                 $this->Session->setFlash('Ihr Bericht wurde erstellt.', 'flash_success');
-                $this->redirect( array('action' => 'view', $year, $week) );
+                $this->redirect( array('action' => 'view', $this->data['Report']['year'], $this->data['Report']['week']) );
             }
         }
         else
