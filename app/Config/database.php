@@ -63,9 +63,9 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'renose',
-		'password' => 'open',
-		'database' => 'renose_dev',
+		'login' => 'root',
+		'password' => 'dev',
+		'database' => 'renose',
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);

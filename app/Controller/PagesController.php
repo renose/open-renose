@@ -27,7 +27,7 @@
 class PagesController extends AppController
 {
         public $components = array('RequestHandler');
-	public $helpers = array('Html', 'Form', 'Js', 'Fck');
+	public $helpers = array('Fck');
 	
 	function index()
 	{

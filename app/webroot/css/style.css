@@ -21,11 +21,13 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
+ * {
+    font-family: 'Open Sans', sans-serif, Arial;
+ }
 html, body {
     margin: 0;
     padding: 0;
     background-color: #fff;
-    font-family: Arial;
     font-size: 14px;
     background-image: url(../img/1920_1080.jpg);
     background-repeat: no-repeat;
