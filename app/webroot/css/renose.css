@@ -1,0 +1,308 @@
+@charset "utf-8";
+/*
+ * style.css
+ *
+ * Copyright (c) 2011 open reNose team <info at renose.de>.
+ * Simon Wörner and Patrick Hafner.
+ *
+ * This file is part of open reNose.
+ *
+ * open reNose is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * open reNose is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
+*/
+
+* {
+    font-family: 'Open Sans', sans-serif, Arial;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    background-image: url(../img/1920_1080.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-size: 14px;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+img {
+    border: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+th {
+    text-align: left;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.floatright {
+    float: right;
+}
+.floatleft {
+    float: left;
+}
+.clearleft {
+    clear: left;
+}
+.clearright {
+    clear: right;
+}
+.clearboth {
+    clear: both;
+}
+
+header {
+    position:absolute;
+    top:0;
+    left:0;
+    height: 90px;
+    width: 100%;
+    overflow:hidden;
+    background-color: rgb(34,76,111);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+
+header h1#logo {
+    margin: 20px 0 0 12px;
+    float: left;
+    font-family: Helvetica;
+    font-weight: normal;
+    letter-spacing: -2px;
+    color: #fff;
+    font-size: 34px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    text-shadow: 0px 0px 5px #000;
+}
+
+header h1#logo span {
+    color: #0A9ECE;
+}
+
+header a {
+    text-decoration: none !important;
+}
+
+header #headerinfo {
+    float: right;
+    margin: 15px 0px 0 0;
+    background-color: #fff;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px 15px;
+    font-size: 11px;
+}
+
+header headerinfo a {
+    color: #000;
+    border-bottom: 1px dotted #000;
+}
+
+nav {
+    overflow:auto;
+    position:absolute;
+    top:90px;
+    left:0px;
+    right:200px;
+    bottom:50px;
+    width: 200px;
+    background-color: whitesmoke;
+    border-right: 1px solid #000;
+    float: left;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+nav ul li {
+    display: block;
+}
+
+nav li ul {
+    display: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #8BFB23;
+    line-height: 30px;
+    padding:5px 15px;
+    display: block;
+}
+
+nav ul li#active {
+    background-color: rgba(0, 0, 0, 0.1);
+    line-height: 17px;
+}
+
+nav ul li:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    line-height: 17px;
+}
+
+nav li#active ul {
+    background-color: rgba(0, 0, 0, 0.1);
+    line-height: 17px;
+}
+
+nav li:hover ul {
+    display: block;
+    background-color: #224C6F !important;
+    line-height: 17px;
+}
+
+
+div#content {
+    overflow:auto;
+    position:absolute;
+    top:90px;
+    left: 200px;
+    right:0px;
+    bottom:50px;
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 15px;
+    overflow: scroll;
+}
+
+div#content h1, div#content h2 {
+    margin-bottom: 15px;
+}
+
+/*div#content p {
+        margin: 0;
+        padding: 0;
+}*/
+
+div#content div#menubox {
+    /*border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;*/
+    width: 100%;
+}
+
+div#content div#menubox p {
+    font-size: 12px;
+}
+
+div#content div#menubox ul {
+    /*border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;*/
+    list-style-type: none;
+    margin: 0 0 15px 0;
+    padding: 0;
+    width: 969px;
+    height: 30px;
+    background-color: #09385e;
+}
+
+div#content div#menubox ul li {
+    float: left;
+    line-height: 30px;
+    background-color: #09385e;
+    display: block;
+}
+
+div#content div#menubox ul li:hover {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+div#content div#menubox ul li a {
+    padding: 0 50px;
+    line-height: 30px;
+    color: #8BFB23;
+    text-decoration: none;
+    display: block;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: pointer; background-color: rgba(0, 0, 0, 0.4); line-height: 30px; display: block; }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+
+
+
+div#content div.sidebox {
+    width: 200px;
+    float: right;
+}
+
+p.breadcrumb {
+    font-size: 10px;
+    margin-bottom: 15px !important;
+}
+
+p.breadcrumb a {
+    color: #000;
+    text-decoration: none;
+}
+
+
+footer {
+    overflow:hidden;
+    position:absolute;
+    bottom:0;
+    left:0;
+    height: 50px;
+    width: 100%;
+    color: #fff;
+    background-color: rgb(34,76,111);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    font-size: 80%;
+    border-top: 1px solid #000;
+
+}	
+footer a {
+    color: #fff;
+    border-bottom: 1px dotted #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #fff;
+    border-bottom: 1px dotted #8BFB23;
+    text-decoration: none;
+}

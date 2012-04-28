@@ -51,6 +51,8 @@ class AppController extends Controller
     {
         //Allowed Actions setzen
         $this->setAllowed();
+        
+        $this->layout = 'renose';
     }
 
     function setAllowed()
