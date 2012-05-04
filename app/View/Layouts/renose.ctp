@@ -25,9 +25,11 @@
     </head>
     <body>
         <header>
-            <a id="logo" href="<?php echo $this->Html->url('/', true); ?>">
-                <span>open</span>reNose
-            </a>
+            <div id="logo">
+                <a href="<?php echo $this->Html->url('/', true); ?>">
+                    <span>open</span>reNose
+                </a>
+            </div>
             <div id="global-search">
                 <form>
                     <input type="search" placeholder="Global suchen..." />
@@ -47,6 +49,8 @@
             <p class="breadcrumb">
                 <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
             </p>
+            
+            <a name="top"/>
             <?php
             echo $this->Session->flash();
             echo $this->Session->flash('auth');
@@ -59,9 +63,18 @@
         </div>
 
         <footer>
-            <p>Page rendered in <?php echo round((microtime(true) - $_SERVER['REQUEST_TIME']) * 1000) ?>ms</p>
+            <?php if(Configure::read('debug') > 0): ?>
+            <div id="footer-left">Page rendered in <?php echo round((microtime(true) - $_SERVER['REQUEST_TIME']) * 1000) ?>ms</div>
+            <?php endif; ?>
+            
+            <div id="footer-right">
+                <a class="icon-goto-top" href="#top">
+                    <?php echo $this->Html->image('icon/goto-top.png'); ?>
+                </a>
+                <a href="#top">Hoch</a>
+            </div>
 
-            <p>
+            <div id="footer-center">
                 (c) 2011-2012 by
                 <a href="mailto:simon@renose.de">Simon Wörner</a>, 
                 <a href="mailto:patrick@renose.de">Patrick Hafner</a> and
