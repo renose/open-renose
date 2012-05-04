@@ -190,7 +190,7 @@ nav {
     top:50px;
     left:0px;
     right:200px;
-    bottom:50px;
+    bottom:34px;
     width: 200px;
     background-color: whitesmoke;
     border-right: 1px solid #000;
@@ -247,7 +247,7 @@ div#content {
     top:50px;
     left: 200px;
     right:0px;
-    bottom:50px;
+    bottom:34px;
 
     background-color: rgba(255, 255, 255, 0.8);
     -moz-border-radius-bottomright: 6px;
@@ -336,6 +336,7 @@ p.breadcrumb a {
 
 
 footer {
+    overflow: hidden;
     position:absolute;
     padding-top: 7px;
     bottom:0;
@@ -346,15 +347,13 @@ footer {
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
     background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
     font-size: 80%;
-    border-top: 1px solid #000;
-
-}	
+    border-top: 1px solid gray;
+}
 footer a {
     color: #fff;
     border-bottom: 1px dotted #fff;
     text-decoration: none;
 }
-
 footer a:hover {
     color: #fff;
     border-bottom: 1px dotted #8BFB23;
