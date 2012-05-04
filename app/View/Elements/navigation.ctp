@@ -22,7 +22,52 @@
  */
 ?>
 
-<?php
-    $menu_items = $this->requestAction("/menus/get_items/$menu");
-    $this->MenuItems->show($menu_items);
-?>
+<div class="nav-section">
+    <div class="nav-title">Main</div>
+    <ul>
+        <li class="active">
+            <?php echo $this->Html->image('icon/dashboard.png'); ?>
+            <?php echo $this->Html->link('Dashboard', '/'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Test Page', '/users/test'); ?>
+        </li>
+    </ul>
+</div>
+
+<div class="nav-section">
+    <div class="nav-title">Berichte</div>
+    <ul>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Übersicht', '/reports'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Hinzufügen', '/reports/add'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            Exportieren
+        </li>
+    </ul>
+</div>
+
+<div class="nav-section">
+    <div class="nav-title">Klasse</div>
+    <ul>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            bla
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            bla
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            bla
+        </li>
+    </ul>
+</div>

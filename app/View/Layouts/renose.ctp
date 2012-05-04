@@ -42,11 +42,11 @@
         </header>
 
         <nav>
-            <?php echo $this->element('navigation', array('menu' => 'main', 'cache' => '+3 hour')); ?>
+            <?php echo $this->element('navigation'); ?>
         </nav>
 
         <div id="content">
-            <p class="breadcrumb">
+            <p id="breadcrumb">
                 <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
             </p>
             
@@ -56,7 +56,7 @@
             echo $this->Session->flash('auth');
             echo $this->Session->flash('email');
             ?>
-
+            
             <?php echo $content_for_layout; ?>
 
             <?php echo $this->element('sql_dump'); ?>
