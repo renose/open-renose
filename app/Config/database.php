@@ -65,7 +65,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'renose',
 		'password' => 'open',
-		'database' => 'renose_dev',
+		'database' => 'renose',
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);
