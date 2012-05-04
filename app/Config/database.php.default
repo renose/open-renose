@@ -59,14 +59,14 @@
  */
 class DATABASE_CONFIG {
 
-	var $default = array(
+	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'renose',
-		'password' => 'open',
-		'database' => 'renose',
+		'login' => 'user',
+		'password' => 'password',
+		'database' => 'database_name',
 		'prefix' => '',
-		'encoding' => 'utf8'
+		'encoding' => 'utf8',
 	);
 }

@@ -4,5 +4,5 @@
 /vendors/
 .DS_Store
 tags/
-!/app/Config/
 /app/Config/database.php
+/app/Config/email.php
