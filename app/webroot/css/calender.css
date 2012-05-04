@@ -105,7 +105,7 @@ table.calendar-month tr td.calendar-week
 {
     font-weight: bold;
 }
-table.calendar-month tr td.calendar-week a:link, a:visited, a:active, a:hover
+table.calendar-month tr td.calendar-week a:link, table.calendar-month tr td.calendar-week a:visited, table.calendar-month tr td.calendar-week a:active, table.calendar-month tr td.calendar-week a:hover
 {
     color: black;
     text-decoration: none;
