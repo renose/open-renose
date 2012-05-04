@@ -27,7 +27,7 @@
 
 class AppController extends Controller
 {
-    
+
     public $components = array( 'Security', 'Session',
         'Auth' => array(
             'loginAction' => array(
@@ -44,13 +44,20 @@ class AppController extends Controller
                 )
             )
         ));
-    
+
     public $helpers = array('Html', 'Js', 'Form', 'Session', 'MenuItems');
-    
+
     function beforeFilter()
     {
-        //Allowed Actions setzen
+        // set allowed actions
         $this->setAllowed();
+
+	// if frontpage is requested, show it
+	if (preg_match('/^/', $this->params->url)) {
+	    $this->layout = 'frontpage';
+	} else {
+	    $this->layout = 'default';
+	}
     }
 
     function setAllowed()
