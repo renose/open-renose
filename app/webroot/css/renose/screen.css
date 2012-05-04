@@ -21,14 +21,12 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
 */
 
-* {
-    font-family: 'Open Sans', sans-serif, Arial;
-}
 html, body {
+    font-family: 'Open Sans', sans-serif, Arial;
     margin: 0;
     padding: 0;
     background-color: #fff;
-    background-image: url(../img/1920_1080.jpg);
+    background-image: url(../../img/1920_1080.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-size: 14px;
@@ -46,6 +44,48 @@ img {
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
+}
+a {
+	color: #003d4c;
+	text-decoration: underline;
+	font-weight: bold;
+}
+a:hover {
+	color: #367889;
+	text-decoration:none;
+}
+a img {
+	border:none;
+}
+h1, h2, h3, h4 {
+	font-weight: normal;
+	margin-bottom:0.5em;
+}
+h1 {
+	background:#fff;
+	color: #003d4c;
+	font-size: 100%;
+}
+h2 {
+	background:#fff;
+	color: #e32;
+	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
+	font-size: 190%;
+}
+h3 {
+	color: #2c6877;
+	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
+	font-size: 165%;
+}
+h4 {
+	color: #993;
+	font-weight: normal;
+}
+ul, li {
+	margin: 0 12px;
+}
+p {
+	margin: 0 0 1em 0;
 }
 
 th {
@@ -69,27 +109,22 @@ th {
     clear: both;
 }
 
+
 header {
     position:absolute;
     top:0;
     left:0;
-    height: 90px;
+    height: 49px;
     width: 100%;
     overflow:hidden;
     background-color: rgb(34,76,111);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
     background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
-    -moz-border-radius-topleft: 6px;
-    -moz-border-radius-topright: 6px;
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-bottom: 1px solid blue;
 }
 
-
-header h1#logo {
-    margin: 20px 0 0 12px;
+header #logo {
+    margin: 5px 20px;
     float: left;
     font-family: Helvetica;
     font-weight: normal;
@@ -101,18 +136,39 @@ header h1#logo {
     padding: 0;
     text-shadow: 0px 0px 5px #000;
 }
-
-header h1#logo span {
+header #logo span {
     color: #0A9ECE;
 }
-
-header a {
+header #logo a {
     text-decoration: none !important;
+}
+
+header #global-search {
+    margin: 12px 15px;
+    float: left;
+}
+header #global-search input {
+    font-size: 100%;
+}
+header #global-search input[type=search] {
+    padding: 3px 28px 3px 3px;
+    width: 300px;
+    -moz-box-shadow:inset 2px 2px 5px #ccc;
+    box-shadow:inset 2px 2px 5px #ccc;
+    border: 1px solid #b8b8b8;
+}
+header #global-search input[type=submit] {
+    background: url(../../img/icon/search.png) center no-repeat;
+    margin-left: -28px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    cursor: pointer;
 }
 
 header #headerinfo {
     float: right;
-    margin: 15px 0px 0 0;
+    margin: 10px 0px 0 0;
     background-color: #fff;
     -moz-border-radius-bottomleft: 3px;
     -moz-border-radius-topleft: 3px;
@@ -120,10 +176,9 @@ header #headerinfo {
     -webkit-border-top-left-radius: 3px;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
-    padding: 10px 15px;
+    padding: 7px 10px;
     font-size: 11px;
 }
-
 header headerinfo a {
     color: #000;
     border-bottom: 1px dotted #000;
@@ -132,7 +187,7 @@ header headerinfo a {
 nav {
     overflow:auto;
     position:absolute;
-    top:90px;
+    top:50px;
     left:0px;
     right:200px;
     bottom:50px;
@@ -189,7 +244,7 @@ nav li:hover ul {
 div#content {
     overflow:auto;
     position:absolute;
-    top:90px;
+    top:50px;
     left: 200px;
     right:0px;
     bottom:50px;

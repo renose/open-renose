@@ -7,7 +7,7 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            'renose',
+            'renose/screen',
             'calender',
             'cake.generic',
             'ui-lightness/jquery-ui-1.8.16.custom',
@@ -25,11 +25,15 @@
     </head>
     <body>
         <header>
-            <a href="<?php echo $this->Html->url('/', true); ?>">
-                <h1 id="logo">
-                    <span>open</span>reNose
-                </h1>
+            <a id="logo" href="<?php echo $this->Html->url('/', true); ?>">
+                <span>open</span>reNose
             </a>
+            <div id="global-search">
+                <form>
+                    <input type="search" placeholder="Global suchen..." />
+                    <input type="submit" value="" />
+                </form>
+            </div>
             <div id="headerinfo">
                 <?php echo $this->element('userinfo'); ?>
             </div>
