@@ -50,7 +50,7 @@
                 <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
             </p>
             
-            <a name="top"/>
+            <a name="top"></a>
             <?php
             echo $this->Session->flash();
             echo $this->Session->flash('auth');
