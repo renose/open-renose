@@ -22,96 +22,53 @@
  */
 ?>
 
-<div class="nav-section">
-    <div class="nav-title">Main</div>
-    <ul>
-        <li>
-            <?php echo $this->Html->image('icon/dashboard.png'); ?>
-            <?php echo $this->Html->link('Dashboard', '/'); ?>
-        </li>
-    </ul>
-</div>
-
-<div class="nav-section">
-    <div class="nav-title">Dev</div>
-    <ul>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Pages', '/pages/display'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Groups', '/groups/display'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Welcome Page', '/users/welcome'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('User Test Page', '/users/test'); ?>
-        </li>
-    </ul>
-</div>
-
-<div class="nav-section">
-    <div class="nav-title">Seiten</div>
-    <ul>
-        <li class="active">
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Home', '/'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Über das Projekt', '/page/about'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Hilfe', '/page/help'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('FAQ', '/page/faq'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Test Seite', '/page/test'); ?>
-        </li>
-    </ul>
-</div>
-
-<div class="nav-section">
-    <div class="nav-title">Berichte</div>
-    <ul>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Übersicht', '/reports'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Hinzufügen', '/reports/add'); ?>
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            Exportieren
-        </li>
-    </ul>
-</div>
-
-<div class="nav-section">
-    <div class="nav-title">Klasse</div>
-    <ul>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            bla
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            bla
-        </li>
-        <li>
-            <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            bla
-        </li>
-    </ul>
-</div>
+<?php
+    $nav = array(
+        'Main' => array(
+            'Dashboard' => array('img' => 'icon/dashboard.png', 'url' => '/')
+        ),
+        'Dev' => array(
+            'Pages' => array('img' => 'icon/menu_item.png', 'url' => '/pages/display'),
+            'Groups' => array('img' => 'icon/menu_item.png', 'url' => '/groups/display'),
+            'Welcome Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/welcome'),
+            'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
+        ),
+        'Seiten' => array(
+            'Home' => array('img' => 'icon/menu_item.png', 'url' => '/'),
+            'Über das Projekt' => array('img' => 'icon/menu_item.png', 'url' => '/page/about'),
+            'Hilfe' => array('img' => 'icon/menu_item.png', 'url' => '/page/help'),
+            'FAQ' => array('img' => 'icon/menu_item.png', 'url' => '/page/faq'),
+            'Test Seite' => array('img' => 'icon/menu_item.png', 'url' => '/page/test')
+        ),
+        'Berichte' => array(
+            'Übersicht' => array('img' => 'icon/menu_item.png', 'url' => '/reports/display'),
+            'Hinzufügen' => array('img' => 'icon/menu_item.png', 'url' => '/page/about')
+        )
+    );
+    
+    foreach($nav as $title => $items)
+    {
+        echo '<div class="nav-section">';
+        echo '<div class="nav-title">' . $title . '</div>';
+        
+        echo '<ul>';
+        foreach($items as $name => $options)
+        {
+            echo '<a href="' . $this->Html->url($options['url']) . '">';
+            
+            if($this->Html->url(null) == $this->Html->url($options['url']))
+                echo '<li class="active">';
+            else
+                echo '<li>';
+            
+            echo $this->Html->image($options['img']);
+            echo $name;
+            echo '</li>';
+            
+            echo '</a>';
+        }
+        echo '</ul>';
+        
+        echo '</div>';
+    }
+?>

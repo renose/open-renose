@@ -215,7 +215,7 @@ nav li {
     padding: 0 25px;
     line-height: 30px;
 }
-nav li a, nav a:hover {
+nav a, nav a:visited, nav a:hover {
     color: black;
     text-decoration: none;
     font-weight: normal;
