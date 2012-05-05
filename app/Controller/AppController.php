@@ -28,6 +28,7 @@
 class AppController extends Controller
 {
     
+    public $layout = 'renose';
     public $components = array( 'Security', 'Session',
         'Auth' => array(
             'loginAction' => array(
@@ -45,14 +46,12 @@ class AppController extends Controller
             )
         ));
     
-    public $helpers = array('Html', 'Js', 'Form', 'Session', 'MenuItems');
+    public $helpers = array('Html', 'Js', 'Form', 'Session');
     
     function beforeFilter()
     {
         //Allowed Actions setzen
         $this->setAllowed();
-        
-        $this->layout = 'renose';
     }
 
     function setAllowed()

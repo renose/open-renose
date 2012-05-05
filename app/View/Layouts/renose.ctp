@@ -7,11 +7,11 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            'renose/screen',
-            'calender',
-            'cake.generic',
             'ui-lightness/jquery-ui-1.8.16.custom',
             'http://fonts.googleapis.com/css?family=Open+Sans',
+            'cake.generic',
+            'renose/screen',
+            'calender',
         ));
 
         echo $this->Html->script(array(

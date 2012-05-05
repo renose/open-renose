@@ -25,13 +25,57 @@
 <div class="nav-section">
     <div class="nav-title">Main</div>
     <ul>
-        <li class="active">
+        <li>
             <?php echo $this->Html->image('icon/dashboard.png'); ?>
             <?php echo $this->Html->link('Dashboard', '/'); ?>
         </li>
+    </ul>
+</div>
+
+<div class="nav-section">
+    <div class="nav-title">Dev</div>
+    <ul>
         <li>
             <?php echo $this->Html->image('icon/menu_item.png'); ?>
-            <?php echo $this->Html->link('Test Page', '/users/test'); ?>
+            <?php echo $this->Html->link('Pages', '/pages/display'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Groups', '/groups/display'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Welcome Page', '/users/welcome'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('User Test Page', '/users/test'); ?>
+        </li>
+    </ul>
+</div>
+
+<div class="nav-section">
+    <div class="nav-title">Seiten</div>
+    <ul>
+        <li class="active">
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Home', '/'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Über das Projekt', '/page/about'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Hilfe', '/page/help'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('FAQ', '/page/faq'); ?>
+        </li>
+        <li>
+            <?php echo $this->Html->image('icon/menu_item.png'); ?>
+            <?php echo $this->Html->link('Test Seite', '/page/test'); ?>
         </li>
     </ul>
 </div>
