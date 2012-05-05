@@ -276,7 +276,7 @@ footer {
     font-size: 80%;
     border-top: 1px solid gray;
 }
-footer a {
+footer a, footer a:visited {
     color: #fff;
     border-bottom: 1px dotted #fff;
     text-decoration: none;
