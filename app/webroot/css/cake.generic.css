@@ -4,17 +4,22 @@
  * Generic CSS for CakePHP
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       app.webroot.css
  * @since         CakePHP(tm)
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
+* {
+	margin:0;
+	padding:0;
+}
 
 /** containers **/
 div.form,
@@ -37,7 +42,7 @@ div.actions h3 {
 
 
 /** Tables **/
-/*table {
+table {
 	border-right:0;
 	clear: both;
 	color: #333;
@@ -54,14 +59,14 @@ th a {
 	display: block;
 	padding: 2px 4px;
 	text-decoration: none;
-}*/
+}
 th a.asc:after {
 	content: ' ⇣';
 }
 th a.desc:after {
 	content: ' ⇡';
 }
-/*table tr td {
+table tr td {
 	padding: 6px;
 	text-align: left;
 	vertical-align: top;
@@ -69,7 +74,7 @@ th a.desc:after {
 }
 table tr:nth-child(even) {
 	background: #f9f9f9;
-}*/
+}
 td.actions {
 	text-align: center;
 	white-space: nowrap;
@@ -275,7 +280,7 @@ form .submit input[type=submit]:hover {
 /* Form errors */
 form .error {
 	background: #FFDACC;
-	-moz-order-radius: 4px;
+	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	font-weight: normal;
@@ -553,6 +558,22 @@ pre {
 	overflow: auto;
 	text-shadow: none;
 }
+.cake-stack-trace li {
+	padding: 10px 5px 0px;
+	margin: 0 0 4px 0;
+	font-family: monospace;
+	border: 1px solid #bbb;
+	-moz-border-radius: 4px;
+	-wekbkit-border-radius: 4px;
+	border-radius: 4px;
+	background: #dcdcdc;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#dcdcdc));
+	background-image: -webkit-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -moz-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -ms-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: -o-linear-gradient(top, #fefefe, #dcdcdc);
+	background-image: linear-gradient(top, #fefefe, #dcdcdc);
+}
 /* excerpt */
 .cake-code-dump pre,
 .cake-code-dump pre code {
@@ -621,9 +642,4 @@ pre {
 }
 .code-coverage-results span.result-good {
 	color: #0a0;
-}
-
-/** Elements **/
-#url-rewriting-warning {
-	display:none;
 }

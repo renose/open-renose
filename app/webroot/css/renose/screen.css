@@ -1,0 +1,321 @@
+@charset "utf-8";
+/*
+ * style.css
+ *
+ * Copyright (c) 2011 open reNose team <info at renose.de>.
+ * Simon Wörner and Patrick Hafner.
+ *
+ * This file is part of open reNose.
+ *
+ * open reNose is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * open reNose is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
+*/
+
+html, body {
+    font-family: 'Open Sans', sans-serif, Arial;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    background-image: url(../../img/1920_1080.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-size: 14px;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+img {
+    border: 0;
+}
+
+a {
+    color: #00E;
+    text-decoration: underline;
+    font-weight: bold;
+}
+a:hover, a:visited {
+    color: black;
+    text-decoration: none;
+}
+a img {
+    border:none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    margin-bottom:0.5em;
+}
+h1, h2 {
+    margin-bottom: 15px;
+}
+h1 {
+    font-size: 230%;
+}
+h2 {
+    font-size: 190%;
+}
+h3 {
+    font-size: 165%;
+}
+h4 {
+    font-weight: normal;
+}
+
+ul, li {
+    margin: 0 12px;
+}
+p {
+    margin: 0 0 1em 0;
+}
+
+th {
+    text-align: left;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.floatright {
+    float: right;
+}
+.floatleft {
+    float: left;
+}
+.clearleft {
+    clear: left;
+}
+.clearright {
+    clear: right;
+}
+.clearboth {
+    clear: both;
+}
+
+
+header {
+    position:absolute;
+    top:0;
+    left:0;
+    height: 49px;
+    width: 100%;
+    overflow:hidden;
+    background-color: rgb(34,76,111);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    border-bottom: 1px solid gray;
+}
+
+header #logo a {
+    float: left;
+    width: 200px;
+    height: 49px;
+    padding-top: 7px;
+    text-align: center;
+    font-family: Helvetica;
+    font-weight: normal;
+    letter-spacing: -2px;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    text-shadow: 0px 0px 5px #000;
+    border-right: 1px solid gray;
+}
+header #logo span {
+    color: #0A9ECE;
+}
+
+header #global-search {
+    margin: 12px 15px;
+    float: left;
+}
+header #global-search input {
+    font-size: 100%;
+}
+header #global-search input[type=search] {
+    padding: 3px 28px 3px 3px;
+    width: 300px;
+    -moz-box-shadow:inset 2px 2px 5px #ccc;
+    box-shadow:inset 2px 2px 5px #ccc;
+    border: 1px solid #b8b8b8;
+}
+header #global-search input[type=submit] {
+    background: url(../../img/icon/search.png) center no-repeat;
+    margin-left: -28px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+}
+
+header #headerinfo {
+    float: right;
+    margin: 10px 0px 0 0;
+    background-color: #fff;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 7px 10px;
+    font-size: 11px;
+}
+header headerinfo a {
+    color: #000;
+    border-bottom: 1px dotted #000;
+}
+
+
+nav {
+    overflow: auto;
+    position:absolute;
+    float: left;
+    top:50px;
+    left:0px;
+    right:200px;
+    bottom:34px;
+    width: 200px;
+    background-color: whitesmoke;
+    border-right: 1px solid #000;
+}
+
+nav .nav-section {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+nav .nav-title {
+    padding: 6px 15px;
+    font-weight: bold;
+    background: #C5C5C5;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+}
+
+nav ul, nav li {
+    font-weight: normal;
+    list-style-type: none;
+    margin: 0;
+}
+nav li {
+    padding: 0 25px;
+    line-height: 30px;
+}
+nav li a, nav a:hover {
+    color: black;
+    text-decoration: none;
+    font-weight: normal;
+}
+nav li img {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+nav li.active {
+    background-color: #D5D5D5;
+}
+nav li:hover {
+    background-color: #DDD !important;
+}
+
+
+div#content {
+    overflow: auto;
+    position:absolute;
+    top:50px;
+    left: 200px;
+    right:0px;
+    bottom:34px;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 15px;
+    overflow: scroll;
+}
+
+#breadcrumb {
+    font-size: 10px;
+    margin-bottom: 15px !important;
+}
+#breadcrumb a {
+    color: #000;
+    text-decoration: none;
+}
+
+
+footer {
+    overflow: hidden;
+    position:absolute;
+    padding-top: 7px;
+    bottom:0;
+    left:0;
+    width: 100%;
+    color: #fff;
+    background-color: rgb(34,76,111);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    font-size: 80%;
+    border-top: 1px solid gray;
+}
+footer a, footer a:visited {
+    color: #fff;
+    border-bottom: 1px dotted #fff;
+    text-decoration: none;
+}
+footer a:hover {
+    color: #fff;
+    border-bottom: 1px dotted #8BFB23;
+    text-decoration: none;
+}
+
+#footer-left {
+    float:left;
+    margin-left: 15px;
+}
+
+#footer-center {
+    width: 100%;
+    text-align: center;
+}
+
+#footer-right {
+    float:right;
+    margin-right: 15px;
+}
+#footer-right .icon-goto-top {
+    border: none;
+}
+#footer-right .icon-goto-top img {
+    vertical-align: middle;
+}
+
+/* make cake errors visible */
+.cake-error {
+    position: relative;
+    top: 75px;
+    left: 200px;
+    margin: 0 15px;
+    z-index: 80;
+}
+.cake-sql-log caption {
+    color: black;
+}
