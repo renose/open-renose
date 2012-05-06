@@ -254,7 +254,19 @@ div#content {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     padding: 15px;
-    overflow: scroll;
+}
+#content::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	padding: 18px;
+	-webkit-border-radius: 1ex;
+}
+#content::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.5);
+	padding: 8px;
+	width: 8px;
+	height: 8px;
+	-webkit-border-radius: 1ex;
 }
 
 #breadcrumb {
