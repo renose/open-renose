@@ -47,21 +47,22 @@
 				<a id="logo" href="#"><span>open</span>reNose</a>
 			    </li>
 			    <li class="active">
-				<a href="#"><?= __('Home'); ?></a>
+				<a href="#">Startseite</a>
 			    </li>
 			    <li class="">
-				<a href="#"><?= __('About us'); ?></a>
+				<a href="#">Über uns</a>
 			    </li>
 			    <li class="">
-				<a href="#"><?= __('Register'); ?></a>
+				<a href="#">Registrieren</a>
 			    </li>
 			</ul>
 			<ul class="nav pull-right">
 			    <li>
 				<form class="form-inline navbar-search pull-right">
-				    <input type="text" class="search-query span2" placeholder="<?= __('Email'); ?>">
-				    <input type="password" class="search-query span2" placeholder="<?= __('Password'); ?>">
-				    <button type="submit" class="btn btn-info"><?= __('Login'); ?></button>
+				    <input type="text" class="input-medium" placeholder="E-Mail">
+				    <input type="password" class="input-small" placeholder="Passwort">
+				    <button type="submit" class="btn  btn-inverse btn-mini">Einloggen</button>
+				    <a href="#" id="navigation-forgot-password">Passwort vergessen?</a>
 				</form>
 			    </li>
 			</ul>
@@ -83,15 +84,12 @@
 
 		    <div class="row">
 			<div class="span12">
-			    <?= $this->Html->image('frontpage/slider/photos/1.jpg', array('alt' => 'Foo bar beschreibung', 'class' => 'teaser-image')); ?>
+			    <?= $this->Html->image('frontpage/frontpage-reports-renose.png', array('alt' => 'Foo bar beschreibung', 'class' => 'teaser-image')); ?>
 			</div>
 		    </div>
 
 		    <p class="download-info">
-			<a href="#" class="btn btn-primary btn-large">Jetzt kostenlos anmelden</a>
-		    </p>
-		    <p class="download-info">
-			<button type="submit" class="btn btn-inverse btn-mini"><?= __('reset password'); ?></button>
+			<a href="#" class="btn btn-primary btn-large">Jetzt kostenlos anmelden!</a>
 		    </p>
 		</div>
 
