@@ -70,7 +70,7 @@
             
             <div id="footer-right">
                 <a class="icon-goto-top" href="#top">
-                    <?php echo $this->Html->image('icons/up.png'); ?>
+                    <?php echo $this->Html->image('icons/up_white.png'); ?>
                 </a>
                 <a href="#top">Hoch</a>
             </div>
