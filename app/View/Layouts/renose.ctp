@@ -64,6 +64,8 @@
         <footer>
             <?php if(Configure::read('debug') > 0): ?>
             <div id="footer-left">Page rendered in <?php echo round((microtime(true) - $_SERVER['REQUEST_TIME']) * 1000) ?>ms</div>
+            <?php else: ?>
+            <div id="footer-left">Icons by <a href="http://icons8.com/">Icons8</a> and <a href="http://www.famfamfam.com">FAMFAMFAM</a></div>
             <?php endif; ?>
             
             <div id="footer-right">

@@ -28,7 +28,6 @@
             'Dashboard' => array('img' => 'icon/dashboard.png', 'url' => '/')
         ),
         'Dev' => array(
-            'Pages' => array('img' => 'icon/menu_item.png', 'url' => '/pages/display'),
             'Groups' => array('img' => 'icon/menu_item.png', 'url' => '/groups/display'),
             'Welcome Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/welcome'),
             'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
@@ -36,9 +35,7 @@
         'Seiten' => array(
             'Home' => array('img' => 'icon/menu_item.png', 'url' => '/'),
             'Über das Projekt' => array('img' => 'icon/menu_item.png', 'url' => '/page/about'),
-            'Hilfe' => array('img' => 'icon/menu_item.png', 'url' => '/page/help'),
-            'FAQ' => array('img' => 'icon/menu_item.png', 'url' => '/page/faq'),
-            'Test Seite' => array('img' => 'icon/menu_item.png', 'url' => '/page/test')
+            'FAQ' => array('img' => 'icon/menu_item.png', 'url' => '/page/faq')
         ),
         'Berichte' => array(
             'Übersicht' => array('img' => 'icon/menu_item.png', 'url' => '/reports/display'),
