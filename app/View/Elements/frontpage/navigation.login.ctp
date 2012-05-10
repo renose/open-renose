@@ -4,7 +4,7 @@ echo $this->Form->create('User', array(
 	'class' => 'form-inline navbar-search pull-right',
 	'inputDefaults' => array(
 	    'div' => false,
-	    'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline'))
+	    'error' => false
 	    )
 	));
 

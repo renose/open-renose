@@ -6,12 +6,12 @@ $c = $this->request->params['controller'];
     <li>
 	<a href="<?= $this->Html->url('/', true); ?>" id="logo"><span>open</span>reNose</a>
     </li>
-    <li <?= ($c == 'pages' && $a == 'view' && $this->request->params['pass'][0] != 'about') ? 'class="active"' : '' ?>>
+    <li <?= ($c == 'pages' && $a == 'display' && $this->request->params['pass'][0] == 'home') ? 'class="active"' : '' ?>>
 	<?=
 	$this->Html->link('Startseite', '/');
 	?>
     </li>
-    <li <?= ($c == 'pages' && $a == 'view' && $this->request->params['pass'][0] == 'about') ? 'class="active"' : '' ?>>
+    <li <?= ($c == 'pages' && $a == 'display' && $this->request->params['pass'][0] == 'about') ? 'class="active"' : '' ?>>
 	<?=
 	$this->Html->link('Über uns', array(
 	    'controller' => 'pages',

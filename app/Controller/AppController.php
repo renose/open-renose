@@ -62,8 +62,13 @@ class AppController extends Controller
         parent::beforeRender();
 
         // change layout on errors
-        if ($this->name == 'CakeError')
-            $this->layout = 'frontpage';
+        if ($this->name == 'CakeError') {
+            if(!$this->Auth->user('id')) {
+                $this->layout = 'frontpage';
+            } else {
+                $this->layout = 'renose';
+            }
+        }
     }
 
 }
