@@ -27,7 +27,6 @@
 
 class UsersController extends AppController
 {
-    public $components = array('Email');
     public $scaffold;
 
     public function beforeFilter()
@@ -48,7 +47,7 @@ class UsersController extends AppController
             else
                 $this->Auth->flash('Email Adresse oder Passwort falsch! Bitte versuche es erneut.');
         }
-        
+
         //Bereits eingeloggt?
         if ($this->Auth->loggedIn())
         {
@@ -58,7 +57,7 @@ class UsersController extends AppController
     }
 
     function logout()
-    {        
+    {
         if ($this->Auth->loggedIn())
         {
             //$this->Session->delete('User');
@@ -86,11 +85,11 @@ class UsersController extends AppController
             if ($this->User->save($this->request->data))
             {
                 App::uses('CakeEmail', 'Network/Email');
-                
+
                 $user = $this->request->data;
-                
+
                 $email = new CakeEmail('default');
-                
+
                 $email  ->to( $user['User']['email'])
                         ->subject('Ihre Registrierung bei open reNose')
                         ->template('register')
@@ -99,7 +98,7 @@ class UsersController extends AppController
                             'user' => $user
                             )
                         );
-                
+
                 $email->send('My message');
 
                 $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');

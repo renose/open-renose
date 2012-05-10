@@ -6,3 +6,4 @@
 tags/
 /app/Config/database.php
 /app/Config/email.php
+nbproject/*
