@@ -38,3 +38,6 @@
 	}
 
 	require APP_DIR . DS . WEBROOT_DIR . DS . 'index.php';
+
+	// required for ChromePhp
+	ob_flush();

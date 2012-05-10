@@ -25,11 +25,13 @@
 
 <?php
 
+App::import('Vendor', 'ChromePhp');
+
 class AppController extends Controller
 {
-    
+
     public $layout = 'renose';
-    public $components = array( 'Security', 'Session',
+    public $components = array('Security', 'Session', 'Email',
         'Auth' => array(
             'loginAction' => array(
                 'controller' => 'users',
@@ -40,14 +42,15 @@ class AppController extends Controller
             'authError' => 'Sie haben keine Berechtigung für diese Seite.',
             'authenticate' => array(
                 'Form' => array(
+                    'userModel' => 'User', // needed for mac
                     'fields' => array('username' => 'email'),
                     'scope' => array('User.is_active' => true)
                 )
             )
         ));
-    
+
     public $helpers = array('Html', 'Js', 'Form', 'Session');
-    
+
     function beforeFilter()
     {
         //Allowed Actions setzen
