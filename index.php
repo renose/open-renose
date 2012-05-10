@@ -38,3 +38,5 @@
 	}
 
 	require APP_DIR . DS . WEBROOT_DIR . DS . 'index.php';
+
+	ob_flush();

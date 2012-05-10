@@ -72,3 +72,7 @@ a#navigation-forgot-password:hover {
     }
 
 }
+
+h1.frontpage-headline {
+    margin-bottom: 25px;
+}

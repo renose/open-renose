@@ -25,6 +25,8 @@
 
 <?php
 
+App::import('Vendor', 'ChromePhp');
+
 class AppController extends Controller
 {
 
@@ -39,6 +41,7 @@ class AppController extends Controller
             'authError' => 'Sie haben keine Berechtigung für diese Seite.',
             'authenticate' => array(
                 'Form' => array(
+		    'userModel' => 'User',
                     'fields' => array('username' => 'email'),
                     'scope' => array('User.is_active' => true)
                 )
@@ -52,11 +55,25 @@ class AppController extends Controller
         // set allowed actions
         $this->setAllowed();
 
-	// if frontpage is requested, show it
-	if (preg_match('/^/', $this->params->url)) {
-	    $this->layout = 'frontpage';
-	} else {
+	// if frontpage is requested, show it, but guests only
+	if($this->Auth->user('id')) {
 	    $this->layout = 'default';
+	} else {
+	    $this->layout = 'frontpage';
+
+	    // set start screen, if no other controller/action is set
+	    if($this->request->params['controller'] == 'pages' && $this->request->params['action'] == 'view' && $this->request->params['pass'][0] != 'about') {
+		$this->set('isHomeSite', true);
+	    }
+	}
+    }
+
+    function beforeRender() {
+	parent::beforeRender();
+	// change layout on errors
+
+	if($this->name == 'CakeError') {
+	    $this->layout = 'frontpage';
 	}
     }
 
