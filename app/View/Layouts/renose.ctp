@@ -41,15 +41,14 @@
             </div>
         </header>
 
-        <nav>
+        <nav id="sidebar">
             <?php echo $this->element('navigation'); ?>
         </nav>
-
-        <div id="content">
-            <p id="breadcrumb">
-                <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
-            </p>
-            
+        
+        <nav id="breadcrumb">
+            <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
+        </nav>
+        <div id="content">            
             <a name="top"></a>
             <?php
             echo $this->Session->flash();
