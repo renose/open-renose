@@ -2,8 +2,8 @@
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins/
 /vendors/
-.DS_Store
-tags/
 /app/Config/database.php
 /app/Config/email.php
-nbproject/*
+/nbproject/private
+.DS_Store
+tags/

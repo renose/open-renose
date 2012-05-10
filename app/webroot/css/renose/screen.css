@@ -252,7 +252,7 @@ nav#breadcrumb a {
 }
 
 
-div#content {
+#content {
     overflow: auto;
     position:absolute;
     top: 79px;
@@ -263,6 +263,19 @@ div#content {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 15px;
     overflow: scroll;
+}
+#content::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	padding: 18px;
+	-webkit-border-radius: 1ex;
+}
+#content::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.5);
+	padding: 8px;
+	width: 8px;
+	height: 8px;
+	-webkit-border-radius: 1ex;
 }
 
 
