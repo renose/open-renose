@@ -50,8 +50,6 @@ class User extends AppModel
                 'dependent' => true
                 )
             );
-
-        public $hasAndBelongsToMany = array('Group');
         
         function verifies($check, $field)
 	{
