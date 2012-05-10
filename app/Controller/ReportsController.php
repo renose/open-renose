@@ -33,7 +33,6 @@ class ReportsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('*');
     }
     
     function index()

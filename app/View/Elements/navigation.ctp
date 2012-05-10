@@ -28,7 +28,6 @@
             'Dashboard' => array('img' => 'icon/dashboard.png', 'url' => '/')
         ),
         'Dev' => array(
-            'Groups' => array('img' => 'icon/menu_item.png', 'url' => '/groups/display'),
             'Welcome Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/welcome'),
             'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
         ),
@@ -39,7 +38,7 @@
         ),
         'Berichte' => array(
             'Übersicht' => array('img' => 'icon/menu_item.png', 'url' => '/reports/display'),
-            'Hinzufügen' => array('img' => 'icon/menu_item.png', 'url' => '/page/about')
+            'Hinzufügen' => array('img' => 'icon/menu_item.png', 'url' => '/reports/add')
         )
     );
     

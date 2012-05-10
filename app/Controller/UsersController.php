@@ -32,7 +32,7 @@ class UsersController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('*');
+        $this->Auth->allow(array('login', 'register', 'activate'));
     }
 
     function login()
@@ -198,12 +198,6 @@ class UsersController extends AppController
 
         $user = $this->User->findById($this->Auth->user('id'));
         pr($user);
-
-        $this->loadModel('Group');
-        foreach ($user['Group'] as $group)
-        {
-            pr($this->Group->findById($group['id']));
-        }
 
         //pr($profile);
         //pr($this->User->find('all'));

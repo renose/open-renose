@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Mai 2012 um 18:15
+-- Erstellungszeit: 10. Mai 2012 um 19:28
 -- Server Version: 5.5.16
 -- PHP-Version: 5.3.8
 
@@ -13,97 +13,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `renose_dev`
 --
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `groups`
---
-
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(127) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Daten für Tabelle `groups`
---
-
-INSERT INTO `groups` (`id`, `name`, `description`) VALUES
-(1, 'admin', 'Administratoren'),
-(2, 'users', 'User'),
-(3, 'anonymous', 'Gäste');
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `groups_users`
---
-
-CREATE TABLE IF NOT EXISTS `groups_users` (
-  `id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `groups_users`
---
-
-INSERT INTO `groups_users` (`id`, `group_id`, `user_id`) VALUES
-(0, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `group_permissions`
---
-
-CREATE TABLE IF NOT EXISTS `group_permissions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `controller` varchar(127) NOT NULL,
-  `action` varchar(127) NOT NULL,
-  `type` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `permission` (`group_id`,`controller`,`action`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
-
---
--- Daten für Tabelle `group_permissions`
---
-
-INSERT INTO `group_permissions` (`id`, `group_id`, `controller`, `action`, `type`) VALUES
-(1, 1, 'pages', 'display', 1),
-(2, 1, 'pages', 'add', 1),
-(3, 1, 'pages', 'edit', 1),
-(4, 1, 'pages', 'delete', 1),
-(5, 2, 'users', 'test', 1),
-(6, 3, 'pages', 'view', 1),
-(7, 2, 'pages', 'view', 1),
-(8, 3, 'pages', 'index', 1),
-(9, 2, 'users', 'logout', 1),
-(10, 3, 'users', 'login', 1),
-(11, 3, 'users', 'register', 1),
-(12, 2, 'users', 'welcome', 1),
-(13, 1, 'groups', 'display', 1),
-(14, 1, 'groups', 'edit', 1),
-(15, 1, 'groups', 'permissions', 1),
-(16, 2, 'Pages', 'index', 1),
-(18, 2, 'Users', 'get_name', 1),
-(19, 2, 'Users', 'activate', 0),
-(20, 2, 'Users', 'login', 0),
-(21, 2, 'Users', 'register', 0),
-(22, 3, 'Users', 'activate', 1),
-(23, 3, 'Users', 'get_name', 1),
-(25, 1, 'Groups', 'add', 1),
-(26, 1, 'Groups', 'delete', 1),
-(27, 1, 'Groups', 'users', 1),
-(28, 1, 'Groups', 'index', 1);
 
 -- --------------------------------------------------------
 
@@ -236,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
 
 --
 -- Daten für Tabelle `users`

@@ -30,8 +30,7 @@ class ReportInstructionsController extends AppController
 
     public function beforeFilter()
     {
-        //parent::beforeFilter();
-        $this->Auth->allow('*');
+        parent::beforeFilter();
     }
     
     function add($report_id = null)
