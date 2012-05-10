@@ -111,7 +111,7 @@ header {
     left: 0;
     height: 49px;
     width: 100%;
-    overflow:hidden;
+    overflow: hidden;
     background-color: rgb(34,76,111);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
     background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
@@ -235,13 +235,13 @@ nav#sidebar li:hover {
 
 nav#breadcrumb {
     overflow: auto;
-    position:absolute;
+    position: absolute;
     top: 50px;
     left: 201px;
     right: 0px;
     height: 14px;
     width: 100%;
-    padding: 9px 15px;
+    padding: 7px 15px;
     font-size: 10px;
     background-color: whitesmoke;
     border-bottom: 1px solid grey;
@@ -255,10 +255,10 @@ nav#breadcrumb a {
 div#content {
     overflow: auto;
     position:absolute;
-    top:83px;
+    top: 79px;
     left: 201px;
     right:0px;
-    bottom:34px;
+    bottom: 34px;
 
     background-color: rgba(255, 255, 255, 0.8);
     padding: 15px;
