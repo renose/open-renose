@@ -254,28 +254,28 @@ nav#breadcrumb a {
 
 #content {
     overflow: auto;
-    position:absolute;
+    position: absolute;
     top: 79px;
     left: 201px;
-    right:0px;
+    right: 0px;
     bottom: 29px;
 
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 15px;
+    padding: 5px 10px 5px 15px;
     overflow: scroll;
 }
 #content::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-	padding: 18px;
-	-webkit-border-radius: 1ex;
+    width: 8px;
+    height: 8px;
+    padding: 18px;
+    -webkit-border-radius: 1ex;
 }
 #content::-webkit-scrollbar-thumb {
-	background-color: rgba(0,0,0,0.5);
-	padding: 8px;
-	width: 8px;
-	height: 8px;
-	-webkit-border-radius: 1ex;
+    background-color: rgba(0,0,0,0.5);
+    padding: 8px;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 1ex;
 }
 
 
