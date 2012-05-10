@@ -331,5 +331,4 @@ Cache::config('_cake_model_', array(
 	'duration' => $duration
 ));
 
-// required for ChromePhp
 ob_start();

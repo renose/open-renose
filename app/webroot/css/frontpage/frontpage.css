@@ -1,0 +1,78 @@
+img.teaser-image {
+    margin: 0 auto 20px auto;
+    display: block;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+/* top navigation */
+div.navbar-inner {
+    background-color: rgb(34,76,111);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
+    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+
+}
+
+/* reNose logo */
+div.navbar-inner a#logo {
+	font-family: Helvetica;
+	font-weight: normal;
+	letter-spacing: -2px;
+	color: #fff;
+	font-size: 28px;
+	cursor: pointer;
+	text-decoration: none;
+	text-shadow: 0px 0px 5px #000;
+	padding-right: 20px;
+}
+
+div.navbar-inner a#logo span {
+	color: #0A9ECE;
+}
+
+/* navigation links */
+.navbar .nav > li > a {
+    color: #ddd;
+    line-height: 25px;
+}
+
+/* forgot password link in navigation */
+a#navigation-forgot-password {
+    color: #ddd;
+    font-size: 11px;
+    text-decoration: none;
+}
+
+a#navigation-forgot-password:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.masthead {
+    margin-bottom: 36px;
+    padding-top: 0px;
+}
+
+/* big font  */
+.jumbotron h1 {
+    font-size: 60px;
+}
+
+/* login in navigation */
+.navbar-search {
+    margin-top: 4px;
+}
+
+
+
+@media (max-width: 480px) {
+    .jumbotron h1 {
+	font-size: 30px;
+    }
+
+}
+
+h1.frontpage-headline {
+    margin-bottom: 25px;
+}

@@ -53,7 +53,103 @@ class AppController extends Controller
 
     function beforeFilter()
     {
-        
+        // set allowed actions
+        $this->setAllowed();
+
+		// if frontpage is requested, show it, but guests only
+		if($this->Auth->user('id')) {
+		    $this->layout = 'default';
+		} else {
+		    $this->layout = 'frontpage';
+
+	    	// set start screen, if no other controller/action is set
+		    if($this->request->params['controller'] == 'pages' && $this->request->params['action'] == 'view' && $this->request->params['pass'][0] != 'about') {
+				$this->set('isHomeSite', true);
+	    	}
+		}
+    }
+
+    function beforeRender() {
+		parent::beforeRender();
+		// change layout on errors
+		if($this->name == 'CakeError') {
+		    $this->layout = 'frontpage';
+		}
+    }
+
+    function setAllowed()
+    {
+        $this->loadModel('Group');
+
+        //Nicht eingeloggt - Gästerechte prüfen
+        $group = $this->Group->findByName('anonymous');
+        //pr($group);
+
+        foreach ($group['GroupPermission'] as $permission)
+        {
+            if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                    strcasecmp($permission['action'], $this->request->action) == 0)
+            {
+                if ($permission['type'] == 1)
+                    $this->Auth->allow($permission['action']);
+                else
+                    $this->Auth->deny($permission['action']);
+            }
+        }
+    }
+
+    function isAuthorized() {
+        return $this->isAllowed($this->name, $this->request->action);
+	}
+   
+    function isAllowed($controller, $action)
+    {
+        $allow = false;
+        $this->loadModel('User');
+        $this->loadModel('Group');
+
+        $user = $this->User->findById($this->Auth->user('id'));
+
+        if ($user)
+        {
+            //Alle Speziell zu geteilten Gruppen prüfen
+            foreach ($user['Group'] as $group)
+            {
+                $group = $this->Group->findById($group['id']);
+
+                foreach ($group['GroupPermission'] as $permission)
+                {
+                    if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                            strcasecmp($permission['action'], $this->request->action) == 0)
+                    {
+                        if ($permission['type'] == 1)
+                            $allow = true;
+                        else
+                            return false;
+                    }
+                }
+            }
+
+            //Aktivierter User Account - User Gruppen Berechtigungen
+            if ($user['User']['is_active'])
+            {
+                $group = $this->Group->findByName('users');
+
+                foreach ($group['GroupPermission'] as $permission)
+                {
+                    if (strcasecmp($permission['controller'], $this->name) == 0 &&
+                            strcasecmp($permission['action'], $this->request->action) == 0)
+                    {
+                        if ($permission['type'] == 1)
+                            $allow = true;
+                        else
+                            return false;
+                    }
+                }
+            }
+        }
+
+        return $allow;
     }
 
 }

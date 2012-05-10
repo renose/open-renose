@@ -22,9 +22,16 @@
  */
 ?>
 
-<h1>Login</h1>
+<h1 class="frontpage-headline">Login</h1>
+
 <?php
-    echo $this->Form->create('User', array('action' => 'login'));
+    echo $this->Form->create('User', array(
+	'action' => 'login',
+	'inputDefaults' => array(
+	    'div' => 'control-group',
+	    'error' => array('attributes' => array('wrap' => 'span', 'class' => 'help-inline'))
+	    )
+	));
 
     echo $this->Form->input('email');
     echo $this->Form->input('password');
