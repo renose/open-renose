@@ -43,11 +43,17 @@
 		<div class="container">
 		    <div class="nav-collapse collapse">
 			<ul class="nav">
+			    <li>
+				<a id="logo" href="#"><span>open</span>reNose</a>
+			    </li>
 			    <li class="active">
 				<a href="#"><?= __('Home'); ?></a>
 			    </li>
 			    <li class="">
 				<a href="#"><?= __('About us'); ?></a>
+			    </li>
+			    <li class="">
+				<a href="#"><?= __('Register'); ?></a>
 			    </li>
 			</ul>
 			<ul class="nav pull-right">
