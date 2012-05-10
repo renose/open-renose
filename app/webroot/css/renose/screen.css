@@ -190,12 +190,8 @@ nav#sidebar {
     bottom: 32px;
     width: 200px;
     background-color: whitesmoke;
-<<<<<<< HEAD
-    border-right: 1px solid #000;
-    font-size: 11px;
-=======
     border-right: 1px solid gray;
->>>>>>> new-navigation
+    font-size: 11px;
 }
 
 nav#sidebar .nav-section {
@@ -216,12 +212,8 @@ nav#sidebar ul, nav#sidebar li {
     list-style-type: none;
     margin: 0;
 }
-<<<<<<< HEAD
-nav li {
-=======
 nav#sidebar li {
     padding: 0 25px;
->>>>>>> new-navigation
     line-height: 30px;
 }
 nav#sidebar a, nav#sidebar a:visited, nav#sidebar a:hover {
@@ -268,33 +260,25 @@ nav#breadcrumb a {
 #content {
     overflow: auto;
     position:absolute;
-<<<<<<< HEAD
     top: 50px;
     left: 200px;
     right: 0px;
     bottom: 32px;
-=======
-    top:83px;
-    left: 201px;
-    right:0px;
-    bottom:34px;
->>>>>>> new-navigation
-
     background-color: rgba(255, 255, 255, 0.8);
     padding: 15px;
 }
 #content::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-	padding: 18px;
-	-webkit-border-radius: 1ex;
+    width: 8px;
+    height: 8px;
+    padding: 18px;
+    -webkit-border-radius: 1ex;
 }
 #content::-webkit-scrollbar-thumb {
-	background-color: rgba(0,0,0,0.5);
-	padding: 8px;
-	width: 8px;
-	height: 8px;
-	-webkit-border-radius: 1ex;
+    background-color: rgba(0,0,0,0.5);
+    padding: 8px;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 1ex;
 }
 
 
