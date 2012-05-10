@@ -180,7 +180,7 @@ header headerinfo a {
 }
 
 
-nav {
+nav#sidebar {
     overflow: auto;
     position: absolute;
     float: left;
@@ -190,16 +190,20 @@ nav {
     bottom: 32px;
     width: 200px;
     background-color: whitesmoke;
+<<<<<<< HEAD
     border-right: 1px solid #000;
     font-size: 11px;
+=======
+    border-right: 1px solid gray;
+>>>>>>> new-navigation
 }
 
-nav .nav-section {
+nav#sidebar .nav-section {
     margin: 0;
     padding: 0;
     width: 100%;
 }
-nav .nav-title {
+nav#sidebar .nav-title {
     padding: 6px 15px;
     font-weight: bold;
     background: #C5C5C5;
@@ -207,22 +211,27 @@ nav .nav-title {
     border-bottom: 1px solid #AAA;
 }
 
-nav ul, nav li {
+nav#sidebar ul, nav#sidebar li {
     font-weight: normal;
     list-style-type: none;
     margin: 0;
 }
+<<<<<<< HEAD
 nav li {
+=======
+nav#sidebar li {
+    padding: 0 25px;
+>>>>>>> new-navigation
     line-height: 30px;
 }
-nav a, nav a:visited, nav a:hover {
+nav#sidebar a, nav#sidebar a:visited, nav#sidebar a:hover {
     color: black;
     text-decoration: none;
     font-weight: normal;
     display: block;
     padding-left: 25px;
 }
-nav li img {
+nav#sidebar li img {
     vertical-align: middle;
     margin-right: 5px;
     float: left;
@@ -230,29 +239,48 @@ nav li img {
     margin-left:25px;
 }
 
-nav li.active {
+nav#sidebar li.active {
     background-color: #D5D5D5;
 }
-nav li:hover {
+nav#sidebar li:hover {
     background-color: #DDD !important;
+}
+
+nav#breadcrumb {
+    overflow: auto;
+    position:absolute;
+    top: 50px;
+    left: 201px;
+    right: 0px;
+    height: 14px;
+    width: 100%;
+    padding: 9px 15px;
+    font-size: 10px;
+    background-color: whitesmoke;
+    border-bottom: 1px solid grey;
+}
+nav#breadcrumb a {
+    color: #000;
+    text-decoration: none;
 }
 
 
 #content {
     overflow: auto;
     position:absolute;
+<<<<<<< HEAD
     top: 50px;
     left: 200px;
     right: 0px;
     bottom: 32px;
+=======
+    top:83px;
+    left: 201px;
+    right:0px;
+    bottom:34px;
+>>>>>>> new-navigation
 
     background-color: rgba(255, 255, 255, 0.8);
-    -moz-border-radius-bottomright: 6px;
-    -moz-border-radius-bottomleft: 6px;
-    -webkit-border-bottom-left-radius: 6px;
-    -webkit-border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
     padding: 15px;
 }
 #content::-webkit-scrollbar {
@@ -267,15 +295,6 @@ nav li:hover {
 	width: 8px;
 	height: 8px;
 	-webkit-border-radius: 1ex;
-}
-
-#breadcrumb {
-    font-size: 10px;
-    margin-bottom: 15px !important;
-}
-#breadcrumb a {
-    color: #000;
-    text-decoration: none;
 }
 
 
