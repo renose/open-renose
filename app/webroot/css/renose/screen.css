@@ -222,6 +222,8 @@ nav#sidebar a, nav#sidebar a:visited, nav#sidebar a:hover {
     font-weight: normal;
 }
 nav#sidebar li img {
+    height: 16px;
+    width: 16px;
     vertical-align: middle;
     margin-right: 5px;
 }
@@ -240,7 +242,6 @@ nav#breadcrumb {
     left: 201px;
     right: 0px;
     height: 14px;
-    width: 100%;
     padding: 7px 15px;
     font-size: 10px;
     background-color: whitesmoke;
@@ -328,6 +329,8 @@ footer a:hover {
     border: none;
 }
 #footer-right .icon-goto-top img {
+    height: 16px;
+    width: 16px;
     vertical-align: middle;
 }
 

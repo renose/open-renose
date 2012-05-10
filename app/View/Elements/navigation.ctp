@@ -25,20 +25,22 @@
 <?php
     $nav = array(
         'Main' => array(
-            'Dashboard' => array('img' => 'icon/dashboard.png', 'url' => '/')
+            'Dashboard' => array('img' => 'icons/clipboard.png', 'url' => '/dashboard'),
+            'Profil' => array('img' => 'icons/user.png', 'url' => '/users/profil'),
+            'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
         'Dev' => array(
             'Welcome Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/welcome'),
             'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
         ),
         'Seiten' => array(
-            'Home' => array('img' => 'icon/menu_item.png', 'url' => '/'),
-            'Über das Projekt' => array('img' => 'icon/menu_item.png', 'url' => '/page/about'),
-            'FAQ' => array('img' => 'icon/menu_item.png', 'url' => '/page/faq')
+            'Home' => array('img' => 'icons/home.png', 'url' => '/'),
+            'Über das Projekt' => array('img' => 'icons/info.png', 'url' => '/page/about'),
+            'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq')
         ),
         'Berichte' => array(
-            'Übersicht' => array('img' => 'icon/menu_item.png', 'url' => '/reports/display'),
-            'Hinzufügen' => array('img' => 'icon/menu_item.png', 'url' => '/reports/add')
+            'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),
+            'Hinzufügen' => array('img' => 'icons/add_list.png', 'url' => '/reports/add')
         )
     );
     
