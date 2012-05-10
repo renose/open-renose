@@ -55,13 +55,7 @@
 
 	<div class="container">
 
-	    <?php
-	    if(isset($isHomeSite)) {
-		echo $this->element('frontpage/home', array(), array(/*'cache' => '+1 day'*/));
-	    } else {
-		echo $content_for_layout;
-	    }
-	    ?>
+	    <?php echo $content_for_layout; ?>
 
 	    <footer class="footer">
 		<p class="pull-right"><a href="#">Back to top</a></p>

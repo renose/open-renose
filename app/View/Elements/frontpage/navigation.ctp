@@ -15,7 +15,7 @@ $c = $this->request->params['controller'];
 	<?=
 	$this->Html->link('Über uns', array(
 	    'controller' => 'pages',
-	    'action' => 'view',
+	    'action' => 'display',
 	    'about'
 	));
 	?>

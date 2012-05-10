@@ -31,8 +31,6 @@ class ReportActivitiesController extends AppController
         parent::beforeFilter();
     }
     
-    //view (?)
-    
     function add($report_id = null)
     {
         $this->set('title_for_layout', 'Tätigkeit hinzufügen');
