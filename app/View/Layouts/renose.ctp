@@ -79,7 +79,7 @@
                 (c) 2011-2012 by
                 <a href="mailto:simon@renose.de">Simon Wörner</a>, 
                 <a href="mailto:patrick@renose.de">Patrick Hafner</a> and
-                <a href="mailto:patrick@renose.de">Daniel Greiner</a> |
+                <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
                 <a href="http://www.renose.de">renose.de</a></p>
             </div>
         </footer>
