@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Mai 2012 um 19:28
+-- Erstellungszeit: 11. Mai 2012 um 13:42
 -- Server Version: 5.5.16
 -- PHP-Version: 5.3.8
 
@@ -23,18 +23,15 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `specialization` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `job_name` (`name`,`specialization`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Daten für Tabelle `jobs`
 --
 
-INSERT INTO `jobs` (`id`, `name`, `specialization`) VALUES
-(1, 'Fachinformatiker', 'Anwendungsentwicklung'),
-(2, 'Fachinformatiker', 'Systemintegration');
+INSERT INTO `jobs` (`id`, `name`) VALUES
+(1, 'Fachinformatiker - Anwendungsentwicklung');
 
 -- --------------------------------------------------------
 
@@ -45,21 +42,26 @@ INSERT INTO `jobs` (`id`, `name`, `specialization`) VALUES
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `zip_code` int(5) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `birthplace` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   `job_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Daten für Tabelle `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `job_id`) VALUES
-(1, 1, 'Admin', 'reNose', NULL),
-(2, 2, 'Simon', '', 1),
-(3, 3, 'Patrick', '', 1);
+INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `street`, `zip_code`, `city`, `birthplace`, `birthday`, `job_id`) VALUES
+(1, 1, 'Admin', 'reNose', NULL, NULL, NULL, NULL, '1999-01-01', 1),
+(2, 2, 'Simon', 'Wörner', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 3, 'Patrick', 'Hafner', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `users`
