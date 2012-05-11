@@ -34,5 +34,3 @@ class JobsController extends AppController
         parent::beforeFilter();
     }
 }
-
-?>

@@ -35,4 +35,3 @@ class Job extends AppModel
     public $hasMany = array('Profiles');
 
 }
-?>

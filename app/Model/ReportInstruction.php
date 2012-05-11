@@ -30,7 +30,7 @@ class ReportInstruction extends AppModel
 
     public $displayField = 'text';
     public $belongsTo = array('Report');
-    
+
     public $validate = array(
         'title' => array(
             'rule' => 'notEmpty'
@@ -41,4 +41,3 @@ class ReportInstruction extends AppModel
     );
 
 }
-?>

@@ -50,7 +50,7 @@ class User extends AppModel
                 'dependent' => true
                 )
             );
-        
+
         function verifies($check, $field)
 	{
             $password = $this->data[$this->name][$field];
@@ -60,4 +60,3 @@ class User extends AppModel
             return $password == $password_confirm;
 	}
 }
-?>

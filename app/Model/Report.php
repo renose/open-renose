@@ -30,7 +30,7 @@ class Report extends AppModel
 
     public $belongsTo = array('User');
     public $hasMany = array('ReportActivity', 'ReportInstruction');
-    
+
     public $validate = array(
             'date' => array(
                     'rule' => 'notEmpty'
@@ -47,4 +47,3 @@ class Report extends AppModel
     );
 
 }
-?>

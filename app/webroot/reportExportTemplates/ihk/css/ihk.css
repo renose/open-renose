@@ -1,0 +1,49 @@
+* {
+    font-family: Arial, sans-serif;
+}
+
+hr {
+    background-color: black;
+    height: 1px;
+    border: none;
+}
+
+div.clearleft {
+    clear:left;
+}
+
+.aligncenter {
+    text-align: center;
+}
+
+
+/* overview.ctp */
+
+img#ihk-logo {
+    float:left;
+    margin-right: 15px;
+}
+h1#ihk-name {
+    font-weight: 100;
+}
+
+h3.overview-subline {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+table.overview-table {
+    border-bottom: 1px solid black;
+    line-height: 26px;
+}
+
+ul.list-border-bottom {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.list-border-bottom li {
+    border-bottom: 1px solid black;
+    line-height: 26px;
+}

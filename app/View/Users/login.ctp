@@ -37,4 +37,3 @@
     echo $this->Form->input('password');
 
     echo $this->Form->end('Login');
-?>

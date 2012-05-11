@@ -29,7 +29,7 @@ class ReportActivity extends AppModel
 {
 
     public $belongsTo = array('Report');
-    
+
     public $validate = array(
         'text' => array(
             'rule' => 'notEmpty'
@@ -37,4 +37,3 @@ class ReportActivity extends AppModel
     );
 
 }
-?>

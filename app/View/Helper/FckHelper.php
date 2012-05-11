@@ -1,16 +1,15 @@
-<?php 
-class FckHelper extends Helper { 
+<?php
+class FckHelper extends Helper {
 
-    var $helpers = Array('Html'); 
+    var $helpers = Array('Html');
 
-    function load($id) { 
-        $did = ''; 
-        foreach (explode('.', $id) as $v) { 
-            $did .= ucfirst($v); 
-        }  
+    function load($id) {
+        $did = '';
+        foreach (explode('.', $id) as $v) {
+            $did .= ucfirst($v);
+        }
 
-        $code = "CKEDITOR.replace( '".$did."' );"; 
-        return $this->Html->scriptBlock($code);  
-    } 
-} 
-?>
+        $code = "CKEDITOR.replace( '".$did."' );";
+        return $this->Html->scriptBlock($code);
+    }
+}

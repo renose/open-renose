@@ -77,4 +77,3 @@
     pr($this->Session->read());
     pr($User);
     pr($Profile);
-?>

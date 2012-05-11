@@ -44,4 +44,3 @@
                 'update' => 'testdiv'));
     echo $this->Form->end();*/
     echo $this->Form->end('Registrieren');
-?>
