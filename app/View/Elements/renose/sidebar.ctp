@@ -26,7 +26,7 @@
     $nav = array(
         'Main' => array(
             'Dashboard' => array('img' => 'icons/clipboard.png', 'url' => '/dashboard'),
-            'Profil' => array('img' => 'icons/user.png', 'url' => '/users/profil'),
+            'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
             'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
         'Dev' => array(

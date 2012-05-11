@@ -4,7 +4,7 @@
  * NavigationHelper.php
  * 
  * Copyright (c) 2011-2012 open reNose team <info at renose.de>.
- * Simon W�rner, Patrick Hafner and Daniel Greiner.
+ * Simon Wörner, Patrick Hafner and Daniel Greiner.
  * 
  * This file is part of open reNose.
  * 

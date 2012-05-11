@@ -25,11 +25,49 @@
 <?php
 class ProfilesController extends AppController
 {
-    public $scaffold;
 
     public function beforeFilter()
     {
         parent::beforeFilter();
+    }
+    
+    public function index()
+    {
+        $this->loadModel('Job');
+        $profile = $this->Profile->findByUserId($this->Auth->user('id'));
+        $jobs = $this->Job->find('all', array('recursive' => 0));
+        $this->set('title_for_layout', 'Profil');
+        
+        $job_list = array();
+        foreach($jobs as $job)
+            $job_list[] = $job['Job']['name'];
+        
+        //Daten eingegeben? => Speichern
+        if (!empty($this->request->data))
+        {
+            $job_name = $this->request->data['Profile']['job_name'];
+            $job = $this->Job->findByName($job_name);
+            
+            if($job != null)
+                $this->request->data['Profile']['job_id'] = $job['Job']['id'];
+            else
+                $this->request->data['Job']['name'] = $job_name;
+            
+            if ($this->Profile->saveAssociated($this->request->data))
+            {
+                $this->Session->setFlash('Dein Profil wurde gespeichert.', 'flash_success');
+                $this->redirect( array('controller' => 'users', 'action' => 'dashboard') );
+            }
+            else
+                $this->Session->setFlash('Fehler beim Speichern des Profils.');
+        }
+        else
+        {
+            $profile['Profile']['job_name'] = $profile['Job']['name'];
+            $this->request->data = $profile;
+        }
+        
+        $this->set('jobs', $job_list);
     }
 }
 ?>

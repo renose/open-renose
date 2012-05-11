@@ -157,36 +157,9 @@ class UsersController extends AppController
 
     function get_name()
     {
-        $Profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+        $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
-        //Vorname bekannt
-        if ($Profile['Profile']['first_name'])
-        {
-            //Setze Vornamen
-            $name = $Profile['Profile']['first_name'];
-
-            //Nachname auch bekannt? - setzen
-            if ($Profile['Profile']['last_name'])
-                $name .= ' ' . $Profile['Profile']['last_name'];
-        }
-        //Vorname nicht bekannt aber Nachname?
-        else if ($Profile['Profile']['last_name'])
-        {
-            //Setze Nachname mit Herr/Frau
-            $name .= 'Herr/Frau' . $Profile['Profile']['last_name'];
-        }
-        //Beides Unbekannt
-        else
-        {
-            //Registriter User
-            if ($this->Auth->user())
-                $name = 'Ninja';
-            //Gast
-            else
-                $name = 'Gast';
-        }
-
-        return $name;
+        return $profile['Profile']['first_name'] .' ' . $profile['Profile']['last_name'];
     }
 
     function test()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
     <head>
         <?php echo $this->Html->charset(); ?>
         <title><?= $title_for_layout.' - open reNose'; ?></title>
@@ -29,10 +29,7 @@
     </head>
 
     <body data-spy="scroll" data-target=".subnav" data-offset="50">
-
-
-	<!-- Navbar
-	  ================================================== -->
+        
 	<div class="navbar navbar-fixed-top">
 	    <div class="navbar-inner">
 		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -54,6 +51,12 @@
 	</div>
 
 	<div class="container">
+            
+            <?php
+            echo $this->Session->flash();
+            echo $this->Session->flash('auth');
+            echo $this->Session->flash('email');
+            ?>
 
 	    <?php echo $content_for_layout; ?>
 
@@ -65,6 +68,6 @@
 		<p>Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
 	    </footer>
 
-	</div><!-- /container -->
+	</div>
     </body>
 </html>

@@ -66,6 +66,9 @@ h1, h2 {
 h1 {
     font-size: 230%;
 }
+h1 img {
+    vertical-align: middle;
+}
 h2 {
     font-size: 190%;
 }
@@ -335,13 +338,6 @@ footer a:hover {
 }
 
 /* make cake errors visible */
-.cake-error {
-    position: relative;
-    top: 75px;
-    left: 200px;
-    margin: 0 15px;
-    z-index: 80;
-}
 .cake-sql-log caption {
     color: black;
 }
