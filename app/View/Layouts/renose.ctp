@@ -26,7 +26,7 @@
     <body>
         <header>
             <div id="logo">
-                <a href="<?php echo $this->Html->url('/', true); ?>">
+                <a href="<?php echo $this->Html->url('/dashboard', true); ?>">
                     <span>open</span>reNose
                 </a>
             </div>
@@ -42,7 +42,7 @@
         </header>
 
         <nav id="sidebar">
-            <?php echo $this->element('navigation'); ?>
+            <?php echo $this->element('renose/sidebar'); ?>
         </nav>
         
         <nav id="breadcrumb">

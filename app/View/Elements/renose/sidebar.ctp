@@ -34,7 +34,6 @@
             'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
         ),
         'Seiten' => array(
-            'Home' => array('img' => 'icons/home.png', 'url' => '/'),
             'Über das Projekt' => array('img' => 'icons/info.png', 'url' => '/page/about'),
             'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq')
         ),
@@ -44,29 +43,5 @@
         )
     );
     
-    foreach($nav as $title => $items)
-    {
-        echo '<div class="nav-section">';
-        echo '<div class="nav-title">' . $title . '</div>';
-        
-        echo '<ul>';
-        foreach($items as $name => $options)
-        {
-            echo '<a href="' . $this->Html->url($options['url']) . '">';
-            
-            if($this->Html->url(null) == $this->Html->url($options['url']))
-                echo '<li class="active">';
-            else
-                echo '<li>';
-            
-            echo $this->Html->image($options['img']);
-            echo $name;
-            echo '</li>';
-            
-            echo '</a>';
-        }
-        echo '</ul>';
-        
-        echo '</div>';
-    }
+    $this->Navigation->show($nav);
 ?>
