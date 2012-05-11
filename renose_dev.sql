@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Mai 2012 um 13:42
+-- Erstellungszeit: 11. Mai 2012 um 14:18
 -- Server Version: 5.5.16
 -- PHP-Version: 5.3.8
 
@@ -13,6 +13,20 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `renose_dev`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `calendar_entry`
+--
+
+CREATE TABLE IF NOT EXISTS `calendar_entry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `day` date NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -130,6 +144,35 @@ CREATE TABLE IF NOT EXISTS `report_instructions` (
 
 INSERT INTO `report_instructions` (`id`, `report_id`, `title`, `text`) VALUES
 (1, 1, 'Webentwicklung mit cakePHP', 'Prototyp mit cakePHP und Scaffolfing erstellen.');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `schedule`
+--
+
+CREATE TABLE IF NOT EXISTS `schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `schedule_lesson`
+--
+
+CREATE TABLE IF NOT EXISTS `schedule_lesson` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shedule_id` int(11) NOT NULL,
+  `day` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `teacher` varchar(255) NOT NULL,
+  `room` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
