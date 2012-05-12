@@ -13,6 +13,13 @@ div.navbar-inner {
 
 }
 
+.nav li img {
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
 /* reNose logo */
 div.navbar-inner a#logo {
 	font-family: Helvetica;
@@ -75,4 +82,10 @@ a#navigation-forgot-password:hover {
 
 h1.frontpage-headline {
     margin-bottom: 25px;
+}
+
+.icon-goto-top img {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
 }

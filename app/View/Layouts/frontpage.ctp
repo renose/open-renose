@@ -61,7 +61,13 @@
 	    <?php echo $content_for_layout; ?>
 
 	    <footer class="footer">
-		<p class="pull-right"><a href="#">Back to top</a></p>
+		<p class="pull-right">
+                    <a href="#" class="icon-goto-top">
+                        <?php echo $this->Html->image('icons/up.png'); ?>
+                    </a>
+                    <a href="#">Back to top</a>
+                </p>
+                
 		<p>&copy; 2012 by <a href="mailto:simon@renose.de">Simon Wörner</a>,
 		    <a href="mailto:patrick@renose.de">Patrick Hafner</a> & <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
 		    <a href="http://www.renose.de">renose.de</a></p>

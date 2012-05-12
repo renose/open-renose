@@ -59,4 +59,30 @@ class NavigationHelper extends AppHelper {
         }
     }
     
+    public function frontpage($navigation)
+    {
+        foreach($navigation as $title => $items)
+        {
+            echo '<ul class=nav>';
+            foreach($items as $name => $options)
+            {
+                if($this->Html->url(null) == $this->Html->url($options['url']))
+                    echo '<li class="active">';
+                else
+                    echo '<li>';
+                
+                echo '<a href="' . $this->Html->url($options['url']) . '">';
+                
+                if(isset($options['img']))
+                    echo $this->Html->image($options['img']);
+                echo $name;
+                
+                echo '</a>';
+                
+                echo '</li>';
+            }
+            echo '</ul>';
+        }
+    }
+    
 }
