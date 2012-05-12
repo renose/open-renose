@@ -1,4 +1,5 @@
 <?php
+
 echo $this->Form->create('User', array(
 	'action' => 'login',
 	'class' => 'form-inline navbar-search pull-right',
@@ -7,6 +8,8 @@ echo $this->Form->create('User', array(
 	    'error' => false
 	    )
 	));
+
+echo $this->Html->image('icons_white/login.png', array('class' => 'login-icon'));
 
     echo $this->Form->input('email', array(
 	'class' => 'input-medium',

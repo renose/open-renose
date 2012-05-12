@@ -22,7 +22,10 @@
  */
 ?>
 
-<h1 class="frontpage-headline">Login</h1>
+<h1 class="frontpage-headline">
+    <?php echo $this->Html->image('icons/login.png'); ?>
+    Login
+</h1>
 
 <?php
     echo $this->Form->create('User', array(

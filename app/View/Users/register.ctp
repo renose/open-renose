@@ -22,7 +22,10 @@
  */
 ?>
 
-<h1 class="frontpage-headline">Registrieren</h1>
+<h1 class="frontpage-headline">
+    <?php echo $this->Html->image('icons/key.png'); ?>
+    Registrieren
+</h1>
 
 <?php
     echo $this->Form->create('User', array(

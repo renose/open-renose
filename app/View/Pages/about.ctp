@@ -23,7 +23,10 @@
  */
 ?>
 
-<h1>Über das Projekt</h1>
+<h1>
+    <?php echo $this->Html->image('icons/info.png'); ?>
+    Über das Projekt
+</h1>
 
 <p>
     Die Projekt Idee entstand Ende 2010, also Simon und Patrick ihre Ausbildung als <em>Fachinformatiker - Anwendungsentwicklung</em> anfingen.
