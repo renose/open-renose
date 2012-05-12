@@ -37,7 +37,8 @@
                 </form>
             </div>
             <div id="headerinfo">
-                <?php echo $this->element('userinfo'); ?>
+                <?php echo 'Hallo <b>' . $this->requestAction('/users/get_name') . '</b>.'; ?>
+                <?php echo $this->Html->link('Ausloggen', '/users/logout'); ?>
             </div>
         </header>
 
