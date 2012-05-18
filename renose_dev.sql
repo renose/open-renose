@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 
 CREATE TABLE IF NOT EXISTS `schedule_lesson` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shedule_id` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL,
   `day` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
