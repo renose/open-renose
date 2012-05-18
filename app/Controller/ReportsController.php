@@ -1,5 +1,4 @@
 <?php
-
 /*
  * reports_controller.php
  *
@@ -22,7 +21,6 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-
 <?php
 
 App::import('Vendor', 'tcpdf/config/lang/ger');
@@ -36,6 +34,12 @@ class ReportsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
+    }
+
+    public function beforeRender()
+    {
+        parent::beforeRender();
+        header('Content-type: application/pdf');
     }
 
     function index()
@@ -156,7 +160,7 @@ class ReportsController extends AppController
         $this->loadModel('User');
 
         // create view for using elements in controller
-        $view = new View($this);
+        $view = new View($this, false);
 
         $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
@@ -174,17 +178,15 @@ class ReportsController extends AppController
         $pdf->AddPage();
         #file_get_contents($this->render('reportExportTemplates/ihk/overview'));
 #        $overview = $view->element('reportExportTemplates/ihk/overview');
-ob_clean();
 
-header('Content-type: application/pdf');
-ob_start();
-header('Content-type: application/pdf');
-$pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
-header('Content-type: application/pdf');
+
+#$pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
+        ob_clean();
+        header('Content-type: application/pdf');
         $pdf->Output('pdf.pdf', 'I');
-header('Content-type: application/pdf');
-        ob_flush();
     }
+
+    private function __setExportTemplate() {}
 
     //edit
 
