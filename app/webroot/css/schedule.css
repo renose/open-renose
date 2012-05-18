@@ -1,0 +1,20 @@
+#schedule {
+    
+}
+
+#schedule td {
+    border: 1px solid transparent;
+}
+#schedule .lesson-subject {
+    cursor: text;
+}
+#schedule .lesson-subject:hover {
+    border: 1px solid red;
+}
+
+#schedule .lesson-delete {
+    height: 16px;
+    width: 16px;
+    margin-left: auto;
+    cursor: pointer;
+}

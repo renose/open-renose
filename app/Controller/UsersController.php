@@ -27,8 +27,6 @@
 
 class UsersController extends AppController
 {
-    public $scaffold;
-
     public function beforeFilter()
     {
         parent::beforeFilter();

@@ -4,110 +4,94 @@ App::uses('AppController', 'Controller');
 
 class SchedulesController extends AppController
 {
+    public $components = array('RequestHandler');
+    
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+        
+        if($this->action == 'save' || $this->action == 'delete')
+        {
+            $this->Security->csrfCheck = false;
+            $this->Security->validatePost = false;
+        }
+    }
     
     public function index()
     {
         $schedule = $this->Schedule->find('first');
+        $days = array();
+        $lesson_count = 0;
+        
+        foreach($schedule['ScheduleLesson'] as $lesson)
+            $days[$lesson['day']][] = $lesson;
+        
+        foreach($days as $day)
+        {
+            if(count($day) > $lesson_count)
+                $lesson_count = count($day);
+        }
+        
         $this->set('schedule', $schedule);
+        $this->set('lesson_count', $lesson_count);
+        $this->set('days', $days);
     }
-
-    /**
-     * view method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null)
+    
+    public function save()
     {
-        $this->Schedule->id = $id;
-        if (!$this->Schedule->exists())
+        $this->loadModel('ScheduleLesson');
+        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+        $lesson = $this->ScheduleLesson->findByScheduleIdAndDayAndNumber(
+                $schedule['Schedule']['id'],
+                $this->request->data['day'],
+                $this->request->data['number']);
+        
+        if(isset($lesson['ScheduleLesson']['id']))
         {
-            throw new NotFoundException(__('Invalid schedule'));
-        }
-        $this->set('schedule', $this->Schedule->read(null, $id));
-    }
-
-    /**
-     * add method
-     *
-     * @return void
-     */
-    public function add()
-    {
-        if ($this->request->is('post'))
-        {
-            $this->Schedule->create();
-            if ($this->Schedule->save($this->request->data))
-            {
-                $this->Session->setFlash(__('The schedule has been saved'));
-                $this->redirect(array('action' => 'index'));
-            }
-            else
-            {
-                $this->Session->setFlash(__('The schedule could not be saved. Please, try again.'));
-            }
-        }
-        $users = $this->Schedule->User->find('list');
-        $this->set(compact('users'));
-    }
-
-    /**
-     * edit method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null)
-    {
-        $this->Schedule->id = $id;
-        if (!$this->Schedule->exists())
-        {
-            throw new NotFoundException(__('Invalid schedule'));
-        }
-        if ($this->request->is('post') || $this->request->is('put'))
-        {
-            if ($this->Schedule->save($this->request->data))
-            {
-                $this->Session->setFlash(__('The schedule has been saved'));
-                $this->redirect(array('action' => 'index'));
-            }
-            else
-            {
-                $this->Session->setFlash(__('The schedule could not be saved. Please, try again.'));
-            }
+            $this->ScheduleLesson->create();
+            
+            $lesson = array(
+                'ScheduleLesson' => array(
+                    'schedule_id' => $schedule['Schedule']['id'],
+                    'day' => $this->request->data['day'],
+                    'number' => $this->request->data['number'],
+                    'subject' => $this->request->data['value']
+                )
+            );
         }
         else
-        {
-            $this->request->data = $this->Schedule->read(null, $id);
-        }
-        $users = $this->Schedule->User->find('list');
-        $this->set(compact('users'));
+            $lesson['ScheduleLesson']['subject'] = $this->request->data['value'];
+        
+        if($this->ScheduleLesson->save($lesson))
+            echo $lesson['ScheduleLesson']['subject'];
+        else
+            echo 'ERROR!';
+        
+        $this->layout = null;
+        $this->autoRender = false;
     }
-
-    /**
-     * delete method
-     *
-     * @param string $id
-     * @return void
-     */
-    public function delete($id = null)
+    
+    public function delete()
     {
-        if (!$this->request->is('post'))
+        $this->loadModel('ScheduleLesson');
+        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+        $lesson = $this->ScheduleLesson->findByScheduleIdAndDayAndNumber(
+                $schedule['Schedule']['id'],
+                $this->request->data['day'],
+                $this->request->data['number']);
+        
+        if($lesson != null)
         {
-            throw new MethodNotAllowedException();
+            if($this->ScheduleLesson->delete($lesson['ScheduleLesson']['id']))
+                echo json_encode(array('status' => 'ok', 'lesson' => null));
+            else
+                echo json_encode(array('status' => 'error', 'lesson' => $lesson));
         }
-        $this->Schedule->id = $id;
-        if (!$this->Schedule->exists())
-        {
-            throw new NotFoundException(__('Invalid schedule'));
-        }
-        if ($this->Schedule->delete())
-        {
-            $this->Session->setFlash(__('Schedule deleted'));
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('Schedule was not deleted'));
-        $this->redirect(array('action' => 'index'));
+        else
+            echo json_encode(array('status' => 'not found', 'lesson' => null));
+        
+        $this->layout = null;
+        $this->autoRender = false;
     }
 
 }
