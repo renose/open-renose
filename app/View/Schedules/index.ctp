@@ -50,45 +50,50 @@
 </table>
 
 <script type="text/javascript">
-    $('#schedule .lesson-delete').hide('fast');
-    $('#schedule .lesson-delete').click(function() {
-        var that = this;
-        $.ajax({
-            url: '<?php echo $this->Html->url('delete'); ?>',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                day: $(that).parent().attr('data-day'),
-                number: $(that).parent().attr('data-number')
-            },
-            success: function(data) {
-                console.log(data);
-
-                if(data.status == 'ok')
-                {
-                    $(that).parent().attr('data-exists', 'false');
-                    $(that).parent().html('-');
+    
+    init($('#schedule'));
+    
+    function init(elements)
+    {
+        $(elements).find('.lesson-delete').hide();
+        $(elements).find('.lesson-delete').click(function() {
+            var that = this;
+            $.ajax({
+                url: '<?php echo $this->Html->url('delete'); ?>',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    day: $(that).parent().attr('data-day'),
+                    number: $(that).parent().attr('data-number')
+                },
+                success: function(data) {
+                    if(data.status == 'ok')
+                    {
+                        $(that).parent().attr('data-exists', 'false');
+                        $(that).parent().html('-');
+                    }
+                    else
+                        alert('Fehler beim Speichern :(');
                 }
-                else
-                    alert('Fehler beim Speichern :(');
-            }
+            });
+
+            return false;
         });
 
-        return false;
-    });
-    
-    $('#schedule .lesson').mouseenter(function() {
-        if($(this).find('.lesson-subject').attr('data-exists') == 'true')
-            $(this).find('img').show('fast');
-    });
-    $('#schedule .lesson').mouseleave(function() {
-        $(this).find('img').hide('fast');
-    });
-    
-    editable($('#schedule .lesson-subject'));
-    $('#schedule .lesson').click(function() {
-        $(this).find('.lesson-subject').click();
-    });
+        $(elements).find('.lesson').mouseenter(function() {
+            if($(this).find('.lesson-subject').attr('data-exists') == 'true')
+                $(this).find('img').css('display', '');
+        });
+        $(elements).find('.lesson').mouseleave(function() {
+            $(this).find('img').css('display', 'none');
+        });
+
+        editable($(elements).find('.lesson-subject'));
+        $(elements).find('.lesson').click(function(e) {
+            if($(this).find('input').length == 0)
+                $(this).find('.lesson-subject').click();
+        });
+    }
     
     function editable(elements)
     {
@@ -97,8 +102,8 @@
             indicator: 'speichern...',
             placeholder: '-',
             tooltip: 'Zum Ändern klicken...',
-            cancel: 'Abbrechen',
             submit: 'Ändern',
+            cancel: 'Abbrechen',
             height: 'none',
             width: 'none',
             submitdata: function(value, settings) {
@@ -117,20 +122,20 @@
     }
     function addLine()
     {
-        var number = $('#schedule .lesson-number').length + 1;
-        var line = '<tr><td class="lesson-number" data-id="null">' + number + '</td>';
+        var number = $('#schedule .lesson-number').length;
+        var line = '<tr><td class="lesson-number" data-id="null">' + (number+1) + '</td>';
         
         for(var i=0; i < 6; i++)
         {
-            line = '<td class="lesson" data-day="0" data-number="2">';
-            line = '<div class="lesson-subject" data-exists="false" title="Zum Ändern klicken..." style="">-</div>';
-            line = '<img src="/renose/img/icons/delete.png" class="lesson-delete" alt="Diese Stunde löschen" style="display: none; ">';
-            line = '</td>';
+            line += '<td class="lesson" data-day="' + i + '" data-number="' + number + '">';
+            line += '<div class="lesson-subject" data-exists="false"></div>';
+            line += '<img src="/renose/img/icons/delete.png" class="lesson-delete" alt="Diese Stunde löschen">';
+            line += '</td>';
         }
         
-        line = '</tr>';
+        line += '</tr>';
         
         $('#schedule tbody').append(line);
-        //editable($(line).find('.lesson-subject'));
+        init($('#schedule tr').last());
     }
 </script>
