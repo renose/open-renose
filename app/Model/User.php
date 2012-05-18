@@ -48,8 +48,12 @@ class User extends AppModel
         public $hasOne = array(
             'Profile' => array(
                 'dependent' => true
+                ),
+            'Schedule' => array(
+                'dependent' => true
                 )
             );
+        public $hasMany = array('CalenderEntry');
         
         function verifies($check, $field)
 	{
