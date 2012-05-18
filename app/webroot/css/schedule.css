@@ -2,19 +2,27 @@
     
 }
 
+#schedule tr {
+    clear: both;
+}
 #schedule td {
     border: 1px solid transparent;
 }
-#schedule .lesson-subject {
+
+#schedule .lesson {
     cursor: text;
 }
-#schedule .lesson-subject:hover {
+#schedule .lesson:hover {
     border: 1px solid red;
+}
+
+#schedule .lesson-subject {
+    float: left;
 }
 
 #schedule .lesson-delete {
     height: 16px;
     width: 16px;
-    margin-left: auto;
+    float: right;
     cursor: pointer;
 }

@@ -46,10 +46,8 @@ class SchedulesController extends AppController
                 $this->request->data['day'],
                 $this->request->data['number']);
         
-        if(isset($lesson['ScheduleLesson']['id']))
+        if(!isset($lesson['ScheduleLesson']['id']))
         {
-            $this->ScheduleLesson->create();
-            
             $lesson = array(
                 'ScheduleLesson' => array(
                     'schedule_id' => $schedule['Schedule']['id'],
@@ -58,6 +56,8 @@ class SchedulesController extends AppController
                     'subject' => $this->request->data['value']
                 )
             );
+            
+            $this->ScheduleLesson->create();
         }
         else
             $lesson['ScheduleLesson']['subject'] = $this->request->data['value'];
