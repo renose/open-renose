@@ -20,9 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
-?>
-<?php
 
+error_reporting(E_ALL);
 App::import('Vendor', 'tcpdf/config/lang/ger');
 App::import('Vendor', 'tcpdf/tcpdf');
 
@@ -34,12 +33,19 @@ class ReportsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
+        if($this->request->params['action'] == 'export') {
+            #header('Content-type: application/pdf');
+            $this->layout = false;
+            $this->autoRender = false;
+            set_time_limit(0);
+            ini_set('memory_limit', '512M');
+        }
     }
 
     public function beforeRender()
     {
         parent::beforeRender();
-        header('Content-type: application/pdf');
+        #header('Content-type: application/pdf');
     }
 
     function index()
@@ -153,16 +159,14 @@ class ReportsController extends AppController
 
     // pdfgen
     public function export() {
-        $this->layout = false;
-        $this->autoRender = false;
-
         // load user model for data
         $this->loadModel('User');
-
         // create view for using elements in controller
-        $view = new View($this, false);
+        #$view = new View($this, false);
 
         $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+
+        $this->set('templatePath', '/reportExporttemplates/ihk/');
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->SetCreator('reNose.de');
@@ -170,19 +174,56 @@ class ReportsController extends AppController
         //$pdf->SetTitle('Berichtsheft von '.$userProfile['full_name']);
 
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetMargins(PDF_MARGIN_LEFT, 15, PDF_MARGIN_RIGHT);
+
+        // disable header
+        $pdf->setPrintHeader(false);
+
+        // disable footer
+        $pdf->setPrintFooter(false);
 #$this->render('reportExportTemplates/ihk/overview');
         //$pdf->SetFont('Arial', 'B', 20);
 
         // add a page
         $pdf->AddPage();
-        #file_get_contents($this->render('reportExportTemplates/ihk/overview'));
-#        $overview = $view->element('reportExportTemplates/ihk/overview');
+
+        // write first site which contains personal data
+        $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
+
+        // the whole activity list
+        $activityList = array();
 
 
-#$pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
-        ob_clean();
-        header('Content-type: application/pdf');
+        // dummy records - yet!
+        $activityDummyRecord = array(
+            'abteilung' => 'Softwareentwicklung',
+            'von' => '01.09.2010',
+            'bis' => '03.09.2010',
+        );
+
+        for($i=0;$i<40;$i++) {
+            $activityList[] = $activityDummyRecord;
+        }
+
+        $this->set('activityList', $activityList);
+        $sizeOfActivityList = sizeof($activityList);
+
+        // max 31 records per page (A4)
+        $pageCounter = ceil($sizeOfActivityList / 31);
+
+
+        // fresh rendering for every page
+        for($i=0;$i<$pageCounter;$i++) {
+            $pdf->AddPage();
+
+            $this->set('start', $i*31);
+            $this->set('end', ($i+1)* 31);
+
+            $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
+        }
+
+
+        // kick it out
         $pdf->Output('pdf.pdf', 'I');
     }
 

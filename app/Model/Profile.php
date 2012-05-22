@@ -20,15 +20,17 @@
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
-?>
 
-<?php
 class Profile extends AppModel
 {
 	public $displayField = 'full_name';
 
         public $virtualFields = array(
-            'full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)");
+            'full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)"
+        );
 
-        public $belongsTo = array('User', 'Job');
+        public $belongsTo = array(
+            'User',
+            'Job'
+        );
 }

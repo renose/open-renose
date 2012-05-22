@@ -1,5 +1,6 @@
 * {
     font-family: Arial, sans-serif;
+    font-size: 10pt;
 }
 
 hr {
@@ -21,20 +22,23 @@ div.clearleft {
 
 img#ihk-logo {
     float:left;
-    margin-right: 15px;
+    width: 100px;
 }
 h1#ihk-name {
-    font-weight: 100;
-}
-
-h3.overview-subline {
-    font-size: 14px;
-    margin-top: 20px;
+    font-weight: lighter;
+    font-size: 60px;
 }
 
 table.overview-table {
-    border-bottom: 1px solid black;
-    line-height: 26px;
+    line-height: 6px;
+}
+
+table.overview-table tr td {
+    border-bottom: 1px solid #666;
+}
+
+table.overview-table tr td.no-border {
+    border-bottom: none;
 }
 
 ul.list-border-bottom {
@@ -45,5 +49,17 @@ ul.list-border-bottom {
 
 ul.list-border-bottom li {
     border-bottom: 1px solid black;
-    line-height: 26px;
+    /*line-height: 26px;*/
+}
+
+
+/* activityList.ctp */
+
+table.activityList {
+    line-height: 6px;
+    border: 1;
+}
+
+table tr td.no-lineheight {
+    line-height: normal;
 }
