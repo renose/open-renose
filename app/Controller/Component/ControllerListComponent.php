@@ -20,9 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
-?>
 
-<?php
 class ControllerListComponent extends Component
 {
     public function get($groupPermissions = null)
