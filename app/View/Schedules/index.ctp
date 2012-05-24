@@ -18,25 +18,29 @@
     </thead>
     <tbod>
         <?php
-        for ($i = 0; $i < $lesson_count + 1; $i++)
+        $lessons = true;
+        $lesson = 0;
+        while($lessons)
         {
+            $lessons = false;
             echo '<tr>';
-            echo '<td class="lesson-number" data-id="null">' . ($i + 1) . '</td>';
+            echo '<td class="lesson-number" data-id="null">' . ($lesson + 1) . '</td>';
 
             for ($n = 0; $n < 6; $n++)
             {
-                if (isset($days[$n][$i]))
+                if (isset($days[$n][$lesson]))
                 {
-                    echo '<td class="lesson" data-day="' . $n . '" data-number="' . $i . '">';
+                    $lessons = true;
+                    echo '<td class="lesson" data-day="' . $n . '" data-number="' . $lesson . '">';
                     
-                    echo '<div class="lesson-subject" data-exists="true">' . $days[$n][$i]['subject'] . '</div>';
+                    echo '<div class="lesson-subject" data-exists="true">' . $days[$n][$lesson]['subject'] . '</div>';
                     echo $this->Html->image('icons/delete.png', array('class' => 'lesson-delete', 'alt' => 'Diese Stunde löschen'));
 
                     echo '</td>';
                 }
                 else
                 {
-                    echo '<td class="lesson" data-day="' . $n . '" data-number="' . $i . '">';
+                    echo '<td class="lesson" data-day="' . $n . '" data-number="' . $lesson . '">';
                     echo '<div class="lesson-subject" data-exists="false"></div>';
                     echo $this->Html->image('icons/delete.png', array('class' => 'lesson-delete', 'alt' => 'Diese Stunde löschen'));
                     echo '</td>';
@@ -44,6 +48,8 @@
             }
 
             echo '</tr>';
+            
+            $lesson++;
         }
         ?>
     </tbod>
@@ -67,13 +73,16 @@
                     number: $(that).parent().attr('data-number')
                 },
                 success: function(data) {
-                    if(data.status == 'ok')
+                    if(data.status.code > 0)
                     {
                         $(that).parent().attr('data-exists', 'false');
                         $(that).parent().find('.lesson-subject').html('-');
                     }
                     else
-                        alert('Fehler beim Speichern :(');
+                    {
+                        console.log(data);
+                        alert(data.message);
+                    }
                 }
             });
 
@@ -113,10 +122,23 @@
                 };
             },
             callback : function(value, settings) {
-                $(this).attr('data-exists', 'true');
-
-                if($(this).parent().attr('data-number') == ($('#schedule .lesson-number').length - 1))
-                    addLine();
+                
+                var data = jQuery.parseJSON(value);
+                
+                if(data.status.code > 0)
+                {
+                    $(this).html(data.data);
+                    $(this).attr('data-exists', 'true');
+                    
+                    if($(this).parent().attr('data-number') == ($('#schedule .lesson-number').length - 1))
+                        addLine();
+                }
+                else
+                {
+                    console.log(data);
+                    alert(data.message);
+                }
+               
             }
         });
     }

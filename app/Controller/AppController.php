@@ -21,9 +21,6 @@
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
-?>
-
-<?php
 
 App::import('Vendor', 'ChromePhp');
 
@@ -55,20 +52,6 @@ class AppController extends Controller
         // change layout to frontpage for guests
         if (!$this->Auth->user('id'))
             $this->layout = 'frontpage';
-    }
-
-    function beforeRender()
-    {
-        parent::beforeRender();
-
-        // change layout on errors
-        if ($this->name == 'CakeError') {
-            if(!$this->Auth->user('id')) {
-                $this->layout = 'frontpage';
-            } else {
-                $this->layout = 'renose';
-            }
-        }
     }
 
 }
