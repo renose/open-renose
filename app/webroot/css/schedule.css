@@ -1,5 +1,8 @@
 #schedule {
-
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 550px;
 }
 
 #schedule tr {
@@ -9,8 +12,14 @@
     border: 1px solid transparent;
 }
 
+#schedule .lesson-number {
+    text-align: right;
+    font-weight: bold;
+}
+
 #schedule .lesson {
     cursor: text;
+    padding-right: 20px;
 }
 #schedule .lesson:hover {
     border: 1px solid #CCCCCC;
@@ -21,6 +30,7 @@
 #schedule .lesson-subject {
     float: left;
     width: 100%;
+    text-align: center;
 }
 #schedule .lesson-subject input {
     font-size: 110%;
@@ -64,7 +74,7 @@
 
 #schedule .lesson-delete {
     position: absolute;
-    margin-left: -18px;
+    margin-left: -2px;
     height: 16px;
     width: 16px;
     float: right;
