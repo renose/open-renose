@@ -57,7 +57,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     for ($month = 1; $month <= 12; $month++)
     {
         ?>
-        <div class="calendar-month">
+        <div class="calendar-month-container">
             <table class="calendar-month">
                 <caption>
                     <b><?php echo __(date('F', mkdate(1, $month, $year))); ?></b>
@@ -141,8 +141,8 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     
     function calendarResize() {
         var content_width = $('#content').width() - parseInt($('#content').css('padding-left'), 10) - parseInt($('#content').css('padding-right'), 10);
-        var months_per_row = Math.floor(content_width / $('.calendar-month').outerWidth(true));
-        var width = $('.calendar-month').outerWidth(true) * months_per_row;
+        var months_per_row = Math.floor(content_width / $('.calendar-month-container').outerWidth(true));
+        var width = $('.calendar-month-container').outerWidth(true) * months_per_row;
         
         $('.calendar').css('width', width);
     }
