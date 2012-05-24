@@ -26,22 +26,24 @@ $this->Html->addCrumb('Berichte', 'display');
 $this->Html->addCrumb($year, array('action' => 'display', $year));
 ?>
 
-<h1><?php echo $title_for_layout; ?></h1>
+<h1>
+    <?php echo $this->Html->image('icons/planner.png'); ?>
+    <?php echo $title_for_layout; ?>
+</h1>
+
+<div class="calendar-year">
+    <div class="last">
+        <?php echo $this->Html->link('≪ ' . ($year - 1), array($year - 1)); ?>
+    </div>
+    <div class="this">
+        <h1><?php echo $year; ?></h1>
+    </div>
+    <div class="next">
+        <?php echo $this->Html->link(($year + 1) . ' ≫', array($year + 1)); ?>
+    </div>
+</div>
 
 <div class="calendar">
-    <div class="calendar-year">
-        <div class="last">
-            <?php echo $this->Html->link('≪ ' . ($year - 1), array($year - 1)); ?>
-        </div>
-        <div class="this">
-            <h1><?php echo $year; ?></h1>
-        </div>
-        <div class="next">
-            <?php echo $this->Html->link(($year + 1) . ' ≫', array($year + 1)); ?>
-        </div>
-    </div>
-    <div style="clear: both;"></div>
-
     <?php
     foreach ($reports as $report)
         $week_reports[$report['Report']['week']] = $report;
@@ -129,5 +131,22 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
 </div>
 
 <div style="clear: both;"></div>
+
+<script type="text/javascript">
+    var resizeTimer;
+    $(window).resize(function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(calendarResize, 100);
+    });
+    
+    function calendarResize() {
+        var content_width = $('#content').width() - parseInt($('#content').css('padding-left'), 10) - parseInt($('#content').css('padding-right'), 10);
+        var months_per_row = Math.floor(content_width / $('.calendar-month').outerWidth(true));
+        var width = $('.calendar-month').outerWidth(true) * months_per_row;
+        
+        $('.calendar').css('width', width);
+    }
+    $(document).ready(function(){ calendarResize(); });
+</script>
 
 <?php pr($reports); ?>

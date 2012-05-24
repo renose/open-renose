@@ -21,8 +21,12 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
 */
 
+.calendar-year {
+    width: 100%;
+    height: 60px;
+}
 .calendar-year div { float: left; vertical-align: middle; width: 33%; }
-.calendar-year .last, .calendar-years .next { margin-top: 10px; }
+.calendar-year .last, .calendar-year .next { margin-top: 10px; }
 .calendar-year .last { text-align: left; }
 .calendar-year .this { text-align: center; }
 .calendar-year .next { text-align: right; }
@@ -31,8 +35,6 @@
 {
     margin-left: auto;
     margin-right: auto;
-    
-    width: 830px;
 }
 
 div.calendar-month
@@ -41,14 +43,10 @@ div.calendar-month
     cursor: default;
     
     float: left;
-    height: 200px;
-    width: 258px;
-    margin-right: 28px;
-    margin-bottom: 14px;
-}
-div.calendar-month:nth-child(3n+2)
-{
-    margin-right: 0px;
+    width: 263px;
+    height: 283px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 table.calendar-month
@@ -97,7 +95,7 @@ table.calendar-month tr:hover
 
 table.calendar-month tr td
 {
-    width: 28px;
+    width: 18px;
     height: 20px;
 }
 
