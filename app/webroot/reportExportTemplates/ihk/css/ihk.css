@@ -63,3 +63,18 @@ table.activityList {
 table tr td.no-lineheight {
     line-height: normal;
 }
+
+
+/* detail.ctp */
+table.detailTable {
+    line-height: 5px;
+    border: 1px solid black;
+}
+
+.spacer {
+    margin-top: 40px;
+}
+
+.detailText {
+    border-top: 1px solid black;
+}

@@ -166,6 +166,13 @@ class ReportsController extends AppController
 
         $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
+        $reports = $this->Report->find('all', array(
+                'conditions' => array(
+                    'User.id = ' => $this->Auth->user('id'),
+                 )
+            ));
+
+
         $this->set('templatePath', '/reportExporttemplates/ihk/');
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -181,7 +188,6 @@ class ReportsController extends AppController
 
         // disable footer
         $pdf->setPrintFooter(false);
-#$this->render('reportExportTemplates/ihk/overview');
         //$pdf->SetFont('Arial', 'B', 20);
 
         // add a page
@@ -201,7 +207,7 @@ class ReportsController extends AppController
             'bis' => '03.09.2010',
         );
 
-        for($i=0;$i<40;$i++) {
+        for($i=0;$i<1;$i++) {
             $activityList[] = $activityDummyRecord;
         }
 
@@ -222,7 +228,90 @@ class ReportsController extends AppController
             $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
         }
 
+        // generate detailed week view
 
+        // dummy records, yet!
+        #$text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut';
+$text = 'Die Stimmung in der deutschen Wirtschaft hat im Mai einen Dämpfer bekommen. Der ifo-Geschäftsklimaindex fiel von 109,9 auf 106,9 Punkte, wie das Ifo-Institut in München mitteilte. Die befragten Unternehmen beurteilten sowohl ihre aktuelle Geschäftslage aus auch ihre Aussichten für das nächste halbe Jahr weit ungünstiger. "Die deutsche Wirtschaft steht unter dem Eindruck der in letzter Zeit gestiegenen Unsicherheit im Euro-Raum", erklärte Ifo-Präsident Hans-Werner Sinn.
+
+Trotz der Euro-Schuldenkrise und der Rezession in Südeuropa war das wichtigste Stimmungsbarometer der deutschen Wirtschaft seit November stetig geklettert. Jetzt erfolgte eine massive Korrektur. Die Industriefirmen beurteilen ihre aktuelle Geschäftslage deutlich schlechter als noch im April. Bei der Bewertung der Geschäftsaussichten hielten sich positive und negative Erwartungen die Waage.
+
+Vorsichtigere Personalplanung setzt ein
+
+Das schlägt sich auch bei der Personalplanung nieder: "Die Beschäftigtenpläne sind erstmals seit Monaten mehrheitlich defensiv ausgerichtet", sagte Sinn. Für den Export würden allerdings weitere Impulse erwartet.
+
+Im Einzelhandel ist die Lageeinschätzung eingebrochen, und die Erwartungen sind wieder mehrheitlich pessimistisch. Auch auf dem Bau sank der Index – die Baubetriebe blicken weniger optimistisch auf die kommende Entwicklung.';
+        $dummyDetail = array(
+            'number' => '01',
+            'section' => 'Softwareentwicklung', // Abteilung
+            'from' => '01.09.2010',
+            'to' => '03.09.2010',
+            'date' => '06.09.2010',
+            'detail' => array(
+                array(
+                    'title' => 'Betriebliche Tätigkeit',
+                    'text' => $text
+                ),
+                array(
+                    'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
+                    'text' => $text
+                ),
+                array(
+                    'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
+                    'text' => $text
+                )
+            )
+        );
+
+        $dummyData = array($dummyDetail, $dummyDetail);
+
+        foreach($dummyData as $data) {
+            $pdf->AddPage();
+
+
+            /*
+             *  /*$length = 3780;
+                if (strlen($text) > $length) {
+                    $text = substr($text, 0, strpos(wordwrap($text, $length), "\n")).' ...';
+                }
+                echo $text;
+             */
+
+            // write first header
+            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
+
+
+            // loop though detail data
+            $sizeOfDetailData = sizeof($data['detail']);
+            $loopCounter = 0;
+            foreach($data['detail'] as $detail) {
+                $loopCounter++;
+                $length = 3670;
+                $pagebreak = false;
+                if (strlen($detail['text']) > $length) {
+                    $detail['text'] = substr($detail['text'], 0, strpos(wordwrap($detail['text'], $length), "\n")).' ...';
+                    $pagebreak = true;
+                }
+
+                $this->set('detail', $detail);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                if($pagebreak) {
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+                    if($loopCounter != $sizeOfDetailData) {
+                        $pdf->AddPage();
+                        $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
+                    }
+                }
+            }
+
+            if(!$pagebreak) {
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+            }
+
+        }
+
+        #$pdf->writeHTML($this->render('reportExportTemplates/ihk/detail'), true);
         // kick it out
         $pdf->Output('pdf.pdf', 'I');
     }
