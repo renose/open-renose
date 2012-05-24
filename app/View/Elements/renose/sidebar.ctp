@@ -27,6 +27,7 @@
         'Main' => array(
             'Dashboard' => array('img' => 'icons/clipboard.png', 'url' => '/dashboard'),
             'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
+            'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedules'),
             'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
         'Dev' => array(

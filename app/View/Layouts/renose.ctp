@@ -7,16 +7,18 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            'ui-lightness/jquery-ui-1.8.16.custom',
+            'ui-lightness/jquery-ui.custom',
             'http://fonts.googleapis.com/css?family=Open+Sans',
             'cake.generic',
             'renose/screen',
             'calender',
+            'schedule'
         ));
 
         echo $this->Html->script(array(
-            'jquery-1.6.4.min',
-            'jquery-ui-1.8.16.custom.min',
+            'jquery.min',
+            'jquery-ui.custom.min',
+            'jquery.jeditable.mini',
             'ckeditor/ckeditor'
         ));
 

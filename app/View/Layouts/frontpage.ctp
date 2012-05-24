@@ -15,7 +15,7 @@
         ));
 
         echo $this->Html->script(array(
-            'jquery-1.7.2.min',
+            'jquery.min',
             'frontpage/bootstrap-collapse'
         ));
 
