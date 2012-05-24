@@ -70,7 +70,7 @@
                     if(data.status == 'ok')
                     {
                         $(that).parent().attr('data-exists', 'false');
-                        $(that).parent().html('-');
+                        $(that).parent().find('.lesson-subject').html('-');
                     }
                     else
                         alert('Fehler beim Speichern :(');
