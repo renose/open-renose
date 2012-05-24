@@ -173,11 +173,19 @@
     border-radius: 3px;
 }
 
-.calendar-month tr td.calendar-day-today
-{
+.calendar-day-today {
     border: 1px solid red;
     
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+}
+.calendar-day-holiday {
+    background-color: yellow;
+}
+.calendar-day-vacation {
+    background-color: blue;
+}
+.calendar-day-school-holidays {
+    background-color: purple;
 }

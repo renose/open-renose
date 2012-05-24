@@ -54,9 +54,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     }
 
     //Alle Monate durchlaufen
-    for ($month = 1; $month <= 12; $month++)
-    {
-        ?>
+    for ($month = 1; $month <= 12; $month++): ?>
         <div class="calendar-month-container">
             <table class="calendar-month">
                 <caption>
@@ -107,12 +105,32 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                             if ($day == 1 && date('N', mkdate($day, $month, $year)) > 1)
                                 echo "<td colspan='" . (date('N', mkdate($day, $month, $year)) - 1) . "'></td>";
                         }
-
-                        //Tag anzeigen, heute hervorheben
+                        
+                        $day_class = array('calendar-day');
+                        
+                        //Aktueller Tag hervorheben
                         if (mkdate($day, $month, $year) == mkdate(date('d'), date('m'), date('Y')))
-                            echo "<td class='calendar-day-today'>$day</td>";
-                        else
-                            echo "<td class='calendar-day'>$day</td>";
+                            $day_class[] = 'calendar-day-today';
+                        if(isset($calendar[date('Y-m-d', mkdate($day, $month, $year))]))
+                        {
+                            foreach($calendar[date('Y-m-d', mkdate($day, $month, $year))] as $event)
+                            {
+                                switch($event)
+                                {
+                                    case 1:
+                                        $day_class[] = 'calendar-day-holiday';
+                                        break;
+                                    case 2:
+                                        $day_class[] = 'calendar-day-vacation';
+                                        break;
+                                    case 3:
+                                        $day_class[] = 'calendar-day-school-holidays';
+                                        break;
+                                }
+                            }
+                        }
+
+                        echo "<td class='" . implode(' ', $day_class) . "'>$day</td>";
 
                         //Woche nach Sonntag beenden
                         if (date('N', mkdate($day, $month, $year)) == 7)
@@ -127,7 +145,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                 </tbody>
             </table>
         </div>
-    <?php } //Ende der Monatsschleife ?>
+    <?php endfor; ?>
 </div>
 
 <div style="clear: both;"></div>
@@ -149,4 +167,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     $(document).ready(function(){ calendarResize(); });
 </script>
 
-<?php pr($reports); ?>
+<?php
+    pr($calendar);
+    pr($reports);
+?>
