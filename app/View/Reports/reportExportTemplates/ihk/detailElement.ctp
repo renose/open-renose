@@ -4,7 +4,7 @@
         <td><?= $detail['title'] ?></td>
     </tr>
     <tr>
-        <td class="detailText"><?= nl2br($detail['text']) ?></td>
+        <td height="180" class="detailText"><?= nl2br($detail['text']) ?></td>
     </tr>
 </table>
 <br />

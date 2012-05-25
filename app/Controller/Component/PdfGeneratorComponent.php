@@ -50,4 +50,23 @@ class PdfGeneratorComponent extends Component {
         return $text;
     }
 
+    public function prepareSchoolTextWithTitleAndText(array $data, $titleField, $textField) {
+        $text = '';
+        $sizeOfData = sizeof($data);
+        $counter = 0;
+
+        foreach($data as $row) {
+            $counter++;
+            if($row[$textField]) {
+                $text.= "<strong>{$row[$titleField]}:</strong> {$row[$textField]}";
+            } else {
+                $text.= "{$row[$titleField]}";
+            }
+            if ($sizeOfData != $counter) $text.="\n";
+        }
+        return $text;
+    }
+
+
+
 }

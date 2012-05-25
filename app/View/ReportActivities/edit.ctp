@@ -36,7 +36,6 @@
     echo $this->Form->create('ReportActivity');
 
     echo $this->Form->input('id');
-    echo $this->Form->input('duration', array('label' => 'Dauer (in Minuten)'));
     echo $this->Form->input('text', array('label' => 'Tätigkeit'));
 
     echo $this->Form->end('Tätigkeit ändern');

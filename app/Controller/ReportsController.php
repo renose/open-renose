@@ -37,7 +37,6 @@ class ReportsController extends AppController
     {
         parent::beforeFilter();
         if($this->request->params['action'] == 'export') {
-            #header('Content-type: application/pdf');
             $this->layout = false;
             $this->autoRender = false;
             set_time_limit(0);
@@ -48,7 +47,6 @@ class ReportsController extends AppController
     public function beforeRender()
     {
         parent::beforeRender();
-        #header('Content-type: application/pdf');
     }
 
     function index()
@@ -77,7 +75,7 @@ class ReportsController extends AppController
 
         foreach($calendar_entries as $entry)
             $calendar[$entry['CalendarEntry']['day']][] = $entry['CalendarEntry']['type'];
-        
+
         $this->set('year', $year);
         $this->set('calendar', $calendar);
         $this->set('reports', $this->Report->find('all', array(
@@ -281,9 +279,18 @@ class ReportsController extends AppController
 
 
             // school
-            // TODO
+            $school = array(
+                'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
+                'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
+            );
+            $this->set('detail', $school);
+            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+            unset($school);
 
             $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+
+            unset($fullReportData);
 
         }
 

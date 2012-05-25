@@ -36,8 +36,6 @@
 <?php
     foreach ($report['ReportActivity'] as $reportActivity)
     {
-        printf('<i>%2u:%02uh</i> ', $reportActivity['duration'] / 60, $reportActivity['duration'] % 60);
-
         echo $this->Html->link(
                 $this->Html->image("icon/edit.png", array("alt" => "Tätigkeit bearbeiten", "align" => "center")),
                 array('controller' => 'report_activities', 'action' => 'edit', $reportActivity['id']), array('escape' => false) );

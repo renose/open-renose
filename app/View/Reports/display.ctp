@@ -73,6 +73,8 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                         <th title="Sonntag">So</th>
                     </tr>
 
+                    <tr>
+
                     <?php
                     //Alle Tage des Monats durchlaufen
                     for ($day = 1; $day <= date('t', mkdate(1, $month, $year)); $day++)
