@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
     <head>
         <?php echo $this->Html->charset(); ?>
         <title><?= $title_for_layout.' - open reNose'; ?></title>
@@ -15,7 +15,7 @@
         ));
 
         echo $this->Html->script(array(
-            'jquery-1.7.2.min',
+            'jquery.min',
             'frontpage/bootstrap-collapse'
         ));
 
@@ -29,10 +29,7 @@
     </head>
 
     <body data-spy="scroll" data-target=".subnav" data-offset="50">
-
-
-	<!-- Navbar
-	  ================================================== -->
+        
 	<div class="navbar navbar-fixed-top">
 	    <div class="navbar-inner">
 		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -54,17 +51,29 @@
 	</div>
 
 	<div class="container">
+            
+            <?php
+            echo $this->Session->flash();
+            echo $this->Session->flash('auth');
+            echo $this->Session->flash('email');
+            ?>
 
 	    <?php echo $content_for_layout; ?>
 
 	    <footer class="footer">
-		<p class="pull-right"><a href="#">Back to top</a></p>
+		<p class="pull-right">
+                    <a href="#" class="icon-goto-top">
+                        <?php echo $this->Html->image('icons/up.png'); ?>
+                    </a>
+                    <a href="#">Back to top</a>
+                </p>
+                
 		<p>&copy; 2012 by <a href="mailto:simon@renose.de">Simon Wörner</a>,
 		    <a href="mailto:patrick@renose.de">Patrick Hafner</a> & <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
 		    <a href="http://www.renose.de">renose.de</a></p>
 		<p>Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
 	    </footer>
 
-	</div><!-- /container -->
+	</div>
     </body>
 </html>

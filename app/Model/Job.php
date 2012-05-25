@@ -24,10 +24,6 @@
 class Job extends AppModel
 {
 
-    public $displayField = 'full_name';
-    public $virtualFields = array(
-        'full_name' => "CONCAT(Job.name, ' - ', Job.specialization)");
-
     public $hasMany = array('Profiles');
 
 }

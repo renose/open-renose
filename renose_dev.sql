@@ -1,9 +1,9 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Mai 2012 um 19:28
+-- Erstellungszeit: 25. Mai 2012 um 11:12
 -- Server Version: 5.5.16
 -- PHP-Version: 5.3.8
 
@@ -17,24 +17,48 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `calendar_entries`
+--
+
+CREATE TABLE IF NOT EXISTS `calendar_entries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `day` date NOT NULL,
+  `type` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Daten für Tabelle `calendar_entries`
+--
+
+INSERT INTO `calendar_entries` (`id`, `user_id`, `day`, `type`, `created`, `modified`) VALUES
+(1, 1, '2011-12-24', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, '2012-12-24', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 1, '2012-05-01', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `jobs`
 --
 
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `specialization` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `job_name` (`name`,`specialization`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Daten für Tabelle `jobs`
 --
 
-INSERT INTO `jobs` (`id`, `name`, `specialization`) VALUES
-(1, 'Fachinformatiker', 'Anwendungsentwicklung'),
-(2, 'Fachinformatiker', 'Systemintegration');
+INSERT INTO `jobs` (`id`, `name`, `created`, `modified`) VALUES
+(1, 'Fachinformatiker - Anwendungsentwicklung', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -45,9 +69,18 @@ INSERT INTO `jobs` (`id`, `name`, `specialization`) VALUES
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `zip_code` int(5) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `birthplace` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   `job_id` int(11) DEFAULT NULL,
+  `company` varchar(255) NOT NULL,
+  `branch` varchar(255) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
@@ -56,10 +89,10 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 -- Daten für Tabelle `profiles`
 --
 
-INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `job_id`) VALUES
-(1, 1, 'Admin', 'reNose', NULL),
-(2, 2, 'Simon', '', 1),
-(3, 3, 'Patrick', '', 1);
+INSERT INTO `profiles` (`id`, `user_id`, `first_name`, `last_name`, `street`, `zip_code`, `city`, `birthplace`, `birthday`, `job_id`, `company`, `branch`, `created`, `modified`) VALUES
+(1, 1, 'Admin', 'reNose', NULL, NULL, NULL, NULL, '1999-01-01', 1, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 2, 'Simon', 'Wörner', NULL, NULL, NULL, NULL, NULL, NULL, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 3, 'Patrick', 'Hafner', NULL, NULL, NULL, NULL, NULL, NULL, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -73,18 +106,23 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `year` year(4) NOT NULL,
   `week` int(2) NOT NULL,
   `number` int(11) NOT NULL,
+  `department` varchar(255) NOT NULL,
   `date` date NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report` (`user_id`,`year`,`week`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Daten für Tabelle `reports`
 --
 
-INSERT INTO `reports` (`id`, `user_id`, `year`, `week`, `number`, `date`) VALUES
-(1, 1, 2010, 35, 1, '2011-05-03'),
-(2, 1, 2011, 33, 51, '2011-08-16');
+INSERT INTO `reports` (`id`, `user_id`, `year`, `week`, `number`, `department`, `date`, `created`, `modified`) VALUES
+(1, 1, 2010, 35, 1, '', '2011-05-03', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, 2011, 33, 51, '', '2011-08-16', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 1, 2012, 21, 87, '', '2012-05-25', '2012-05-25 10:48:57', '2012-05-25 10:48:57'),
+(4, 1, 2012, 7, 73, '', '2012-05-25', '2012-05-25 11:03:57', '2012-05-25 11:03:57');
 
 -- --------------------------------------------------------
 
@@ -96,7 +134,8 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
   `text` text NOT NULL,
-  `duration` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
@@ -104,9 +143,9 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
 -- Daten für Tabelle `report_activities`
 --
 
-INSERT INTO `report_activities` (`id`, `report_id`, `text`, `duration`) VALUES
-(1, 1, 'Report via Scaffolding getestet', 240),
-(2, 1, 'Test³²', 150);
+INSERT INTO `report_activities` (`id`, `report_id`, `text`, `created`, `modified`) VALUES
+(1, 1, 'Report via Scaffolding getestet', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, 'Test³²', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -119,6 +158,8 @@ CREATE TABLE IF NOT EXISTS `report_instructions` (
   `report_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `text` text,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -126,8 +167,75 @@ CREATE TABLE IF NOT EXISTS `report_instructions` (
 -- Daten für Tabelle `report_instructions`
 --
 
-INSERT INTO `report_instructions` (`id`, `report_id`, `title`, `text`) VALUES
-(1, 1, 'Webentwicklung mit cakePHP', 'Prototyp mit cakePHP und Scaffolfing erstellen.');
+INSERT INTO `report_instructions` (`id`, `report_id`, `title`, `text`, `created`, `modified`) VALUES
+(1, 1, 'Webentwicklung mit cakePHP', 'Prototyp mit cakePHP und Scaffolfing erstellen.', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `report_schools`
+--
+
+CREATE TABLE IF NOT EXISTS `report_schools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_id` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `schedules`
+--
+
+CREATE TABLE IF NOT EXISTS `schedules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `schedules`
+--
+
+INSERT INTO `schedules` (`id`, `user_id`, `created`, `modified`) VALUES
+(1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `schedule_lessons`
+--
+
+CREATE TABLE IF NOT EXISTS `schedule_lessons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `schedule_id` int(11) NOT NULL,
+  `day` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `teacher` varchar(255) NOT NULL,
+  `room` varchar(255) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+
+--
+-- Daten für Tabelle `schedule_lessons`
+--
+
+INSERT INTO `schedule_lessons` (`id`, `schedule_id`, `day`, `number`, `subject`, `teacher`, `room`, `created`, `modified`) VALUES
+(1, 1, 4, 0, 'BWL', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, 4, 1, 'BWL', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(35, 1, 4, 3, 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(36, 1, 4, 4, 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(37, 1, 4, 5, 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -145,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `users`

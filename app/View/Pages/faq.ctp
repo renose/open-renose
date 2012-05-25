@@ -22,7 +22,10 @@
  */
 ?>
 
-<h1>FAQ - Häufig gestellte Fragen</h1>
+<h1>
+    <?php echo $this->Html->image('icons/help.png'); ?>
+    FAQ - Häufig gestellte Fragen
+</h1>
 <br/>
 
 <p>Seit wann macht ihr dieses Projekt?</p>

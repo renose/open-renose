@@ -153,7 +153,8 @@ header #global-search input[type=search] {
     border: 1px solid #b8b8b8;
 }
 header #global-search input[type=submit] {
-    background: url(../../img/icon/search.png) center no-repeat;
+    background: url(../../img/icons/search.png) center no-repeat;
+    background-size: 15px;
     margin-left: -28px;
     width: 25px;
     height: 25px;
@@ -279,6 +280,11 @@ nav#breadcrumb a {
     -webkit-border-radius: 1ex;
 }
 
+div.jGrowl.top-right {
+    right: 5px;
+    top: 75px;
+}
+
 
 footer {
     overflow: hidden;
@@ -335,13 +341,6 @@ footer a:hover {
 }
 
 /* make cake errors visible */
-.cake-error {
-    position: relative;
-    top: 75px;
-    left: 200px;
-    margin: 0 15px;
-    z-index: 80;
-}
 .cake-sql-log caption {
     color: black;
 }

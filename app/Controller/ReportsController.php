@@ -63,13 +63,32 @@ class ReportsController extends AppController
         //Kein Jahr übergeben => dieses Jahr nehmen
         if(!$year)
             $year = date('Y');
+<<<<<<< HEAD
 
+=======
+        
+        $this->loadModel('CalendarEntry');
+        $calendar_entries = $this->CalendarEntry->find('all', array(
+            'recursive' => 0,
+            'conditions' => array(
+                'CalendarEntry.user_id = ' => $this->Auth->user('id'),
+                'CalendarEntry.day > ' => "$year-01-01",
+                'CalendarEntry.day < ' => "$year-12-31"),
+            'fields' => array('CalendarEntry.day', 'CalendarEntry.type')
+        ));
+        $calendar = array();
+        
+        foreach($calendar_entries as $entry)
+            $calendar[$entry['CalendarEntry']['day']][] = $entry['CalendarEntry']['type'];
+        
+>>>>>>> master
         $this->set('year', $year);
+        $this->set('calendar', $calendar);
         $this->set('reports', $this->Report->find('all', array(
             'order' => 'Report.number ASC',
             'conditions' => array(
-                'User.id = ' => $this->Auth->user('id'),
-                'Report.year = ' => $year)
+                'Report.user_id = ' => $this->Auth->user('id'),
+                'Report.year = ' => $year),
         )));
     }
 
@@ -78,7 +97,7 @@ class ReportsController extends AppController
         $report =
             $this->Report->find('first', array(
                 'conditions' => array(
-                    'User.id = ' => $this->Auth->user('id'),
+                    'Report.user_id = ' => $this->Auth->user('id'),
                     'Report.year = ' => $year,
                     'Report.week = ' => $week)
             ));

@@ -26,22 +26,24 @@ $this->Html->addCrumb('Berichte', 'display');
 $this->Html->addCrumb($year, array('action' => 'display', $year));
 ?>
 
-<h1><?php echo $title_for_layout; ?></h1>
+<h1>
+    <?php echo $this->Html->image('icons/planner.png'); ?>
+    <?php echo $title_for_layout; ?>
+</h1>
+
+<div class="calendar-year">
+    <div class="last">
+        <?php echo $this->Html->link('≪ ' . ($year - 1), array($year - 1)); ?>
+    </div>
+    <div class="this">
+        <h1><?php echo $year; ?></h1>
+    </div>
+    <div class="next">
+        <?php echo $this->Html->link(($year + 1) . ' ≫', array($year + 1)); ?>
+    </div>
+</div>
 
 <div class="calendar">
-    <div class="calendar-year">
-        <div class="last">
-            <?php echo $this->Html->link('≪ ' . ($year - 1), array($year - 1)); ?>
-        </div>
-        <div class="this">
-            <h1><?php echo $year; ?></h1>
-        </div>
-        <div class="next">
-            <?php echo $this->Html->link(($year + 1) . ' ≫', array($year + 1)); ?>
-        </div>
-    </div>
-    <div style="clear: both;"></div>
-
     <?php
     foreach ($reports as $report)
         $week_reports[$report['Report']['week']] = $report;
@@ -52,10 +54,8 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     }
 
     //Alle Monate durchlaufen
-    for ($month = 1; $month <= 12; $month++)
-    {
-        ?>
-        <div class="calendar-month">
+    for ($month = 1; $month <= 12; $month++): ?>
+        <div class="calendar-month-container">
             <table class="calendar-month">
                 <caption>
                     <b><?php echo __(date('F', mkdate(1, $month, $year))); ?></b>
@@ -78,7 +78,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                     for ($day = 1; $day <= date('t', mkdate(1, $month, $year)); $day++)
                     {
                         //Woche ermitteln
-                        $week = date('W', mkdate($day, $month, $year));
+                        $week = date('W', mkdate($day, $month, $year)) * 1;
 
                         //Neue Woche am Montag anfangen (und am 1. des Monats) und Wochennummer anzeigen
                         if (date('N', mkdate($day, $month, $year)) == 1 || $day == 1)
@@ -105,12 +105,32 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                             if ($day == 1 && date('N', mkdate($day, $month, $year)) > 1)
                                 echo "<td colspan='" . (date('N', mkdate($day, $month, $year)) - 1) . "'></td>";
                         }
-
-                        //Tag anzeigen, heute hervorheben
+                        
+                        $day_class = array('calendar-day');
+                        
+                        //Aktueller Tag hervorheben
                         if (mkdate($day, $month, $year) == mkdate(date('d'), date('m'), date('Y')))
-                            echo "<td class='calendar-day-today'>$day</td>";
-                        else
-                            echo "<td class='calendar-day'>$day</td>";
+                            $day_class[] = 'calendar-day-today';
+                        if(isset($calendar[date('Y-m-d', mkdate($day, $month, $year))]))
+                        {
+                            foreach($calendar[date('Y-m-d', mkdate($day, $month, $year))] as $event)
+                            {
+                                switch($event)
+                                {
+                                    case 1:
+                                        $day_class[] = 'calendar-day-holiday';
+                                        break;
+                                    case 2:
+                                        $day_class[] = 'calendar-day-vacation';
+                                        break;
+                                    case 3:
+                                        $day_class[] = 'calendar-day-school-holidays';
+                                        break;
+                                }
+                            }
+                        }
+
+                        echo "<td class='" . implode(' ', $day_class) . "'>$day</td>";
 
                         //Woche nach Sonntag beenden
                         if (date('N', mkdate($day, $month, $year)) == 7)
@@ -125,9 +145,34 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                 </tbody>
             </table>
         </div>
-    <?php } //Ende der Monatsschleife ?>
+    <?php endfor; ?>
 </div>
 
 <div style="clear: both;"></div>
 
+<<<<<<< HEAD
 <?php pr($reports);
+=======
+<script type="text/javascript">
+    var resizeTimer;
+    $(window).resize(function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(calendarResize, 100);
+    });
+    
+    function calendarResize() {
+        var content_width = $('#content').width() - parseInt($('#content').css('padding-left'), 10) - parseInt($('#content').css('padding-right'), 10);
+        var months_per_row = Math.floor(content_width / $('.calendar-month-container').outerWidth(true));
+        months_per_row = months_per_row < 4 ? months_per_row : 4;
+        var width = $('.calendar-month-container').outerWidth(true) * months_per_row;
+        
+        $('.calendar').css('width', width);
+    }
+    $(document).ready(function(){ calendarResize(); });
+</script>
+
+<?php
+    pr($calendar);
+    pr($reports);
+?>
+>>>>>>> master

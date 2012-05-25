@@ -1,31 +1,12 @@
 <?php
-$a = $this->request->params['action'];
-$c = $this->request->params['controller'];
+    $nav = array(
+        'Seiten' => array(
+            'Home' => array('img' => 'icons_white/home.png', 'url' => '/'),
+            'Über das Projekt' => array('img' => 'icons_white/info.png', 'url' => '/page/about'),
+            'FAQ' => array('img' => 'icons_white/help.png', 'url' => '/page/faq'),
+            'Registrieren' => array('img' => 'icons_white/key.png', 'url' => '/users/register')
+        )
+    );
+    
+    $this->Navigation->frontpage($nav, array('list-class' => 'nav', 'section' => false, 'title' => false));
 ?>
-<ul class="nav">
-    <li>
-	<a href="<?= $this->Html->url('/', true); ?>" id="logo"><span>open</span>reNose</a>
-    </li>
-    <li <?= ($c == 'pages' && $a == 'display' && $this->request->params['pass'][0] == 'home') ? 'class="active"' : '' ?>>
-	<?=
-	$this->Html->link('Startseite', '/');
-	?>
-    </li>
-    <li <?= ($c == 'pages' && $a == 'display' && $this->request->params['pass'][0] == 'about') ? 'class="active"' : '' ?>>
-	<?=
-	$this->Html->link('Über uns', array(
-	    'controller' => 'pages',
-	    'action' => 'display',
-	    'about'
-	));
-	?>
-    </li>
-    <li <?= ($c == 'users' && $a == 'register') ? 'class="active"' : '' ?>>
-<?=
-$this->Html->link('Registrieren', array(
-    'controller' => 'users',
-    'action' => 'register'
-));
-?>
-    </li>
-</ul>

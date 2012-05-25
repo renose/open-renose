@@ -46,9 +46,17 @@ class User extends AppModel
         public $hasOne = array(
             'Profile' => array(
                 'dependent' => true
+                ),
+            'Schedule' => array(
+                'dependent' => true
                 )
             );
+<<<<<<< HEAD
 
+=======
+        public $hasMany = array('CalenderEntry');
+        
+>>>>>>> master
         function verifies($check, $field)
 	{
             $password = $this->data[$this->name][$field];

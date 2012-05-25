@@ -24,8 +24,6 @@
 
 class JobsController extends AppController
 {
-    public $scaffold;
-
     public function beforeFilter()
     {
         parent::beforeFilter();

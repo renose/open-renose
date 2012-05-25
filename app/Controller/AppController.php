@@ -45,7 +45,7 @@ class AppController extends Controller
                 )
             )
             ));
-    public $helpers = array('Html', 'Js', 'Form', 'Session');
+    public $helpers = array('Html', 'Js', 'Form', 'Session', 'Navigation');
 
     function beforeFilter()
     {
@@ -54,6 +54,7 @@ class AppController extends Controller
             $this->layout = 'frontpage';
     }
 
+<<<<<<< HEAD
     function beforeRender()
     {
         parent::beforeRender();

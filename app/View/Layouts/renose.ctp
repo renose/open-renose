@@ -7,16 +7,20 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            'ui-lightness/jquery-ui-1.8.16.custom',
             'http://fonts.googleapis.com/css?family=Open+Sans',
+            'ui-lightness/jquery-ui.custom',
+            'jquery.jgrowl',
             'cake.generic',
             'renose/screen',
             'calender',
+            'schedule'
         ));
 
         echo $this->Html->script(array(
-            'jquery-1.6.4.min',
-            'jquery-ui-1.8.16.custom.min',
+            'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js', //'jquery.min',
+            'jquery-ui.custom.min',
+            'jquery.jeditable.min',
+            'jquery.jgrowl.min',
             'ckeditor/ckeditor'
         ));
 
@@ -26,7 +30,7 @@
     <body>
         <header>
             <div id="logo">
-                <a href="<?php echo $this->Html->url('/', true); ?>">
+                <a href="<?php echo $this->Html->url('/dashboard', true); ?>">
                     <span>open</span>reNose
                 </a>
             </div>
@@ -37,18 +41,19 @@
                 </form>
             </div>
             <div id="headerinfo">
-                <?php echo $this->element('userinfo'); ?>
+                <?php echo 'Hallo <b>' . $this->requestAction('/users/get_name') . '</b>.'; ?>
+                <?php echo $this->Html->link('Ausloggen', '/users/logout'); ?>
             </div>
         </header>
 
         <nav id="sidebar">
-            <?php echo $this->element('navigation'); ?>
+            <?php echo $this->element('renose/sidebar'); ?>
         </nav>
         
         <nav id="breadcrumb">
             <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
         </nav>
-        <div id="content">            
+        <div id="content">
             <a name="top"></a>
             <?php
             echo $this->Session->flash();
@@ -70,7 +75,7 @@
             
             <div id="footer-right">
                 <a class="icon-goto-top" href="#top">
-                    <?php echo $this->Html->image('icons/up_white.png'); ?>
+                    <?php echo $this->Html->image('icons_white/up.png'); ?>
                 </a>
                 <a href="#top">Hoch</a>
             </div>
@@ -79,7 +84,7 @@
                 (c) 2011-2012 by
                 <a href="mailto:simon@renose.de">Simon Wörner</a>, 
                 <a href="mailto:patrick@renose.de">Patrick Hafner</a> and
-                <a href="mailto:patrick@renose.de">Daniel Greiner</a> |
+                <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
                 <a href="http://www.renose.de">renose.de</a></p>
             </div>
         </footer>

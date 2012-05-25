@@ -1,4 +1,5 @@
 <?php
+
 /*
  * profile.php
  *
@@ -21,10 +22,15 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
+=======
+<?php
+
+>>>>>>> master
 class Profile extends AppModel
 {
-	public $displayField = 'full_name';
 
+<<<<<<< HEAD
         public $virtualFields = array(
             'full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)"
         );
@@ -34,3 +40,18 @@ class Profile extends AppModel
             'Job'
         );
 }
+=======
+    public $displayField = 'full_name';
+    public $virtualFields = array('full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)");
+    public $belongsTo = array('User', 'Job');
+    
+    public function afterSave($created)
+    {
+        parent::afterSave($created);
+        
+        $this->Job->query('delete from jobs where (select count(*) from profiles Profile where Profile.job_id = jobs.id) = 0');
+    }
+
+}
+?>
+>>>>>>> master
