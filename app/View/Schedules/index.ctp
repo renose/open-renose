@@ -18,11 +18,8 @@
     </thead>
     <tbod>
         <?php
-        $lessons = true;
-        $lesson = 0;
-        while($lessons)
+        for($lesson = 0; $lesson < $max_lesson + 1; $lesson)
         {
-            $lessons = false;
             echo '<tr>';
             echo '<td class="lesson-number" data-id="null">' . ($lesson + 1) . '</td>';
 
@@ -30,7 +27,6 @@
             {
                 if (isset($days[$n][$lesson]))
                 {
-                    $lessons = true;
                     echo '<td class="lesson" data-day="' . $n . '" data-number="' . $lesson . '">';
                     
                     echo '<div class="lesson-subject" data-exists="true">' . $days[$n][$lesson]['subject'] . '</div>';
@@ -81,7 +77,7 @@
                     else
                     {
                         console.log(data);
-                        alert(data.message);
+                        $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
                     }
                 }
             });
@@ -136,7 +132,9 @@
                 else
                 {
                     console.log(data);
-                    alert(data.message);
+                    $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
+                    
+                    $(this).html('Fehler');
                 }
                
             }

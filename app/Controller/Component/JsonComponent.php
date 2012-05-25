@@ -39,6 +39,8 @@ class JsonComponent extends Component
     public $errors = array(
         -1 => 'general error',
         -10 => 'save failed',
+        -11 => 'change failed',
+        -12 => 'create failed',
         -13 => 'delete failed',
         -20 => 'input missing',
         -21 => 'input invalid',

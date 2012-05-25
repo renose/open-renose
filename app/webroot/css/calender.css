@@ -44,7 +44,7 @@
     
     float: left;
     width: 265px;
-    height: 283px;
+    height: 277px;
     margin-right: 20px;
     margin-bottom: 20px;
 }
@@ -96,7 +96,7 @@
 .calendar-month tr td
 {
     width: 18px;
-    height: 20px;
+    height: 18px;
 }
 
 .calendar-month tr td.calendar-week

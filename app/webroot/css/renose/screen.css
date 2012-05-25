@@ -280,6 +280,11 @@ nav#breadcrumb a {
     -webkit-border-radius: 1ex;
 }
 
+div.jGrowl.top-right {
+    right: 5px;
+    top: 75px;
+}
+
 
 footer {
     overflow: hidden;

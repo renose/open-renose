@@ -21,12 +21,19 @@ class SchedulesController extends AppController
     {
         $schedule = $this->Schedule->find('first');
         $days = array();
+        $max_lesson = 0;
         
         foreach($schedule['ScheduleLesson'] as $lesson)
+        {
             $days[$lesson['day']][$lesson['number']] = $lesson;
+            
+            if($lesson['number'] > $max_lesson)
+                $max_lesson = $lesson['number'];
+        }
         
         $this->set('schedule', $schedule);
         $this->set('days', $days);
+        $this->set('max_lesson', $max_lesson);
     }
     
     public function save()
@@ -43,7 +50,19 @@ class SchedulesController extends AppController
                 $this->request->data['day'],
                 $this->request->data['number']);
         
-        if(!isset($lesson['ScheduleLesson']['id']))
+        if(isset($lesson['ScheduleLesson']['id']))
+        {
+            $lesson['ScheduleLesson']['subject'] = $this->request->data['value'];
+            
+            if($this->ScheduleLesson->save($lesson))
+            {
+                $this->data = $this->ScheduleLesson->findById($lesson['ScheduleLesson']['id']);
+                $this->Json->response($this->data['ScheduleLesson']['subject'], 11);
+            }
+            else
+                $this->Json->error('Fehler beim Speichern der Stunde.', -11, $this->validationErrors);
+        }
+        else
         {
             $lesson = array(
                 'ScheduleLesson' => array(
@@ -55,26 +74,20 @@ class SchedulesController extends AppController
             );
             
             $this->ScheduleLesson->create();
+            if($this->ScheduleLesson->save($lesson))
+            {
+                $this->data = $this->ScheduleLesson->findById($this->ScheduleLesson->getLastInsertId());
+                $this->Json->response($this->data['ScheduleLesson']['subject'], 12);
+            }
+            else
+                $this->Json->error('Fehler beim Speichern der Stunde.', -12, $this->validationErrors);
         }
-        else
-            $lesson['ScheduleLesson']['subject'] = $this->request->data['value'];
-        
-        if($this->ScheduleLesson->save($lesson))
-        {
-            $this->data = $this->ScheduleLesson->findById($lesson['ScheduleLesson']['id']);
-            $this->Json->response($this->data['ScheduleLesson']['subject'], 10);
-        }
-        else
-            $this->Json->error('Fehler beim Speichern der Stunde.', -10, $this->validationErrors);
-        
-        $this->layout = null;
-        $this->autoRender = false;
     }
     
     public function delete()
     {
         if(!isset($this->request->data['day']) || !isset($this->request->data['number']))
-            $this->Json->error('Fehler beim Speichern der Stunde.', -20, $this->request->data);
+            $this->Json->error('Fehler beim Löschen der Stunde.', -20, $this->request->data);
         
         $this->loadModel('ScheduleLesson');
         $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
@@ -86,7 +99,7 @@ class SchedulesController extends AppController
         if($lesson != null)
         {
             if($this->ScheduleLesson->delete($lesson['ScheduleLesson']['id']))
-                $this->Json->response(null, 13);
+                $this->Json->response('-', 13);
             else
                 $this->Json->error('Fehler beim Löschen der Stunde.', -13, $this->validationErrors);
         }

@@ -7,8 +7,9 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
-            'ui-lightness/jquery-ui.custom',
             'http://fonts.googleapis.com/css?family=Open+Sans',
+            'ui-lightness/jquery-ui.custom',
+            'jquery.jgrowl',
             'cake.generic',
             'renose/screen',
             'calender',
@@ -18,7 +19,8 @@
         echo $this->Html->script(array(
             'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js', //'jquery.min',
             'jquery-ui.custom.min',
-            'jquery.jeditable.mini',
+            'jquery.jeditable.min',
+            'jquery.jgrowl.min',
             'ckeditor/ckeditor'
         ));
 
@@ -51,7 +53,7 @@
         <nav id="breadcrumb">
             <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
         </nav>
-        <div id="content">            
+        <div id="content">
             <a name="top"></a>
             <?php
             echo $this->Session->flash();
