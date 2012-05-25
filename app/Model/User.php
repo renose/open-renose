@@ -1,4 +1,5 @@
 <?php
+
 /*
  * user.php
  *
@@ -23,44 +24,61 @@
 
 class User extends AppModel
 {
-	public $displayField = 'email';
-	public $validate = array(
-                'email'=> array(
-                    'mustBeEmail'=> array(
-                        'rule' => array('email', true),
-                        'message' => 'Bitte geben Sie eine gültige Email ein.',
-                        'last'=>true),
-                    'mustUnique'=>array(
-                        'rule' =>'isUnique',
-                        'message' =>'Diese Email ist bereits registriert.')),
-		'password' => array( 'rule' =>'notempty' ),
-                'password_confirm'=>array(
-                        'mustBeLonger'=>array(
-                            'rule' => array('minLength', 5),
-                            'message'=> 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.'),
-                        'mustMatch'=>array(
-                            'rule' => array('verifies', 'password'),
-                            'message' => 'Sie haben unterschiedliche Passwörter eingegeben, bitte versuchen Sie es erneut.'))
-                    );
 
-        public $hasOne = array(
-            'Profile' => array(
-                'dependent' => true
-                ),
-            'Schedule' => array(
-                'dependent' => true
-                )
-            );
+    public $displayField = 'email';
+    public $validate = array(
+        'email' => array(
+            'mustBeEmail' => array(
+                'rule' => array('email', true),
+                'message' => 'Bitte geben Sie eine gültige Email ein.',
+                'last' => true),
+            'mustUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'Diese Email ist bereits registriert.')
+        ),
+        'password' => array(
+            'mustBeLonger' => array(
+                'rule' => array('minLength', 5),
+                'message' => 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.',
+            ),
+            'equals' => array(
+                'rule' => array('passwordCheck', 'password_confirm'),
+                'message' => ''
+            )
+        ),
+        'password_confirm' => array(
+            'mustBeLonger' => array(
+                'rule' => array('minLength', 5),
+                'message' => 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.'
+            ),
+        )
+    );
+    public $hasOne = array(
+        'Profile' => array(
+            'dependent' => true
+        ),
+        'Schedule' => array(
+            'dependent' => true
+        )
+    );
+    public $hasMany = array('CalenderEntry');
 
-        public $hasMany = array('CalenderEntry');
+    function passwordCheck($data, $field) {
 
-        
-        function verifies($check, $field)
-	{
-            $password = $this->data[$this->name][$field];
-            $password_confirm = $check['password_confirm'];
-            $password_confirm = Security::hash(Configure::read('Security.salt') . $password_confirm);
+        // $data['password'] = password value
+        // $field = field which has to be equal
+        if($data['password'] != $this->data[$this->alias][$field]) {
+            $this->invalidate($field, 'Bitte geben Sie ihr Passwort zur Bestätigung nochmals korrekt ein');
+            return false;
+        } else {
+            return true;
+        }
 
-            return $password == $password_confirm;
-	}
+        /*$password = $this->data[$this->name][$field];
+        $password_confirm = $check['password_confirm'];
+        $password_confirm = Security::hash(Configure::read('Security.salt') . $password_confirm);
+
+        return $password == $password_confirm;*/
+    }
+
 }

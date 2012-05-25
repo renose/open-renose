@@ -21,6 +21,8 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
+App::uses('Security', 'Utility');
+
 class UsersController extends AppController
 {
     public function beforeFilter()
@@ -69,13 +71,16 @@ class UsersController extends AppController
     {
         //pr($this->User);
         //pr($this->Auth);
+ChromePhp::log($this->request->data);
 
         if ($this->request->data)
         {
             //Setze Activation Key
-            $activationkey = $this->request->data['User']['email'] . time() . $this->request->data['User']['password'];
-            $this->request->data['User']['activationkey'] = $this->Auth->password($activationkey);
+            $this->request->data['User']['activationkey'] = Security::generateAuthKey();
 
+            // manual hashing is required cause model validation function and save after positive result
+            $this->request->data['User']['password'] = Security::hash(Configure::read('Security.salt') . $this->request->data['User']['password']);
+            $this->request->data['User']['password_confirm'] = Security::hash(Configure::read('Security.salt') . $this->request->data['User']['password_confirm']);
             if ($this->User->save($this->request->data))
             {
                 App::uses('CakeEmail', 'Network/Email');

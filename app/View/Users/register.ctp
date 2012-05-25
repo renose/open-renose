@@ -38,8 +38,8 @@
 
     echo $this->Form->input('email');
 
-    echo $this->Form->input('password', array('label' => 'Passwort'));
-    echo $this->Form->input('password_confirm', array('required' => true, 'type' => 'password', 'label' => 'Passwort bestätigen'));
+    echo $this->Form->input('password', array('type' => 'password', 'label' => 'Passwort'));
+    echo $this->Form->input('password_confirm', array('type' => 'password', 'label' => 'Passwort bestätigen'));
 
     /*echo $ajax->submit('Submit',
             array(

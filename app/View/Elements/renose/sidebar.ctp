@@ -41,7 +41,7 @@
         'Berichte' => array(
             'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),
             'Hinzufügen' => array('img' => 'icons/add_list.png', 'url' => '/reports/add'),
-            'Export' => array('img' => null, 'url' => '/reports/export')
+            'Export' => array('img' => 'icons/save_as.png', 'url' => '/reports/export')
         )
     );
 
