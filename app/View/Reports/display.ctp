@@ -78,7 +78,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                     for ($day = 1; $day <= date('t', mkdate(1, $month, $year)); $day++)
                     {
                         //Woche ermitteln
-                        $week = date('W', mkdate($day, $month, $year));
+                        $week = date('W', mkdate($day, $month, $year)) * 1;
 
                         //Neue Woche am Montag anfangen (und am 1. des Monats) und Wochennummer anzeigen
                         if (date('N', mkdate($day, $month, $year)) == 1 || $day == 1)
@@ -160,6 +160,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     function calendarResize() {
         var content_width = $('#content').width() - parseInt($('#content').css('padding-left'), 10) - parseInt($('#content').css('padding-right'), 10);
         var months_per_row = Math.floor(content_width / $('.calendar-month-container').outerWidth(true));
+        months_per_row = months_per_row < 4 ? months_per_row : 4;
         var width = $('.calendar-month-container').outerWidth(true) * months_per_row;
         
         $('.calendar').css('width', width);
