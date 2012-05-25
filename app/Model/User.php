@@ -51,12 +51,10 @@ class User extends AppModel
                 'dependent' => true
                 )
             );
-<<<<<<< HEAD
 
-=======
         public $hasMany = array('CalenderEntry');
+
         
->>>>>>> master
         function verifies($check, $field)
 	{
             $password = $this->data[$this->name][$field];

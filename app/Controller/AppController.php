@@ -54,7 +54,6 @@ class AppController extends Controller
             $this->layout = 'frontpage';
     }
 
-<<<<<<< HEAD
     function beforeRender()
     {
         parent::beforeRender();

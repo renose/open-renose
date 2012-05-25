@@ -63,10 +63,7 @@ class ReportsController extends AppController
         //Kein Jahr übergeben => dieses Jahr nehmen
         if(!$year)
             $year = date('Y');
-<<<<<<< HEAD
 
-=======
-        
         $this->loadModel('CalendarEntry');
         $calendar_entries = $this->CalendarEntry->find('all', array(
             'recursive' => 0,
@@ -77,11 +74,10 @@ class ReportsController extends AppController
             'fields' => array('CalendarEntry.day', 'CalendarEntry.type')
         ));
         $calendar = array();
-        
+
         foreach($calendar_entries as $entry)
             $calendar[$entry['CalendarEntry']['day']][] = $entry['CalendarEntry']['type'];
         
->>>>>>> master
         $this->set('year', $year);
         $this->set('calendar', $calendar);
         $this->set('reports', $this->Report->find('all', array(

@@ -105,9 +105,9 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                             if ($day == 1 && date('N', mkdate($day, $month, $year)) > 1)
                                 echo "<td colspan='" . (date('N', mkdate($day, $month, $year)) - 1) . "'></td>";
                         }
-                        
+
                         $day_class = array('calendar-day');
-                        
+
                         //Aktueller Tag hervorheben
                         if (mkdate($day, $month, $year) == mkdate(date('d'), date('m'), date('Y')))
                             $day_class[] = 'calendar-day-today';
@@ -150,22 +150,21 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
 
 <div style="clear: both;"></div>
 
-<<<<<<< HEAD
-<?php pr($reports);
-=======
+<?php pr($reports); ?>
+
 <script type="text/javascript">
     var resizeTimer;
     $(window).resize(function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(calendarResize, 100);
     });
-    
+
     function calendarResize() {
         var content_width = $('#content').width() - parseInt($('#content').css('padding-left'), 10) - parseInt($('#content').css('padding-right'), 10);
         var months_per_row = Math.floor(content_width / $('.calendar-month-container').outerWidth(true));
         months_per_row = months_per_row < 4 ? months_per_row : 4;
         var width = $('.calendar-month-container').outerWidth(true) * months_per_row;
-        
+
         $('.calendar').css('width', width);
     }
     $(document).ready(function(){ calendarResize(); });
@@ -175,4 +174,3 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
     pr($calendar);
     pr($reports);
 ?>
->>>>>>> master
