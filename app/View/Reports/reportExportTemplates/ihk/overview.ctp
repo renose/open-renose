@@ -2,14 +2,14 @@
 <table>
     <tr>
         <td width="100px"><?= $this->Html->image($this->Html->url($templatePath.'img/ihk_logo_grey.png', true), array('id' => 'ihk-logo')); ?></td>
-        <td><h1 id="ihk-name">Region Stuttgart</h1></td>
+        <td><h1 id="ihk-name">Region TODO</h1></td>
     </tr>
 </table>
 <hr>
 <h2 class="aligncenter" style="font-size: 16pt;line-height: 3px;">Berichtsheft</h2>
 <p class="aligncenter">(Ausbildungsnachweis für die Berufsausbildung, wöchentliche Berichte)</p>
 <br>
-<table class="overview-table" border="0" width="85.5%"> <!-- border="1" frame="void" rules="rows" -->
+<table class="overview-table" border="0" width="85.5%">
     <tr>
         <td width="50%">Name, Vorname</td>
         <td colspan="2">Muster, Max</td>

@@ -19,13 +19,13 @@
     <?php
 
     for($i=$start;$i<$end;$i++) {
-        if(!(isset($activityList[$i]))) break;;
+        if(!(isset($reports[$i]))) break;
     ?>
 
         <tr nobr="true">
-            <td><?= $activityList[$i]['abteilung'] ?></td>
-            <td align="center"><?= $activityList[$i]['von'] ?></td>
-            <td align="center"><?= $activityList[$i]['bis'] ?></td>
+            <td><?= 'TODO' ?></td>
+            <td align="center"><?= $this->reNoseDate->getMondayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week']); ?></td>
+            <td align="center"><?= $this->reNoseDate->getFridayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week']); ?></td>
             <td></td>
         </tr>
         <?php

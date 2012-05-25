@@ -1,12 +1,12 @@
 <?= $this->Html->css($this->Html->url($templatePath.'css/ihk.css', true)); ?>
 <table class="detailTable">
     <tr>
-        <td><strong>Ausbildungsnachweis Nr. 01</strong></td>
-        <td>für die Zeit vom 01.01.2011</td>
-        <td>bis 01.01.2011</td>
+        <td><strong>Ausbildungsnachweis Nr. <?= $report['number'] ?></strong></td>
+        <td>für die Zeit vom <?= $this->reNoseDate->getMondayByYearAndWeek($report['year'], $report['week']); ?></td>
+        <td>bis <?= $this->reNoseDate->getFridayByYearAndWeek($report['year'], $report['week']); ?></td>
     </tr>
     <tr>
-        <td colspan="2">Abteilung oder Arbeitsgebiet: Softwareentwicklung</td>
-        <td>Datum: 06.09.2010</td>
+        <td colspan="2">Abteilung oder Arbeitsgebiet: TODO</td>
+        <td>Datum: <?= $this->Time->format('d.m.Y', $report['date']); ?></td>
     </tr>
 </table>
