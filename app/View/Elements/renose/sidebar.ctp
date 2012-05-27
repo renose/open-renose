@@ -25,23 +25,17 @@
 <?php
     $nav = array(
         'Main' => array(
-            'Dashboard' => array('img' => 'icons/clipboard.png', 'url' => '/dashboard'),
             'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
             'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedules'),
-            'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
+#           'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
-        'Dev' => array(
-            'Welcome Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/welcome'),
-            'User Test Page' => array('img' => 'icon/menu_item.png', 'url' => '/users/test')
+        'Berichte' => array(
+            'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),
+            'Export' => array('img' => 'icons/pdf.png', 'url' => '/reports/export')
         ),
         'Seiten' => array(
             'Über das Projekt' => array('img' => 'icons/info.png', 'url' => '/page/about'),
             'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq')
-        ),
-        'Berichte' => array(
-            'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),
-            'Hinzufügen' => array('img' => 'icons/add_list.png', 'url' => '/reports/add'),
-            'Export' => array('img' => 'icons/save_as.png', 'url' => '/reports/export')
         )
     );
 

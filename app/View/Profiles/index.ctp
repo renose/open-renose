@@ -37,7 +37,7 @@ echo $this->Form->input('last_name', array('label' => 'Nachname'));
 
 echo $this->Form->input('job_name', array('label' => 'Beruf', 'type' => 'text'));
 
-echo $this->Form->input('birthday', array('label' => 'Geburtstag'));
+echo $this->Form->input('birthday', array('label' => 'Geburtstag', 'minYear' => date('Y') -70 ,'maxYear' => date('Y')));
 echo $this->Form->input('birthplace', array('label' => 'Geburtsort'));
 
 echo $this->Form->input('zip_code', array('label' => 'Postleizahl'));
