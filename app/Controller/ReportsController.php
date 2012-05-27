@@ -197,7 +197,7 @@ class ReportsController extends AppController
             )
         ));
 
-        $this->set('templatePath', '/reportExporttemplates/ihk/');
+        $this->set('templatePath', '/reportExportTemplates/ihk/');
 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->SetCreator('reNose.de');
