@@ -71,7 +71,6 @@ class UsersController extends AppController
     {
         //pr($this->User);
         //pr($this->Auth);
-ChromePhp::log($this->request->data);
 
         if ($this->request->data)
         {
@@ -134,13 +133,13 @@ ChromePhp::log($this->request->data);
             }
             else
             {
-                $this->Session->setFlash('Fehlerhafter Aktivierungscode. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+                $this->Session->setFlash('Fehlerhafter Aktivierungscode. Bitte kontaktieren Sie einen Administrator.', 'flash_fail');
                 $this->redirect('/');
             }
         }
         else
         {
-            $this->Session->setFlash('User nicht gefunden. Bitte Konatieren Sie einen Administrator.', 'flash_fail');
+            $this->Session->setFlash('User nicht gefunden. Bitte kontaktieren Sie einen Administrator.', 'flash_fail');
             $this->redirect('/');
         }
     }
@@ -165,8 +164,6 @@ ChromePhp::log($this->request->data);
     {
         $user = $this->Auth->user();
         $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
-
-        //pr($this->User->findById($this->Auth->user('id')));
 
         $user = $this->User->findById($this->Auth->user('id'));
         pr($user);
