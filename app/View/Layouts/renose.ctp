@@ -21,7 +21,9 @@
             'jquery-ui.custom.min',
             'jquery.jeditable.min',
             'jquery.jgrowl.min',
-            'ckeditor/ckeditor'
+            'ckeditor/ckeditor',
+            'jquery.textlimiter',
+            'jquery.load'
         ));
 
         echo $scripts_for_layout;
@@ -49,7 +51,7 @@
         <nav id="sidebar">
             <?php echo $this->element('renose/sidebar'); ?>
         </nav>
-        
+
         <nav id="breadcrumb">
             <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
         </nav>
@@ -60,7 +62,7 @@
             echo $this->Session->flash('auth');
             echo $this->Session->flash('email');
             ?>
-            
+
             <?php echo $content_for_layout; ?>
 
             <?php echo $this->element('sql_dump'); ?>
@@ -72,7 +74,7 @@
             <?php else: ?>
             <div id="footer-left">Icons by <a href="http://icons8.com/">Icons8</div>
             <?php endif; ?>
-            
+
             <div id="footer-right">
                 <a class="icon-goto-top" href="#top">
                     <?php echo $this->Html->image('icons_white/up.png'); ?>
@@ -82,7 +84,7 @@
 
             <div id="footer-center">
                 (c) 2011-2012 by
-                <a href="mailto:simon@renose.de">Simon Wörner</a>, 
+                <a href="mailto:simon@renose.de">Simon Wörner</a>,
                 <a href="mailto:patrick@renose.de">Patrick Hafner</a> and
                 <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
                 <a href="http://www.renose.de">renose.de</a></p>
