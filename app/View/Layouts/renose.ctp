@@ -10,18 +10,22 @@
             'http://fonts.googleapis.com/css?family=Open+Sans',
             'ui-lightness/jquery-ui.custom',
             'jquery.jgrowl',
+            'wysihtml5',
             'cake.generic',
             'renose/screen',
             'calender',
-            'schedule'
+            'schedule',
+            'report'
         ));
 
         echo $this->Html->script(array(
             'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js', //'jquery.min',
             'jquery-ui.custom.min',
-            'jquery.jeditable.min',
+            'jquery.jeditable', //'jquery.jeditable.min',
+            'jquery.jeditable.wysihtml5',
             'jquery.jgrowl.min',
-            'ckeditor/ckeditor'
+            'wysihtml5/parser_rules/simple',
+            'wysihtml5/wysihtml5.min'
         ));
 
         echo $scripts_for_layout;

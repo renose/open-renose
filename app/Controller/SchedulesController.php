@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 
 class SchedulesController extends AppController
 {
-    public $components = array('RequestHandler', 'Json');
+    public $components = array('Json');
     
     public function beforeFilter()
     {

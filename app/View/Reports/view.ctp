@@ -1,106 +1,133 @@
 <?php
-
-/*
- * view.ctp
- *
- * Copyright (c) 2011 open reNose team <info at renose.de>.
- * Simon Wörner and Patrick Hafner.
- *
- * This file is part of open reNose.
- *
- * open reNose is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * open reNose is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
- */
-?>
-
-<?php
     $this->Html->addCrumb('Berichte', 'display');
     $this->Html->addCrumb($report['Report']['year'], array('action' => 'display', $report['Report']['year']));
     $this->Html->addCrumb('Bericht ' . $report['Report']['number']);
 ?>
 
-<h1><?php echo $title_for_layout; ?></h1>
-
-<b>Tätigkeiten</b>
-<hr/><div>
-<?php
-    foreach ($report['ReportActivity'] as $reportActivity)
-    {
-        echo $this->Html->link(
-                $this->Html->image("icon/edit.png", array("alt" => "Tätigkeit bearbeiten", "align" => "center")),
-                array('controller' => 'report_activities', 'action' => 'edit', $reportActivity['id']), array('escape' => false) );
-
-        echo ' ';
-
-        echo $this->Html->link(
-                $this->Html->image("icon/delete.png", array("alt" => "Tätigkeit löschen", "align" => "center")),
-                array('controller' => 'report_activities', 'action' => 'delete', $reportActivity['id']), array('escape' => false),
-                'Wollen Sie diese Tätigkeit wirklich löschen?');
-
-        echo '<pre>';
-        //echo str_replace("\n", "<br/>", $reportActivity['text']);
-        echo $reportActivity['text'];
-        echo '</pre>';
-
-        echo '<br/>';
-    }
-?>
-</div>
-<?php
-    echo $this->Html->link(
-            $this->Html->image("icon/add.png", array("alt" => "Tätigkeit hinzufügen", "align" => "center", "id" => "ico-addpage")),
-            array('controller' => 'report_activities', 'action' => 'add', $report['Report']['id']),
-            array('escape' => false));
-?>
-
-<hr/>
-<br/>
+<h1>
+    <?php
+        echo $this->Html->image('icons/clipboard.png');
+        echo $title_for_layout;
+    ?>
+</h1>
 <br/>
 
-<b>Unterweisungen</b>
-<hr/><div>
-<?php
-    foreach ($report['ReportInstruction'] as $reportInstruction)
-    {
-        echo '<i>' . $reportInstruction['title'] . '</i> ';
+<div id="report">
+    <h2>
+        <?php echo $this->Html->image('icons/manager.png'); ?>
+        Tätigkeiten
+    </h2>
+    <div id="wysihtml5-toolbar" style="display: none;">
+        <ul class="commands">
+            <li data-wysihtml5-command="bold" title="Fett" class="command" href="javascript:;" unselectable="on">
+                <?php echo $this->Html->image('icons/bold.png'); ?>
+            </li>
+            <li data-wysihtml5-command="italic" title="Kursiv" class="command" href="javascript:;" unselectable="on">
+                <?php echo $this->Html->image('icons/italic.png'); ?>
+            </li>
+        </ul>
+    </div>
+    <?php
+        if(isset($report['ReportActivity']))
+        {
+            echo '<div id="ReportActivity" class="edit-field" data-report="'. $report['Report']['id'] .'" data-exists="true">';
+            echo $report['ReportActivity']['text'];
+            echo '</div>';
+            //echo $this->Html->image('icons/delete.png', array('class' => 'delete-icon', 'alt' => 'Diesen Eintrag löschen'));
+        }
+        else
+        {
+            echo '<div id="ReportActivity" data-report="'. $report['Report']['id'] .'" data-exists="false"></div>';
+            //echo $this->Html->image('icons/delete.png', array('class' => 'delete-icon', 'alt' => 'Diesen Eintrag löschen'));
+        }
+    ?>
+    <br/>
 
+    <h2>
+        <?php echo $this->Html->image('icons/talk.png'); ?>
+        Unterweisungen
+    </h2>
+    <div>
+    <?php
+        foreach ($report['ReportInstruction'] as $reportInstruction)
+        {
+            echo '<i>' . $reportInstruction['title'] . '</i> ';
+
+            echo $this->Html->link(
+                    $this->Html->image("icon/edit.png", array("alt" => "Unterweisung bearbeiten", "align" => "center")),
+                    array('controller' => 'report_instructions', 'action' => 'edit', $reportInstruction['id']), array('escape' => false) );
+
+            echo ' ';
+
+            echo $this->Html->link(
+                    $this->Html->image("icon/delete.png", array("alt" => "Unterweisung löschen", "align" => "center")),
+                    array('controller' => 'report_instructions', 'action' => 'delete', $reportInstruction['id']), array('escape' => false),
+                    'Wollen Sie diese Unterweisung wirklich löschen?');
+
+            echo '<dir>';
+            echo str_replace("\n", "<br/>", $reportInstruction['text']);
+            //echo $reportInstruction['text'];
+            echo '</dir>';
+
+            echo '<br/>';
+        }
+    ?>
+    </div>
+    <?php
         echo $this->Html->link(
-                $this->Html->image("icon/edit.png", array("alt" => "Unterweisung bearbeiten", "align" => "center")),
-                array('controller' => 'report_instructions', 'action' => 'edit', $reportInstruction['id']), array('escape' => false) );
-
-        echo ' ';
-
-        echo $this->Html->link(
-                $this->Html->image("icon/delete.png", array("alt" => "Unterweisung löschen", "align" => "center")),
-                array('controller' => 'report_instructions', 'action' => 'delete', $reportInstruction['id']), array('escape' => false),
-                'Wollen Sie diese Unterweisung wirklich löschen?');
-
-        echo '<dir>';
-        echo str_replace("\n", "<br/>", $reportInstruction['text']);
-        //echo $reportInstruction['text'];
-        echo '</dir>';
-
-        echo '<br/>';
-    }
-?>
+                $this->Html->image("icon/add.png", array("alt" => "Unterweisung hinzufügen", "align" => "center", "id" => "ico-addpage")),
+                array('controller' => 'report_instructions', 'action' => 'add', $report['Report']['id']),
+                array('escape' => false));
+    ?>
+    <br/>
+    
+    <h2>
+        <?php echo $this->Html->image('icons/books.png'); ?>
+        Schule
+    </h2>
 </div>
-<?php
-    echo $this->Html->link(
-            $this->Html->image("icon/add.png", array("alt" => "Unterweisung hinzufügen", "align" => "center", "id" => "ico-addpage")),
-            array('controller' => 'report_instructions', 'action' => 'add', $report['Report']['id']),
-            array('escape' => false));
-?>
-<hr/>
 
-<?php
-    pr($report);
+<script type="text/javascript">
+    
+    editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities', 'action' => 'save')); ?>');
+    
+    function editable(elements, url)
+    {
+        elements.editable(url, {
+            type: 'wysihtml5',
+            loadtext: 'bitte warten...',
+            indicator: 'speichern...',
+            placeholder: '-',
+            tooltip: 'Zum Ändern klicken...',
+            submit: 'Speichern',
+            cancel: 'Abbrechen',
+            height: 'none',
+            width: 'none',
+            submitdata: function(value, settings) {
+                return {
+                    report_id: $(this).attr('data-report')
+                };
+            },
+            callback : function(value, settings) {
+                
+                var data = jQuery.parseJSON(value);
+                
+                if(data.status.code > 0)
+                {
+                    $(this).html(data.data);
+                    $(this).attr('data-exists', 'true');
+                }
+                else
+                {
+                    console.log(data);
+                    $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
+                    
+                    $(this).html('Fehler');
+                }
+               
+            }
+        });
+    }
+</script>
+
+<?php pr($report);

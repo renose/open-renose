@@ -25,7 +25,8 @@ class Report extends AppModel
 {
 
     public $belongsTo = array('User');
-    public $hasMany = array('ReportActivity', 'ReportInstruction', 'ReportSchool');
+    public $hasOne = array('ReportActivity');
+    public $hasMany = array('ReportInstruction', 'ReportSchool');
 
     public $validate = array(
             'date' => array(
