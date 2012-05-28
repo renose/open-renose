@@ -184,6 +184,7 @@ class ReportsController extends AppController
         $this->loadModel('User');
 
         $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+        #ChromePhp::log($userProfile);
 
         $reports = $this->Report->find('all', array(
             'conditions' => array(
@@ -224,6 +225,7 @@ class ReportsController extends AppController
 
         // write first site which contains personal data
         // TODO
+        $this->set('user', $userProfile);
         $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
 
         // set report overview for activityList

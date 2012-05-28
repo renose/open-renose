@@ -20,10 +20,8 @@
  * You should have received a copy of the GNU General Public License
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
-?>
 
-<?php
-    $nav = array(
+$nav = array(
         'Main' => array(
             'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
             'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedules'),
@@ -40,4 +38,3 @@
     );
 
     $this->Navigation->show($nav);
-?>

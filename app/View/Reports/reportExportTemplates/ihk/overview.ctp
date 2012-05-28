@@ -12,28 +12,28 @@
 <table class="overview-table" border="0" width="85.5%">
     <tr>
         <td width="50%">Name, Vorname</td>
-        <td colspan="2">Muster, Max</td>
+        <td colspan="2"><?= $user['Profile']['last_name'].', '.$user['Profile']['first_name'] ?></td>
     </tr>
     <tr>
         <td>Geburtsort</td>
-        <td>Musterstadt</td>
-        <td>Geburtsdatum: 03.01.1991</td>
+        <td><?= $user['Profile']['birthplace'] ?></td>
+        <td>Geburtsdatum: <?= $this->Time->format('d.m.Y', $user['Profile']['birthday']) ?></td>
     </tr>
     <tr>
         <td>Anschrift</td>
-        <td colspan="2">Teststraße 88</td>
+        <td colspan="2"><?= $user['Profile']['street'].', '.$user['Profile']['zip_code'].' '.$user['Profile']['city'] ?></td>
     </tr>
     <tr>
         <td>Ausbildungsberuf (nach Berufsbild)</td>
-        <td colspan="2">Fachinformatiker - Anwendungsentwicklung</td>
+        <td colspan="2"><?= $user['Job']['name'] ?></td>
     </tr>
     <tr>
         <td>Ausbildungsfirma</td>
-        <td colspan="2">Test GmbH</td>
+        <td colspan="2"><?= $user['Profile']['company'] ?></td>
     </tr>
     <tr>
         <td>Geschäftszweig</td>
-        <td colspan="2">Webentwicklung</td>
+        <td colspan="2"><?= $user['Profile']['branch'] ?></td>
     </tr>
     <tr>
         <td>Vertragliche Ausbildungszeit vom</td>

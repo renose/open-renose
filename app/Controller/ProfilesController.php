@@ -54,7 +54,7 @@ class ProfilesController extends AppController
             if ($this->Profile->saveAssociated($this->request->data))
             {
                 $this->Session->setFlash('Dein Profil wurde gespeichert.', 'flash_success');
-                $this->redirect( array('controller' => 'users', 'action' => 'dashboard') );
+                $this->redirect( array('controller' => 'profiles', 'action' => 'index') );
             }
             else
                 $this->Session->setFlash('Fehler beim Speichern des Profils.');
