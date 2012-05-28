@@ -21,9 +21,4 @@ $this->Html->addCrumb('Registrieren', array('action' => 'register'));
     echo $this->Form->input('password', array('type' => 'password', 'label' => 'Passwort'));
     echo $this->Form->input('password_confirm', array('type' => 'password', 'label' => 'Passwort bestätigen'));
 
-    /*echo $ajax->submit('Submit',
-            array(
-                'url'=> array('controller'=>'users', 'action'=>'register'),
-                'update' => 'testdiv'));
-    echo $this->Form->end();*/
     echo $this->Form->end('Registrieren');

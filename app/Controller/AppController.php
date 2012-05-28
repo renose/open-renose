@@ -34,7 +34,7 @@ class AppController extends Controller
                 'controller' => 'users',
                 'action' => 'login',
             ),
-            'loginRedirect' => '/',
+            'loginRedirect' => '/reports/display',
             'logoutRedirect' => '/',
             'authError' => 'Sie sind nicht eingeloggt, bitte einloggen.',
             'authenticate' => array(
@@ -50,22 +50,18 @@ class AppController extends Controller
     function beforeFilter()
     {
         // change layout to frontpage for guests
-        if (!$this->Auth->user('id'))
+        if (!$this->Auth->loggedIn())
             $this->layout = 'frontpage';
-    }
-
-    function beforeRender()
-    {
-        parent::beforeRender();
-
-        // change layout on errors
-        if ($this->name == 'CakeError') {
-            if(!$this->Auth->user('id')) {
-                $this->layout = 'frontpage';
-            } else {
-                $this->layout = 'renose';
+        else
+        {
+            //redirect login users from page home to report overview
+            if($this->request->params['controller'] == 'pages' && $this->request->params['action'] == 'display')
+            {
+                if(!isset($this->request->params['pass'][0]))
+                    $this->redirect ('/reports');
+                else if($this->request->params['pass'][0] == 'home')
+                    $this->redirect ('/reports');
             }
         }
     }
-
 }

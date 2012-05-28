@@ -38,19 +38,19 @@ class User extends AppModel
         ),
         'password' => array(
             'mustBeLonger' => array(
-                'rule' => array('minLength', 5),
-                'message' => 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.',
-            ),
-            'equals' => array(
-                'rule' => array('passwordCheck', 'password_confirm'),
-                'message' => ''
+                'rule' => array('minLength', 6),
+                'message' => 'Ihr Passwort muss aus Sicherheitsgründen mindestens 6 Zeichen lang sein.',
             )
         ),
         'password_confirm' => array(
-            'mustBeLonger' => array(
-                'rule' => array('minLength', 5),
-                'message' => 'Ihr Passwort muss aus Sicherheitsgründen mindestens 5 Zeichen lang sein.'
-            ),
+            'equals' => array(
+                'rule' => array('equalToField', array(
+                    'this_field' => 'password_confirm',
+                    'other_field' => 'password'
+                    )
+                ),
+                'message' => 'Bitte geben Sie ihr Passwort zur Bestätigung nochmals korrekt ein.'
+            )
         )
     );
     public $hasOne = array(
@@ -61,24 +61,11 @@ class User extends AppModel
             'dependent' => true
         )
     );
-    public $hasMany = array('CalenderEntry');
+    public $hasMany = array('CalendarEntry');
 
-    function passwordCheck($data, $field) {
-
-        // $data['password'] = password value
-        // $field = field which has to be equal
-        if($data['password'] != $this->data[$this->alias][$field]) {
-            $this->invalidate($field, 'Bitte geben Sie ihr Passwort zur Bestätigung nochmals korrekt ein');
-            return false;
-        } else {
-            return true;
-        }
-
-        /*$password = $this->data[$this->name][$field];
-        $password_confirm = $check['password_confirm'];
-        $password_confirm = Security::hash(Configure::read('Security.salt') . $password_confirm);
-
-        return $password == $password_confirm;*/
+    function equalToField($data, $options)
+    {
+        return $data[$options['this_field']] == $this->data[$this->alias][$options['other_field']];
     }
 
 }

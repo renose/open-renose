@@ -28,11 +28,19 @@ class UsersController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow(array('login', 'register', 'activate'));
+        $this->Auth->allow(array('login', 'logout', 'register', 'activate'));
+        $this->Auth->allow('*');
     }
 
     function login()
     {
+        //Bereits eingeloggt?
+        if ($this->Auth->loggedIn())
+        {
+            $this->Session->setFlash('Sie sind bereits eingeloggt.', 'flash_notice');
+            $this->redirect($this->Auth->redirect());
+        }
+        
         if($this->request->data)
         {
             if ($this->Auth->login())
@@ -43,20 +51,12 @@ class UsersController extends AppController
             else
                 $this->Auth->flash('Email Adresse oder Passwort falsch! Bitte versuche es erneut.');
         }
-
-        //Bereits eingeloggt?
-        if ($this->Auth->loggedIn())
-        {
-            $this->Session->setFlash('Sie sind bereits eingeloggt. Bitte loggen Sie sich zuerst aus.', 'flash_notice');
-            $this->redirect($this->Auth->redirect());
-        }
     }
 
     function logout()
     {
         if ($this->Auth->loggedIn())
         {
-            //$this->Session->delete('User');
             $this->Session->setFlash('Sie wurden erfolgreich ausgeloggt.', 'flash_success');
             $this->redirect($this->Auth->logout());
         }
@@ -68,37 +68,46 @@ class UsersController extends AppController
     }
 
     function register()
-    {
-        //pr($this->User);
-        //pr($this->Auth);
-
+    {        
         if ($this->request->data)
         {
             //Setze Activation Key
             $this->request->data['User']['activationkey'] = Security::generateAuthKey();
 
             // manual hashing is required cause model validation function and save after positive result
-            $this->request->data['User']['password'] = Security::hash(Configure::read('Security.salt') . $this->request->data['User']['password']);
-            $this->request->data['User']['password_confirm'] = Security::hash(Configure::read('Security.salt') . $this->request->data['User']['password_confirm']);
+            $this->request->data['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
+            $this->request->data['User']['password_confirm'] = Security::hash($this->request->data['User']['password_confirm'], null, true);
+            
             if ($this->User->save($this->request->data))
             {
                 App::uses('CakeEmail', 'Network/Email');
-
+                
                 $user = $this->request->data;
-
+                
                 $email = new CakeEmail('default');
 
-                $email  ->to( $user['User']['email'])
+                $email  ->to($user['User']['email'])
                         ->subject('Ihre Registrierung bei open reNose')
                         ->template('register')
-                        ->sendAs('both')
+                        ->emailFormat('html')
                         ->viewVars(array(
                             'user' => $user
                             )
                         );
-
-                $email->send('My message');
-
+                
+                try
+                {
+                    $email->send();
+                }
+                catch(Exception $e)
+                {
+                    //pr($e);
+                    
+                    $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
+                    //$this->redirect(array('controller' => 'users', 'action' => 'register'));
+                    $this->redirect(array('controller' => 'users', 'action' => 'activate', $user['User']['email'], $user['User']['activationkey']));
+                }
+                
                 $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');
                 $this->redirect(array('controller' => 'users', 'action' => 'login'));
             }
@@ -125,7 +134,7 @@ class UsersController extends AppController
             if ($user['User']['activationkey'] == $activationkey)
             {
                 $user['User']['is_active'] = 1;
-                $user['User']['activationkey'] = NULL;
+                $user['User']['activationkey'] = null;
                 $this->User->save($user);
 
                 $this->Session->setFlash('Account erfolgreich aktiviert.', 'flash_success');

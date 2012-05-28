@@ -10,12 +10,12 @@
             'http://fonts.googleapis.com/css?family=Open+Sans',
             'ui-lightness/jquery-ui.custom',
             'jquery.jgrowl',
-            'wysihtml5',
             'cake.generic',
+            'renose/wysihtml5',
             'renose/screen',
-            'calender',
-            'schedule',
-            'report'
+            'renose/calender',
+            'renose/schedule',
+            'renose/report'
         ));
 
         echo $this->Html->script(array(
