@@ -37,6 +37,11 @@ class ReportsController extends AppController
     {
         parent::beforeFilter();
         if($this->request->params['action'] == 'export') {
+            if(!in_array('curl', get_loaded_extensions())) {
+                throw new InternalErrorException('cURL wurde nicht gefunden. Dieses Modul wird für den PDF Generator benötigt.');
+                $this->render();
+            }
+
             $this->layout = false;
             $this->autoRender = false;
             set_time_limit(0);
