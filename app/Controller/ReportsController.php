@@ -305,8 +305,4 @@ class ReportsController extends AppController
 
     private function __setExportTemplate() {}
 
-    //edit
-
-    //delete
-
 }

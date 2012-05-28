@@ -1,6 +1,6 @@
 <?php
-    $this->Html->addCrumb('Berichte', 'display');
-    $this->Html->addCrumb($report['Report']['year'], array('action' => 'display', $report['Report']['year']));
+    $this->Html->addCrumb('Berichte');
+    $this->Html->addCrumb('Übersicht', array('action' => 'display', $report['Report']['year']));
     $this->Html->addCrumb('Bericht ' . $report['Report']['number']);
 ?>
 

@@ -56,7 +56,7 @@
         </nav>
         
         <nav id="breadcrumb">
-            <?php echo $this->Html->getCrumbs(' > ', 'Home'); ?>
+            <?php echo $this->Html->getCrumbs(' > '); ?>
         </nav>
         <div id="content">
             <a name="top"></a>

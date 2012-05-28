@@ -6,7 +6,7 @@
     border-radius: 5px;
 }
 #report .edit-field:hover {
-    border: 1px solid black;
+    border: 1px solid darkgrey;
 }
 
 #report .edit-field {

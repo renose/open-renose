@@ -1,3 +1,7 @@
+<?php
+    $this->Html->addCrumb('Main');
+    $this->Html->addCrumb('Stundenplan', array('action' =>'index'));
+?>
 <h1>
     <?php echo $this->Html->image('icons/planner.png'); ?>
     Stundenplan

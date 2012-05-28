@@ -144,43 +144,10 @@ class UsersController extends AppController
         }
     }
 
-    function welcome()
-    {
-        $user = $this->User->findById($this->Auth->user('id'));
-        $profile = $this->User->Profile->findByUserId($user['User']['id']);
-
-        $this->set('User', $user);
-        $this->set('Profile', $profile);
-    }
-
     function get_name()
     {
         $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
         return $profile['Profile']['first_name'] .' ' . $profile['Profile']['last_name'];
-    }
-
-    function test()
-    {
-        $user = $this->Auth->user();
-        $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
-
-        $user = $this->User->findById($this->Auth->user('id'));
-        pr($user);
-
-        //pr($profile);
-        //pr($this->User->find('all'));
-        //pr($this->User->Profile->find('all'));
-        //pr($this->Auth);
-
-        $this->set('User', $user);
-        $this->set('Profile', $profile);
-
-        //echo $this->Auth->password('unknown');
-        /* echo $this->Auth->password('simon');
-          echo '<br/>';
-          echo $this->Auth->password('patrick'); */
-
-        //pr($this->Auth);
     }
 }
