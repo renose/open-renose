@@ -1,41 +1,44 @@
-var wysihtml5_editor;
-$.editable.addInputType('wysihtml5', {    
-    element : function(settings, original) {        
-        var container = $('<div id="wysihtml5">');
-        $(this).append(container);
+$.editable.addInputType('wysihtml5', {
+    element : function(settings, original) {
+        settings.wysihtml5 = new Array();
+        settings.wysihtml5.editor = null;
+        settings.wysihtml5.uuid = Math.uuid();
+        
+        var container = $('<div />');
+        $(container).attr('id', settings.wysihtml5.uuid);
         $(container).attr('class', 'wysihtml5');
-        
-        /*var toolbar = $('<div id="wysihtml5-toolbar">');
-        $(container).append(toolbar);
-        $(toolbar).css('display', 'none');
-        
-        var toolbar_commands = $('<ul class="commands">');
-        $(toolbar).append(toolbar_commands);
-        
-        var command_bold = $('<li data-wysihtml5-command="bold" class="command" href="javascript:;" unselectable="on"></li>');
-        $(toolbar_commands).append(command_bold);
-        var command_italic = $('<li data-wysihtml5-command="italic" class="command" href="javascript:;" unselectable="on"></li>');
-        $(toolbar_commands).append(command_italic);*/
+        $(this).append(container);
         
         var toolbar = $('#wysihtml5-toolbar').clone();
-        toolbar.attr('id', 'my-wysihtml5-toolbar');
+        $(toolbar).attr('id', settings.wysihtml5.uuid + '-toolbar');
+        $(toolbar).attr('class', 'wysihtml5-toolbar');
         $(container).append(toolbar);
         
-        var input = $('<textarea id="wysihtml5-textarea">');
-        $(container).append(input);
+        var textarea = $('<textarea />');
+        $(textarea).attr('id', settings.wysihtml5.uuid + '-textarea');
+        if (settings.rows) {
+            textarea.attr('rows', settings.rows);
+        } else if (settings.height != "none") {
+            textarea.height(settings.height);
+        }
+        if (settings.cols) {
+            textarea.attr('cols', settings.cols);
+        } else if (settings.width != "none") {
+            textarea.width(settings.width);
+        }
+        $(container).append(textarea);
         
         return(container);
     },
     plugin: function(settings, original) {
-        wysihtml5_editor = new wysihtml5.Editor("wysihtml5-textarea", {
-            toolbar: "my-wysihtml5-toolbar",
+        settings.wysihtml5.editor = new wysihtml5.Editor(settings.wysihtml5.uuid + '-textarea', {
+            toolbar: settings.wysihtml5.uuid + '-toolbar',
             parserRules:  wysihtml5ParserRules
         });
     },
-    submit_data: function (settings, original) {
+    get_data: function (settings, original) {
         return {
-            value: wysihtml5_editor.textarea.element.value
+            value: settings.wysihtml5.editor.textarea.element.value
         };
     }
-         
 });

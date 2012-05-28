@@ -113,7 +113,8 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                         //Aktueller Tag hervorheben
                         if (mkdate($day, $month, $year) == mkdate(date('d'), date('m'), date('Y')))
                             $day_class[] = 'calendar-day-today';
-                        if(isset($calendar[date('Y-m-d', mkdate($day, $month, $year))]))
+                        //Calendar Events
+                        /*if(isset($calendar[date('Y-m-d', mkdate($day, $month, $year))]))
                         {
                             foreach($calendar[date('Y-m-d', mkdate($day, $month, $year))] as $event)
                             {
@@ -130,7 +131,7 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
                                         break;
                                 }
                             }
-                        }
+                        }*/
 
                         echo "<td class='" . implode(' ', $day_class) . "'>$day</td>";
 
@@ -169,7 +170,10 @@ $this->Html->addCrumb($year, array('action' => 'display', $year));
 
         $('.calendar').css('width', width);
     }
-    $(document).ready(function(){ calendarResize(); });
+    
+    $(document).ready(function(){
+        calendarResize();
+    });
 </script>
 
 <?php

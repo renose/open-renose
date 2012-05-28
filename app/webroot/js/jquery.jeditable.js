@@ -82,7 +82,7 @@
         /* setup some functions */
         var plugin   = $.editable.types[settings.type].plugin || function() { };
         var submit   = $.editable.types[settings.type].submit || function() { };
-        var submit_data = $.editable.types[settings.type].submit_data || function() { };
+        var get_data = $.editable.types[settings.type].get_data || function() { };
         var buttons  = $.editable.types[settings.type].buttons
                     || $.editable.types['defaults'].buttons;
         var content  = $.editable.types[settings.type].content
@@ -307,9 +307,7 @@
                         /* If it returns false abort submitting. */
                         if (false !== submit.apply(form, [settings, self])) {
                             
-                            if($.isFunction(submit_data))
-                                var data = submit_data.apply(form, [settings, self]);
-                            
+                            var data = get_data.apply(form, [settings, self]);                            
                             var id = data.id || self.id;
                             var value = data.value || input.val();
 

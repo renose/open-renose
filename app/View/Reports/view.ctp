@@ -12,21 +12,20 @@
 </h1>
 <br/>
 
+<div id="wysihtml5-toolbar" class="wysihtml5-toolbar" style="display: none;">
+    <a data-wysihtml5-command="bold" title="Fett" class="wysihtml5-command" href="javascript:;">
+        <?php echo $this->Html->image('icons/bold.png'); ?>
+    </a>
+    <a data-wysihtml5-command="italic" title="Kursiv" class="wysihtml5-command" href="javascript:;">
+        <?php echo $this->Html->image('icons/italic.png'); ?>
+    </a>
+</div>
+
 <div id="report">
     <h2>
         <?php echo $this->Html->image('icons/manager.png'); ?>
         Tätigkeiten
     </h2>
-    <div id="wysihtml5-toolbar" style="display: none;">
-        <ul class="commands">
-            <li data-wysihtml5-command="bold" title="Fett" class="command" href="javascript:;" unselectable="on">
-                <?php echo $this->Html->image('icons/bold.png'); ?>
-            </li>
-            <li data-wysihtml5-command="italic" title="Kursiv" class="command" href="javascript:;" unselectable="on">
-                <?php echo $this->Html->image('icons/italic.png'); ?>
-            </li>
-        </ul>
-    </div>
     <?php
         if(isset($report['ReportActivity']))
         {
@@ -103,6 +102,7 @@
             cancel: 'Abbrechen',
             height: 'none',
             width: 'none',
+            rows: 10,
             submitdata: function(value, settings) {
                 return {
                     report_id: $(this).attr('data-report')

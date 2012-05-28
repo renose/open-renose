@@ -19,6 +19,7 @@
         ));
 
         echo $this->Html->script(array(
+            'Math.uuid',
             'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js', //'jquery.min',
             'jquery-ui.custom.min',
             'jquery.jeditable', //'jquery.jeditable.min',
