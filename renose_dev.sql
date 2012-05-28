@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 25. Mai 2012 um 11:12
+-- Erstellungszeit: 28. Mai 2012 um 14:22
 -- Server Version: 5.5.16
 -- PHP-Version: 5.3.8
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report` (`user_id`,`year`,`week`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Daten für Tabelle `reports`
@@ -122,7 +122,8 @@ INSERT INTO `reports` (`id`, `user_id`, `year`, `week`, `number`, `department`, 
 (1, 1, 2010, 35, 1, '', '2011-05-03', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 1, 2011, 33, 51, '', '2011-08-16', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (3, 1, 2012, 21, 87, '', '2012-05-25', '2012-05-25 10:48:57', '2012-05-25 10:48:57'),
-(4, 1, 2012, 7, 73, '', '2012-05-25', '2012-05-25 11:03:57', '2012-05-25 11:03:57');
+(4, 1, 2012, 7, 73, '', '2012-05-25', '2012-05-25 11:03:57', '2012-05-25 11:03:57'),
+(5, 1, 2012, 22, 88, '', '2012-05-28', '2012-05-28 13:44:44', '2012-05-28 13:44:44');
 
 -- --------------------------------------------------------
 
@@ -136,8 +137,9 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
   `text` text NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `report_id` (`report_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `report_activities`
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `report_activities` (
 
 INSERT INTO `report_activities` (`id`, `report_id`, `text`, `created`, `modified`) VALUES
 (1, 1, 'Report via Scaffolding getestet', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 1, 'Test³²', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, 4, 'Hallo, <i>Welt</i><b>!</b><br><b>(:</b>', '2012-05-28 01:20:22', '2012-05-28 01:20:22');
 
 -- --------------------------------------------------------
 
@@ -156,19 +158,19 @@ INSERT INTO `report_activities` (`id`, `report_id`, `text`, `created`, `modified
 CREATE TABLE IF NOT EXISTS `report_instructions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
   `text` text,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `report_id` (`report_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Daten für Tabelle `report_instructions`
 --
 
-INSERT INTO `report_instructions` (`id`, `report_id`, `title`, `text`, `created`, `modified`) VALUES
-(1, 1, 'Webentwicklung mit cakePHP', 'Prototyp mit cakePHP und Scaffolfing erstellen.', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `report_instructions` (`id`, `report_id`, `text`, `created`, `modified`) VALUES
+(1, 1, 'Prototyp mit cakePHP und Scaffolfing erstellen.', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -224,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `schedule_lessons` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 --
 -- Daten für Tabelle `schedule_lessons`

@@ -30,122 +30,43 @@ class ReportInstructionsController extends AppController
         parent::beforeFilter();
     }
 
-    function add($report_id = null)
+    public function save()
     {
-        $this->set('title_for_layout', 'Unterweisung hinzufügen');
-
-        //Bericht Id aus Formular übernehmen
-        if(!empty($this->request->data['Report']['id']))
-            $report_id = $report_id = $this->request->data['Report']['id'];
-
-        //Bericht laden
-        if($report_id)
+        if(!isset($this->request->data['report_id']))
+            $this->Json->error('Fehler beim Speichern der Tätigkeit.', -20, $this->request->data);
+        
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        
+        if(isset($report['ReportInstruction']['id']))
         {
-            $report = $this->ReportInstruction->Report->find('first', array(
-                        'order' => 'Report.number ASC',
-                        'conditions' => array('User.id = ' => $this->Auth->user('id'), 'Report.id = ' => $report_id)));
-        }
-
-        //Daten eingegeben? => Speichern
-        if (!empty($this->request->data))
-        {
-            if ($this->ReportInstruction->saveAll($this->request->data))
+            $report['ReportInstruction']['text'] = $this->request->data['value'];
+            
+            if($this->ReportInstruction->save($report))
             {
-                $this->Session->setFlash('Die Unterweisung wurde hinzugefügt.', 'flash_success');
-                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+                $this->data = $this->ReportInstruction->findById($report['ReportActivity']['id']);
+                $this->Json->response($this->data['ReportInstruction']['text'], 11);
             }
             else
-            {
-                $this->Session->setFlash('Fehler beim Hinzufügen der Unterweisung.');
-            }
-        }
-
-        //Bericht nicht gefunden / nicht von diesem User => Abbrechen
-        if(!$report)
-        {
-            $this->Session->setFlash("Bericht mit ID '$report_id' nicht gefunden. Unterweisung hinzufügen abgebrochen.");
-            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
+                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -11, $this->request->data);
         }
         else
         {
-            //Bericht setzen
-            $this->request->data['Report']['id'] = $report['Report']['id'];
-        }
-
-        $this->set('report', $report);
-    }
-
-    function edit($id = null)
-    {
-        $this->set('title_for_layout', 'Unterweisung ändern');
-
-        //Bericht Id aus Formular übernehmen
-        if(!empty($this->request->data['ReportInstruction']['id']))
-            $id = $this->request->data['ReportInstruction']['id'];
-
-        //Bericht laden
-        if($id)
-            $report = $this->ReportInstruction->find('first', array('conditions' => array('ReportInstruction.id = ' => $id)));
-
-        //Daten eingegeben? => Speichern
-        if (!empty($this->request->data))
-        {
-            if ($this->ReportInstruction->saveAll($this->request->data))
+            $report = array(
+                'ReportInstruction' => array(
+                    'report_id' => $report['Report']['id'],
+                    'text' => $this->request->data['value']
+                )
+            );
+            
+            $this->ReportInstruction->create();
+            if($this->ReportInstruction->save($report))
             {
-                $this->Session->setFlash('Die Unterweisung wurde hinzugefügt.', 'flash_success');
-                $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+                $this->data = $this->ReportInstruction->findById($this->ReportInstruction->getLastInsertId());
+                $this->Json->response($this->data['ReportInstruction']['text'], 12);
             }
             else
-            {
-                $this->Session->setFlash('Fehler beim Ändern der Unterweisung.');
-            }
+                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -12, $this->request->data);
         }
-        else if($report)
-        {
-            //Gehört dem User?
-            if($report['Report']['user_id'] != $this->Auth->user('id'))
-            {
-                $this->Session->setFlash('Keine Berechtigung.');
-                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
-            }
-            else
-                $this->request->data = $report;
-        }
-        else
-        {
-            $this->Session->setFlash('Unterweisung nicht gefunden.');
-            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
-        }
-
-        $this->set('report', $report);
-    }
-
-    function delete($id)
-    {
-        $this->set('title_for_layout', 'Unterweisung löschen');
-
-        //Bericht laden
-        $report = $this->ReportInstruction->find('first', array('conditions' => array('ReportInstruction.id = ' => $id)));
-
-        //Bericht vorhanden
-        if($report)
-        {
-            //Gehört dem User?
-            if($report['Report']['user_id'] != $this->Auth->user('id'))
-            {
-                $this->Session->setFlash('Keine Berechtigung.');
-                $this->redirect( array('controller' => 'reports', 'action' => 'display') );
-            }
-        }
-        else
-        {
-            $this->Session->setFlash('Unterweisung nicht gefunden.');
-            $this->redirect( array('controller' => 'reports', 'action' => 'display') );
-        }
-
-        //Löschen und zum Bericht zurückkehren
-        $this->ReportInstruction->delete($report['ReportInstruction']['id']);
-        $this->Session->setFlash('Die Unterweisung wurde gelöscht.', 'flash_success');
-        $this->redirect( array('controller' => 'reports', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
     }
 }

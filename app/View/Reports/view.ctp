@@ -32,12 +32,10 @@
             echo '<div id="ReportActivity" class="edit-field" data-report="'. $report['Report']['id'] .'" data-exists="true">';
             echo $report['ReportActivity']['text'];
             echo '</div>';
-            //echo $this->Html->image('icons/delete.png', array('class' => 'delete-icon', 'alt' => 'Diesen Eintrag löschen'));
         }
         else
         {
             echo '<div id="ReportActivity" data-report="'. $report['Report']['id'] .'" data-exists="false"></div>';
-            //echo $this->Html->image('icons/delete.png', array('class' => 'delete-icon', 'alt' => 'Diesen Eintrag löschen'));
         }
     ?>
     <br/>
@@ -46,37 +44,17 @@
         <?php echo $this->Html->image('icons/talk.png'); ?>
         Unterweisungen
     </h2>
-    <div>
     <?php
-        foreach ($report['ReportInstruction'] as $reportInstruction)
+        if(isset($report['ReportInstruction']))
         {
-            echo '<i>' . $reportInstruction['title'] . '</i> ';
-
-            echo $this->Html->link(
-                    $this->Html->image("icon/edit.png", array("alt" => "Unterweisung bearbeiten", "align" => "center")),
-                    array('controller' => 'report_instructions', 'action' => 'edit', $reportInstruction['id']), array('escape' => false) );
-
-            echo ' ';
-
-            echo $this->Html->link(
-                    $this->Html->image("icon/delete.png", array("alt" => "Unterweisung löschen", "align" => "center")),
-                    array('controller' => 'report_instructions', 'action' => 'delete', $reportInstruction['id']), array('escape' => false),
-                    'Wollen Sie diese Unterweisung wirklich löschen?');
-
-            echo '<dir>';
-            echo str_replace("\n", "<br/>", $reportInstruction['text']);
-            //echo $reportInstruction['text'];
-            echo '</dir>';
-
-            echo '<br/>';
+            echo '<div id="ReportInstruction" class="edit-field" data-report="'. $report['Report']['id'] .'" data-exists="true">';
+            echo $report['ReportInstruction']['text'];
+            echo '</div>';
         }
-    ?>
-    </div>
-    <?php
-        echo $this->Html->link(
-                $this->Html->image("icon/add.png", array("alt" => "Unterweisung hinzufügen", "align" => "center", "id" => "ico-addpage")),
-                array('controller' => 'report_instructions', 'action' => 'add', $report['Report']['id']),
-                array('escape' => false));
+        else
+        {
+            echo '<div id="ReportInstruction" data-report="'. $report['Report']['id'] .'" data-exists="false"></div>';
+        }
     ?>
     <br/>
     
@@ -89,6 +67,7 @@
 <script type="text/javascript">
     
     editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities', 'action' => 'save')); ?>');
+    editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions', 'action' => 'save')); ?>');
     
     function editable(elements, url)
     {
