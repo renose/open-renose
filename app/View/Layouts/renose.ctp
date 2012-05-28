@@ -35,7 +35,7 @@
     <body>
         <header>
             <div id="logo">
-                <a href="<?php echo $this->Html->url('/report/display', true); ?>">
+                <a href="<?php echo $this->Html->url('/reports/display', true); ?>">
                     <span>open</span>reNose
                 </a>
             </div>
