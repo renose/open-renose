@@ -16,13 +16,15 @@ echo $this->Form->input('first_name', array('label' => 'Vorname'));
 echo $this->Form->input('last_name', array('label' => 'Nachname'));
 
 echo $this->Form->input('job_name', array('label' => 'Beruf', 'type' => 'text'));
+echo '<hr />';
+echo $this->Form->input('street', array('label' => 'Straße'));
+
+echo $this->Form->input('zip_code', array('label' => 'Postleitzahl'));
+echo $this->Form->input('city', array('label' => 'Stadt'));
 
 echo $this->Form->input('birthday', array('label' => 'Geburtstag', 'dateFormat' => 'DMY', 'minYear' => date('Y') -70 ,'maxYear' => date('Y')));
 echo $this->Form->input('birthplace', array('label' => 'Geburtsort'));
 
-echo $this->Form->input('zip_code', array('label' => 'Postleizahl'));
-echo $this->Form->input('city', array('label' => 'Stadt'));
-echo $this->Form->input('street', array('label' => 'Straße'));
 
 echo $this->Form->end('Speichern');
 ?>
