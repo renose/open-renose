@@ -2,7 +2,7 @@
 <table>
     <tr>
         <td width="100px"><?= $this->Html->image($this->Html->url($templatePath.'img/ihk_logo_grey.png', true), array('id' => 'ihk-logo')); ?></td>
-        <td><h1 id="ihk-name">Region TODO</h1></td>
+        <td><h1 id="ihk-name"><?= $user['Profile']['assigned_board_of_trade'] ?></h1></td>
     </tr>
 </table>
 <hr>
@@ -37,16 +37,16 @@
     </tr>
     <tr>
         <td>Vertragliche Ausbildungszeit vom</td>
-        <td>01.09.2000</td>
-        <td>bis 01.09.2003</td>
+        <td><?= $this->Time->format('d.m.Y', $user['Profile']['start_training_period']) ?></td>
+        <td>bis <?= $this->Time->format('d.m.Y', $user['Profile']['end_training_period']) ?></td>
     </tr>
     <tr>
         <td>Berufsausbildungsvertrag abgeschlossen am</td>
-        <td colspan="2">05.03.2000</td>
+        <td colspan="2"><?= $this->Time->format('d.m.Y', $user['Profile']['contract_signed']) ?></td>
     </tr>
     <tr>
         <td colspan="2">Eingetragen in das Verzeichnis der Berufsausbildungsverhältnisse der IHK am</td>
-        <td>n.A.</td>
+        <td><?= $this->Time->format('d.m.Y', $user['Profile']['contract_registered']) ?></td>
     </tr>
 </table>
 

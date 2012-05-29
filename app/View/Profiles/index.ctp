@@ -24,6 +24,16 @@ echo $this->Form->input('city', array('label' => 'Stadt'));
 
 echo $this->Form->input('birthday', array('label' => 'Geburtstag', 'dateFormat' => 'DMY', 'minYear' => date('Y') -70 ,'maxYear' => date('Y')));
 echo $this->Form->input('birthplace', array('label' => 'Geburtsort'));
+echo '<hr />';
+echo $this->Form->input('company', array('label' => 'Ausbildungsfirma'));
+echo $this->Form->input('branch', array('label' => 'Geschäftszweig'));
+echo '<hr />';
+echo $this->Form->input('start_training_period', array('label' => 'Vertragliche Ausbildungszeit vom', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
+echo $this->Form->input('end_training_period', array('label' => 'bis', 'dateFormat' => 'DMY', 'minYear' => date('Y') ,'maxYear' => date('Y')+5));
+echo '<hr />';
+echo $this->Form->input('contract_signed', array('label' => 'Vertrag abgeschlossen am', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
+echo $this->Form->input('contract_registered', array('label' => 'Eingetragen ins Verzeichnis der Berufsausbildungsregister', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
+echo $this->Form->input('assigned_board_of_trade', array('label' => 'Zuständige IHK, z.B. \'Region Stuttgart\''));
 
 
 echo $this->Form->end('Speichern');
