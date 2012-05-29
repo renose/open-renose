@@ -24,8 +24,8 @@
 
         <tr nobr="true">
             <td><?= 'TODO' ?></td>
-            <td align="center"><?= $this->reNoseDate->getMondayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week']); ?></td>
-            <td align="center"><?= $this->reNoseDate->getFridayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week']); ?></td>
+            <td align="center"><?= $this->reNoseDate->getMondayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week'], $user['Profile']['start_training_period']); ?></td>
+            <td align="center"><?= $this->reNoseDate->getFridayByYearAndWeek($reports[$i]['Report']['year'], $reports[$i]['Report']['week'], $user['Profile']['end_training_period']); ?></td>
             <td></td>
         </tr>
         <?php

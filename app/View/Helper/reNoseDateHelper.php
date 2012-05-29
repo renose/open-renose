@@ -23,7 +23,7 @@
 
 App::uses('TimeHelper', 'View/Helper');
 
-class reNoseDateHelper extends AppHelper {
+class reNoseDateHelper extends TimeHelper {
 
     public function __construct(View $View, $settings = array()) {
         parent::__construct($View, $settings);
@@ -34,11 +34,18 @@ class reNoseDateHelper extends AppHelper {
      *
      * @param int $year
      * @param int $week
+     * @param int $startDate - training start to avoid returning monday, when training starts e.g. wednesday.
      *
      * @return string $date - "d.m.Y"
      */
-    public function getMondayByYearAndWeek($year, $week) {
-        return date('d.m.Y', strtotime('Monday this week', strtotime($year.'W'.$week)));
+    public function getMondayByYearAndWeek($year, $week, $startDate = NULL) {
+        $startDate = $this->toUnix($startDate);
+        $mondayThisWeek = date('d.m.Y', $mondayThisWeekUnix = strtotime('Monday this week', strtotime($year.'W'.$week)));
+        if($startDate > $mondayThisWeekUnix) {
+            return $this->format('d.m.Y', $startDate);
+        } else {
+            return $mondayThisWeek;
+        }
     }
 
     /*
@@ -46,11 +53,18 @@ class reNoseDateHelper extends AppHelper {
      *
      * @param int $year
      * @param int $week
+     * @param int $endDate - training end to avoid returning friday, when training ends e.g. wednesday.
      *
      * @return string $date - "d.m.Y"
      */
-    public function getFridayByYearAndWeek($year, $week) {
-        return date('d.m.Y', strtotime('Friday this week', strtotime($year.'W'.$week)));
+    public function getFridayByYearAndWeek($year, $week, $endDate = NULL) {
+        $endDate = $this->toUnix($endDate);
+        $fridayThisWeek = date('d.m.Y', $fridayThisWeekUnix = strtotime('Friday this week', strtotime($year.'W'.$week)));
+        if($endDate < $fridayThisWeekUnix) {
+            return $this->format('d.m.Y', $endDate);
+        } else {
+            return $fridayThisWeek;
+        }
     }
 
 

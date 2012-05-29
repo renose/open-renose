@@ -266,7 +266,7 @@ class ReportsController extends AppController
             // ReportActivity
             $activity = array(
                 'title' => 'Betriebliche Tätigkeit',
-                'text' => $this->PdfGenerator->mergeTextFromArray($fullReportData['ReportActivity'], 'text')
+                'text' => $fullReportData['ReportActivity']['text']
             );
 
             $this->set('detail', $activity);
