@@ -27,7 +27,6 @@ class JsonComponent extends Component
 {
 
     public $components = array('RequestHandler');
-    public $Controller = null;
     
     public $status = array(
         -1 => 'error',
@@ -48,10 +47,6 @@ class JsonComponent extends Component
         42 => 'yep, that\'s the answer',
         1337 => 'master ü is calling',
     );
-    
-    public function initialize($controller) {
-        $this->Controller = $controller;
-    }
 
     public function response($data, $status_code = 1)
     {
@@ -68,8 +63,7 @@ class JsonComponent extends Component
             'timestamp' => time()
         );
         
-        echo json_encode($response);
-        exit();
+        die(json_encode($response));
     }
 
     public function error($message, $error_code = -1, $data = null)
@@ -87,8 +81,7 @@ class JsonComponent extends Component
             'timestamp' => time()
         );
         
-        echo json_encode($response);
-        exit();
+        die(json_encode($response));
     }
 
 }
