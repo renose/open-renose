@@ -41,7 +41,7 @@
 {
     text-align: center;
     cursor: default;
-    
+
     float: left;
     width: 265px;
     height: 277px;
@@ -50,21 +50,21 @@
 }
 
 .calendar-month
-{   
+{
     -moz-border-radius-bottomleft: 6px;
     -moz-border-radius-bottomright: 6px;
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    
+
     border: solid 1px gray;
 }
 
 .calendar-month caption
 {
     color: #FFFFFF;
-    
+
     background-color: rgb(34,76,111);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
     background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
@@ -74,7 +74,7 @@
     -webkit-border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    
+
     font-size: 1.5em;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -127,7 +127,7 @@
         rgb(147,162,207) 16%,
         rgb(174,205,235) 51%
     );
-    
+
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -147,7 +147,7 @@
         rgb(128,199,77) 9%,
         rgb(147,245,98) 78%
     );
-    
+
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -167,7 +167,7 @@
         rgb(128,199,77) 34%,
         rgb(147,245,98) 60%
     );
-    
+
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -175,7 +175,7 @@
 
 .calendar-day-today {
     border: 1px solid red;
-    
+
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -188,4 +188,15 @@
 }
 .calendar-day-school-holidays {
     background-color: purple;
+}
+
+a.calendar-week-link {
+    padding: 7px;
+    display: block;
+}
+
+.calendar-week-nopadding {
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
 }

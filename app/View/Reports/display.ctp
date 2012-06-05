@@ -72,12 +72,12 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
                             if (isset($week_reports[$week]))
                             {
                                 if (count($week_reports[$week]['ReportActivity']) > 0 && count($week_reports[$week]['ReportInstruction']) > 0)
-                                    echo "<td class='calendar-week calendar-week-view-full' title='Woche $week'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                                    echo "<td class='calendar-week calendar-week-view-full calendar-week-nopadding'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                 else
-                                    echo "<td class='calendar-week calendar-week-view' title='Woche $week'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week)) . "</td>";
+                                    echo "<td class='calendar-week calendar-week-view calendar-week-nopadding'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                             }
                             else
-                                echo "<td class='calendar-week calendar-week-add' title='Woche $week'>" . $this->Html->link($week, array('action' => 'add', $year_link, $week)) . "</td>";
+                                echo "<td class='calendar-week calendar-week-add calendar-week-nopadding'>" . $this->Html->link($week, array('action' => 'add', $year_link, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} hinzufügen")) . "</td>";
 
                             //Wenn erster Tag KEIN Montag ist Leertage einfügen
                             if ($day == 1 && date('N', mkdate($day, $month, $year)) > 1)
@@ -146,7 +146,7 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
 
         $('.calendar').css('width', width);
     }
-    
+
     $(document).ready(function(){
         calendarResize();
     });
