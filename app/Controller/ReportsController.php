@@ -21,7 +21,6 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-error_reporting(E_ALL);
 App::import('Vendor', 'tcpdf/config/lang/ger');
 App::import('Vendor', 'tcpdf/tcpdf');
 
@@ -199,7 +198,9 @@ class ReportsController extends AppController
                 ),
             'recursive' => 0,
             'order' => array(
-                'Report.number' => 'asc'
+                'Report.year' => 'asc',
+                'Report.number' => 'asc',
+                'Report.week' => 'asc'
             )
         ));
 
@@ -277,7 +278,7 @@ class ReportsController extends AppController
             // ReportInstruction
             $instruction = array(
                 'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
-                'text' => $this->PdfGenerator->prepareTextWithTitleAndText($fullReportData['ReportInstruction'], 'title', 'text')
+                'text' => $fullReportData['ReportInstruction']['text']
             );
             $this->set('detail', $instruction);
             $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);

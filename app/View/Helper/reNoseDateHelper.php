@@ -39,6 +39,7 @@ class reNoseDateHelper extends TimeHelper {
      * @return string $date - "d.m.Y"
      */
     public function getMondayByYearAndWeek($year, $week, $startDate = NULL) {
+        $week = sprintf("%02d", $week);
         $startDate = $this->toUnix($startDate);
         $mondayThisWeek = date('d.m.Y', $mondayThisWeekUnix = strtotime('Monday this week', strtotime($year.'W'.$week)));
         if($startDate > $mondayThisWeekUnix) {
@@ -58,6 +59,7 @@ class reNoseDateHelper extends TimeHelper {
      * @return string $date - "d.m.Y"
      */
     public function getFridayByYearAndWeek($year, $week, $endDate = NULL) {
+        $week = sprintf("%02d", $week);
         $endDate = $this->toUnix($endDate);
         $fridayThisWeek = date('d.m.Y', $fridayThisWeekUnix = strtotime('Friday this week', strtotime($year.'W'.$week)));
         if($endDate < $fridayThisWeekUnix) {

@@ -12,7 +12,8 @@
 <table class="overview-table" border="0" width="85.5%">
     <tr>
         <td width="50%">Name, Vorname</td>
-        <td colspan="2"><?= $user['Profile']['last_name'].', '.$user['Profile']['first_name'] ?></td>
+        <td colspan="2"><?php if($user['Profile']['last_name'] && $user['Profile']['first_name']) echo "{$user['Profile']['last_name']}, {$user['Profile']['first_name']}"; ?>
+        </td>
     </tr>
     <tr>
         <td>Geburtsort</td>
@@ -21,7 +22,7 @@
     </tr>
     <tr>
         <td>Anschrift</td>
-        <td colspan="2"><?= $user['Profile']['street'].', '.$user['Profile']['zip_code'].' '.$user['Profile']['city'] ?></td>
+        <td colspan="2"><?php if($user['Profile']['street'] && $user['Profile']['zip_code'] && $user['Profile']['city']) echo $user['Profile']['street'].', '.$user['Profile']['zip_code'].' '.$user['Profile']['city'] ?></td>
     </tr>
     <tr>
         <td>Ausbildungsberuf (nach Berufsbild)</td>
