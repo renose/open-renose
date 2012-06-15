@@ -99,9 +99,29 @@ class ReportsController extends AppController
                     'Report.year = ' => $year,
                     'Report.week = ' => $week)
             ));
-
+        
+        $this->loadModel('Schedule');
+        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+        $lessons = array();
+        
+        if($schedule)
+        {
+            $this->loadModel('ScheduleLesson');
+            $schedule_lessons = $this->ScheduleLesson->find('all', array(
+                'conditions' => array('Schedule.id' => $schedule['Schedule']['id']),
+                'group' => 'ScheduleLesson.subject'
+            ));
+            
+            foreach ($schedule_lessons as $lesson)
+                $lessons[$lesson['ScheduleLesson']['subject']] = null;
+        }
+        
+        foreach ($report['ReportSchool'] as $lesson)
+            $lessons[$lesson['subject']] = $lesson['text'];
+        
         $this->set('title_for_layout', 'Bericht Nr. ' . $report['Report']['number']);
         $this->set('report', $report);
+        $this->set('lessons', $lessons);
     }
 
     function add($year = null, $week = null)

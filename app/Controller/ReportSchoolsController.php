@@ -1,100 +1,93 @@
 <?php
 App::uses('AppController', 'Controller');
-/**
- * ReportSchools Controller
- *
- * @property ReportSchool $ReportSchool
- */
-class ReportSchoolsController extends AppController {
 
-
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->ReportSchool->recursive = 0;
-		$this->set('reportSchools', $this->paginate());
-	}
-
-/**
- * view method
- *
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		$this->ReportSchool->id = $id;
-		if (!$this->ReportSchool->exists()) {
-			throw new NotFoundException(__('Invalid report school'));
-		}
-		$this->set('reportSchool', $this->ReportSchool->read(null, $id));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->ReportSchool->create();
-			if ($this->ReportSchool->save($this->request->data)) {
-				$this->Session->setFlash(__('The report school has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The report school could not be saved. Please, try again.'));
-			}
-		}
-		$reports = $this->ReportSchool->Report->find('list');
-		$this->set(compact('reports'));
-	}
-
-/**
- * edit method
- *
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		$this->ReportSchool->id = $id;
-		if (!$this->ReportSchool->exists()) {
-			throw new NotFoundException(__('Invalid report school'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->ReportSchool->save($this->request->data)) {
-				$this->Session->setFlash(__('The report school has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The report school could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->request->data = $this->ReportSchool->read(null, $id);
-		}
-		$reports = $this->ReportSchool->Report->find('list');
-		$this->set(compact('reports'));
-	}
-
-/**
- * delete method
- *
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->ReportSchool->id = $id;
-		if (!$this->ReportSchool->exists()) {
-			throw new NotFoundException(__('Invalid report school'));
-		}
-		if ($this->ReportSchool->delete()) {
-			$this->Session->setFlash(__('Report school deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Report school was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
+class ReportSchoolsController extends AppController
+{
+    public $components = array('Json');
+    
+    public function beforeFilter()
+    {
+        parent::beforeFilter();
+        
+        if($this->action == 'save' || $this->action == 'delete')
+        {
+            $this->Security->csrfCheck = false;
+            $this->Security->validatePost = false;
+        }
+    }
+    
+    public function save()
+    {
+        if(!isset($this->request->data['report_id']))
+            $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
+        
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $lesson = $this->ReportSchool->findByReportIdAndSubject(
+                $report['Report']['id'],
+                $this->request->data['subject']);
+        
+        //Schedule not found?
+        if(!$report)
+            $this->Json->error('Fehler beim Speichern des Schulthemas. Bericht wurde nicht gefunden.', -30, array('report' => $report, 'lesson' => $lesson));
+        
+        if(isset($lesson['ReportSchool']['id']))
+        {
+            $lesson['ReportSchool']['text'] = $this->request->data['value'];
+            
+            if($this->ReportSchool->save($lesson))
+            {
+                $this->data = $this->ReportSchool->findById($lesson['ReportSchool']['id']);
+                $this->Json->response($this->data['ReportSchool']['text'], 11);
+            }
+            else
+                $this->Json->error('Fehler beim Speichern des Schulthemas.', -11, $this->validationErrors);
+        }
+        else
+        {
+            $lesson = array(
+                'ReportSchool' => array(
+                    'report_id' => $report['Report']['id'],
+                    'subject' => $this->request->data['subject'],
+                    'text' => $this->request->data['value']
+                )
+            );
+            
+            $this->ReportSchool->create();
+            if($this->ReportSchool->save($lesson))
+            {
+                $this->data = $this->ReportSchool->findById($this->ReportSchool->getLastInsertId());
+                $this->Json->response($this->data['ReportSchool']['text'], 12);
+            }
+            else
+                $this->Json->error('Fehler beim Speichern des Schulthemas.', -12, $this->validationErrors);
+        }
+    }
+    
+    public function delete()
+    {
+        if(!isset($this->request->data['day']) || !isset($this->request->data['number']))
+            $this->Json->error('Fehler beim Löschen der Stunde.', -20, $this->request->data);
+        
+        $this->loadModel('ScheduleLesson');
+        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+        $lesson = $this->ScheduleLesson->findByScheduleIdAndDayAndNumber(
+                $schedule['Schedule']['id'],
+                $this->request->data['day'],
+                $this->request->data['number']);
+        
+        //Schedule not found?
+        if(!$schedule)
+            $this->Json->error('Fehler beim Löschen der Stunde. Stundenplan wurde nicht gefunden.', -30, array('schedule' => $schedule, 'lesson' => $lesson));
+        
+        if($lesson != null)
+        {
+            if($this->ScheduleLesson->delete($lesson['ScheduleLesson']['id']))
+                $this->Json->response('-', 13);
+            else
+                $this->Json->error('Fehler beim Löschen der Stunde.', -13, $this->validationErrors);
+        }
+        else
+            $this->Json->error('Stunde wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
+    }
 }

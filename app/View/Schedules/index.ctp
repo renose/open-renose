@@ -22,7 +22,7 @@
     </thead>
     <tbod>
         <?php
-        for($lesson = 0; $lesson < $max_lesson + 1; $lesson)
+        for($lesson = 0; $lesson <= $max_lesson + 1; $lesson)
         {
             echo '<tr>';
             echo '<td class="lesson-number" data-id="null">' . ($lesson + 1) . '</td>';
