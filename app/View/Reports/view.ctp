@@ -22,6 +22,10 @@
 </div>
 
 <div id="report">
+    <p><?= $this->Html->link('Bericht drucken', array(
+        'action' => 'export',
+        $report['Report']['id']
+    ), array('id' => 'renose-print')) ?></p>
     <h2>
         <?php echo $this->Html->image('icons/manager.png'); ?>
         Tätigkeiten
@@ -57,7 +61,7 @@
         }
     ?>
     <br/>
-    
+
     <h2>
         <?php echo $this->Html->image('icons/books.png'); ?>
         Schule
@@ -100,16 +104,16 @@
 </div>
 
 <script type="text/javascript">
-    
+
     editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities', 'action' => 'save')); ?>');
     editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions', 'action' => 'save')); ?>');
-    
+
     function editable(elements, url)
     {
         elements.editable(url, {
             type: 'wysihtml5',
-            loadtext: 'bitte warten...',
-            indicator: 'speichern...',
+            loadtext: 'Bitte warten...',
+            indicator: 'Speichern...',
             placeholder: '-',
             tooltip: 'Zum Ändern klicken...',
             submit: 'Speichern',
@@ -123,9 +127,9 @@
                 };
             },
             callback : function(value, settings) {
-                
+
                 var data = jQuery.parseJSON(value);
-                
+
                 if(data.status.code > 0)
                 {
                     $(this).html(data.data);
@@ -135,10 +139,10 @@
                 {
                     console.log(data);
                     $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
-                    
+
                     $(this).html('Fehler');
                 }
-               
+
             }
         });
     }
