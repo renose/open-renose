@@ -34,6 +34,8 @@ class ReportActivitiesController extends AppController
         {
             $this->Security->csrfCheck = false;
             $this->Security->validatePost = false;
+            Configure::write('Error.handler', 'JsonError::handleError');
+            Configure::write('Exception.handler', 'JsonError::handleException');
         }
     }
 

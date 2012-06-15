@@ -13,6 +13,8 @@ class ReportSchoolsController extends AppController
         {
             $this->Security->csrfCheck = false;
             $this->Security->validatePost = false;
+            Configure::write('Error.handler', 'JsonError::handleError');
+            Configure::write('Exception.handler', 'JsonError::handleException');
         }
     }
     
@@ -29,7 +31,7 @@ class ReportSchoolsController extends AppController
         
         //Schedule not found?
         if(!$report)
-            $this->Json->error('Fehler beim Speichern des Schulthemas. Bericht wurde nicht gefunden.', -30, array('report' => $report, 'lesson' => $lesson));
+            $this->Json->error('Fehler beim Speichern des Schulthemas. Bericht wurde nicht gefunden.', -30, $this->request->data);
         
         if(isset($lesson['ReportSchool']['id']))
         {
@@ -66,28 +68,27 @@ class ReportSchoolsController extends AppController
     
     public function delete()
     {
-        if(!isset($this->request->data['day']) || !isset($this->request->data['number']))
-            $this->Json->error('Fehler beim Löschen der Stunde.', -20, $this->request->data);
+        if(!isset($this->request->data['report_id']))
+            $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
         
-        $this->loadModel('ScheduleLesson');
-        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
-        $lesson = $this->ScheduleLesson->findByScheduleIdAndDayAndNumber(
-                $schedule['Schedule']['id'],
-                $this->request->data['day'],
-                $this->request->data['number']);
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $lesson = $this->ReportSchool->findByReportIdAndSubject(
+                $report['Report']['id'],
+                $this->request->data['subject']);
         
-        //Schedule not found?
-        if(!$schedule)
-            $this->Json->error('Fehler beim Löschen der Stunde. Stundenplan wurde nicht gefunden.', -30, array('schedule' => $schedule, 'lesson' => $lesson));
+        //Report not found?
+        if(!$report)
+            $this->Json->error('Fehler beim Löschen des Schulthemas. Bericht wurde nicht gefunden.', -30, $this->request->data);
         
         if($lesson != null)
         {
-            if($this->ScheduleLesson->delete($lesson['ScheduleLesson']['id']))
+            if($this->ReportSchool->delete($lesson['ReportSchool']['id']))
                 $this->Json->response('-', 13);
             else
-                $this->Json->error('Fehler beim Löschen der Stunde.', -13, $this->validationErrors);
+                $this->Json->error('Fehler beim Löschen des Schulthemas.', -13, $this->validationErrors);
         }
         else
-            $this->Json->error('Stunde wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
+            $this->Json->error('Schulthema wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
     }
 }

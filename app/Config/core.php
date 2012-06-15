@@ -49,7 +49,7 @@
  * @see ErrorHandler for more information on error handling and configuration.
  */
 	Configure::write('Error', array(
-		'handler' => 'ErrorHandler::handleError',
+		'handler' => 'AppError::handleError',
 		'level' => E_ALL & ~E_DEPRECATED,
 		'trace' => true
 	));
@@ -71,7 +71,7 @@
  * @see ErrorHandler for more information on exception handling and configuration.
  */
 	Configure::write('Exception', array(
-		'handler' => 'ErrorHandler::handleException',
+                'handler' => 'AppError::handleException',
 		'renderer' => 'ExceptionRenderer',
 		'log' => true
 	));

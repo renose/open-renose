@@ -63,3 +63,6 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+
+App::uses('AppError', 'Lib');
+App::uses('JsonError', 'Lib');

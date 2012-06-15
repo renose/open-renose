@@ -14,6 +14,8 @@ class SchedulesController extends AppController
         {
             $this->Security->csrfCheck = false;
             $this->Security->validatePost = false;
+            Configure::write('Error.handler', 'JsonError::handleError');
+            Configure::write('Exception.handler', 'JsonError::handleException');
         }
     }
     
@@ -52,7 +54,7 @@ class SchedulesController extends AppController
         
         //Schedule not found?
         if(!$schedule)
-            $this->Json->error('Fehler beim Speichern der Stunde. Stundenplan wurde nicht gefunden.', -30, array('schedule' => $schedule, 'lesson' => $lesson));
+            $this->Json->error('Fehler beim Speichern der Stunde. Stundenplan wurde nicht gefunden.', -30, $this->request->data);
         
         if(isset($lesson['ScheduleLesson']['id']))
         {

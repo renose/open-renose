@@ -136,15 +136,16 @@ COMMIT;
 --  Table structure for `report_schools`
 -- ----------------------------
 DROP TABLE IF EXISTS `report_schools`;
-CREATE TABLE `report_schools` (
+CREATE TABLE IF NOT EXISTS `report_schools` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `report_id` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `report_subject` (`report_id`,`subject`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `reports`
