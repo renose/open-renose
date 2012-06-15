@@ -307,9 +307,17 @@
                         /* If it returns false abort submitting. */
                         if (false !== submit.apply(form, [settings, self])) {
                             
-                            var data = get_data.apply(form, [settings, self]);                            
-                            var id = data.id || self.id;
-                            var value = data.value || input.val();
+                            //strd. value
+                            var id = self.id;
+                            var value = input.val();
+                            
+                            //value from plugin if available
+                            var data = get_data.apply(form, [settings, self]);
+                            if(data)
+                            {
+                                id = data.id;
+                                value = data.value;
+                            }
 
                           /* Check if given target is function */
                           if ($.isFunction(settings.target)) {

@@ -19,7 +19,7 @@ class SchedulesController extends AppController
     
     public function index()
     {
-        $schedule = $this->Schedule->find('first');
+        $schedule = $this->_findCreateSchedule();
         $days = array();
         $max_lesson = 0;
         
@@ -49,6 +49,10 @@ class SchedulesController extends AppController
                 $schedule['Schedule']['id'],
                 $this->request->data['day'],
                 $this->request->data['number']);
+        
+        //Schedule not found?
+        if(!$schedule)
+            $this->Json->error('Fehler beim Speichern der Stunde. Stundenplan wurde nicht gefunden.', -30, array('schedule' => $schedule, 'lesson' => $lesson));
         
         if(isset($lesson['ScheduleLesson']['id']))
         {
@@ -96,6 +100,10 @@ class SchedulesController extends AppController
                 $this->request->data['day'],
                 $this->request->data['number']);
         
+        //Schedule not found?
+        if(!$schedule)
+            $this->Json->error('Fehler beim Löschen der Stunde. Stundenplan wurde nicht gefunden.', -30, array('schedule' => $schedule, 'lesson' => $lesson));
+        
         if($lesson != null)
         {
             if($this->ScheduleLesson->delete($lesson['ScheduleLesson']['id']))
@@ -106,5 +114,25 @@ class SchedulesController extends AppController
         else
             $this->Json->error('Stunde wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
     }
-
+    
+    private function _findCreateSchedule()
+    {
+        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+        
+        if($schedule)
+            return $schedule;
+        else
+        {
+            $this->Schedule->create();
+            $schedule = array(
+                'Schedule' => array(
+                    'user_id' => $this->Auth->user('id')
+                )
+            );
+            $this->Schedule->save($schedule);
+            
+            $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
+            return $schedule;
+        }
+    }
 }

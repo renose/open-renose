@@ -72,7 +72,10 @@ class JsonComponent extends Component
 
         $response = array(
             'message' => $message,
-            'status' => -1,
+            'status' => array(
+                'code' => -1,
+                'msg' => isset($this->status[-1]) ? $this->status[-1] : null
+            ),
             'error' => array(
                 'code' => $error_code,
                 'msg' => isset($this->errors[$error_code]) ? $this->errors[$error_code] : null
