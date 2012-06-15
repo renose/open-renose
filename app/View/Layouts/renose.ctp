@@ -15,6 +15,7 @@
             'renose/screen',
             'renose/calender',
             'renose/schedule',
+            'renose/jquery.loadindicator',
             'renose/report',
             'renose/tipTip'
         ));
@@ -29,6 +30,7 @@
             'wysihtml5/parser_rules/simple',
             'wysihtml5/wysihtml5.min',
             'jquery.tipTip.minified',
+            'jquery.loadindicator',
             'jquery.renose.load'
         ));
 
