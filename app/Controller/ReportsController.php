@@ -21,15 +21,12 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-App::import('Vendor', 'tcpdf/config/lang/ger');
-App::import('Vendor', 'tcpdf/tcpdf');
-
 class ReportsController extends AppController
 {
 
     public $scaffold;
 
-    public $helpers = array('Time', 'reNoseDate');
+    public $helpers = array('Time', 'reNoseDate', 'Form');
     public $components = array('PdfGenerator');
 
     public function beforeFilter()
@@ -41,10 +38,13 @@ class ReportsController extends AppController
                 $this->render();
             }
 
-            $this->layout = false;
-            $this->autoRender = false;
-            set_time_limit(0);
-            ini_set('memory_limit', '512M');
+            if($this->request->is('post')) {
+                $this->layout = false;
+                $this->autoRender = false;
+                set_time_limit(0);
+                ini_set('memory_limit', '512M');
+            }
+
         }
     }
 
@@ -179,131 +179,138 @@ class ReportsController extends AppController
 
     // pdfgen
     public function export($debug = NULL) {
-        // load user model for data
-        $this->loadModel('User');
 
-        $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
-        #ChromePhp::log($userProfile);
+        if($this->request->is('post')) {
+            App::import('Vendor', 'tcpdf/config/lang/ger');
+            App::import('Vendor', 'tcpdf/tcpdf');
 
-        $reports = $this->Report->find('all', array(
-            'conditions' => array(
-                'User.id = ' => $this->Auth->user('id'),
-                ),
-                'fields' => array(
-                    'Report.date',
-                    'Report.number',
-                    'Report.year',
-                    'Report.week',
-                    'Report.number'
-                ),
-            'recursive' => 0,
-            'order' => array(
-                'Report.year' => 'asc',
-                'Report.number' => 'asc',
-                'Report.week' => 'asc'
-            )
-        ));
+            // load user model for data
+            $this->loadModel('User');
 
-        $this->set('templatePath', '/reportExportTemplates/ihk/');
+            $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
+            #ChromePhp::log($userProfile);
 
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $pdf->SetCreator('reNose.de');
-        //$pdf->SetAuthor($userProfile['full_name']);
-        //$pdf->SetTitle('Berichtsheft von '.$userProfile['full_name']);
-
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-        $pdf->SetMargins(PDF_MARGIN_LEFT, 15, PDF_MARGIN_RIGHT);
-
-        // disable header
-        $pdf->setPrintHeader(false);
-
-        // disable footer
-        $pdf->setPrintFooter(false);
-        //$pdf->SetFont('Arial', 'B', 20);
-
-        // add a page
-        $pdf->AddPage();
-
-        // write first site which contains personal data
-        // TODO
-        $this->set('user', $userProfile);
-        $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
-
-        // set report overview for activityList
-        $this->set('reports', $reports);
-        $sizeOfReports = sizeof($reports);
-
-        // max 31 records per page (A4)
-        $pageCounter = ceil($sizeOfReports / 31);
-
-        // fresh rendering for every page
-        for($i=0;$i<$pageCounter;$i++) {
-            $pdf->AddPage();
-
-            $this->set('start', $i*31);
-            $this->set('end', ($i+1)* 31);
-
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
-        }
-
-
-        // generate detailed week view
-
-        foreach($reports as $report) {
-            $fullReportData = $this->Report->find('first', array(
+            $reports = $this->Report->find('all', array(
                 'conditions' => array(
-                    'Report.id' => $report['Report']['id']
+                    'User.id = ' => $this->Auth->user('id'),
+                    ),
+                    'fields' => array(
+                        'Report.date',
+                        'Report.number',
+                        'Report.year',
+                        'Report.week',
+                        'Report.number'
+                    ),
+                'recursive' => 0,
+                'order' => array(
+                    'Report.year' => 'asc',
+                    'Report.number' => 'asc',
+                    'Report.week' => 'asc'
                 )
             ));
 
+            $this->set('templatePath', '/reportExportTemplates/ihk/');
+
+            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->SetCreator('reNose.de');
+            //$pdf->SetAuthor($userProfile['full_name']);
+            //$pdf->SetTitle('Berichtsheft von '.$userProfile['full_name']);
+
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+            $pdf->SetMargins(PDF_MARGIN_LEFT, 15, PDF_MARGIN_RIGHT);
+
+            // disable header
+            $pdf->setPrintHeader(false);
+
+            // disable footer
+            $pdf->setPrintFooter(false);
+            //$pdf->SetFont('Arial', 'B', 20);
+
+            // add a page
             $pdf->AddPage();
-            $pdf->SetAutoPageBreak(true, 0.5);
 
-            // write first header
-            $this->set('report', $fullReportData['Report']);
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
+            // write first site which contains personal data
+            // TODO
+            $this->set('user', $userProfile);
+            $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
 
+            // set report overview for activityList
+            $this->set('reports', $reports);
+            $sizeOfReports = sizeof($reports);
 
-            // ReportActivity
-            $activity = array(
-                'title' => 'Betriebliche Tätigkeit',
-                'text' => $fullReportData['ReportActivity']['text']
-            );
+            // max 31 records per page (A4)
+            $pageCounter = ceil($sizeOfReports / 31);
 
-            $this->set('detail', $activity);
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+            // fresh rendering for every page
+            for($i=0;$i<$pageCounter;$i++) {
+                $pdf->AddPage();
 
-            unset($activity);
+                $this->set('start', $i*31);
+                $this->set('end', ($i+1)* 31);
 
-            // ReportInstruction
-            $instruction = array(
-                'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
-                'text' => $fullReportData['ReportInstruction']['text']
-            );
-            $this->set('detail', $instruction);
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
-
-            unset($instruction);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
+            }
 
 
-            // school
-            $school = array(
-                'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
-                'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
-            );
-            $this->set('detail', $school);
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+            // generate detailed week view
 
-            unset($school);
+            foreach($reports as $report) {
+                $fullReportData = $this->Report->find('first', array(
+                    'conditions' => array(
+                        'Report.id' => $report['Report']['id']
+                    )
+                ));
 
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+                $pdf->AddPage();
+                $pdf->SetAutoPageBreak(true, 0.5);
 
-            unset($fullReportData);
+                // write first header
+                $this->set('report', $fullReportData['Report']);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
 
+
+                // ReportActivity
+                $activity = array(
+                    'title' => 'Betriebliche Tätigkeit',
+                    'text' => $fullReportData['ReportActivity']['text']
+                );
+
+                $this->set('detail', $activity);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                unset($activity);
+
+                // ReportInstruction
+                $instruction = array(
+                    'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
+                    'text' => $fullReportData['ReportInstruction']['text']
+                );
+                $this->set('detail', $instruction);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                unset($instruction);
+
+
+                // school
+                $school = array(
+                    'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
+                    'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
+                );
+                $this->set('detail', $school);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                unset($school);
+
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+
+                unset($fullReportData);
+
+            }
+
+            // kick it out
+            if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
         }
 
-        // kick it out
-        if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
     }
 
     private function __setExportTemplate() {}
