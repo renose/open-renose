@@ -1,0 +1,23 @@
+div#renose-print-load {
+    position: fixed;
+    width: 150px;
+    height: 125px;
+    margin-left: -75px;
+    margin-top: -62.5px;
+    left: 50%;
+    top: 50%;
+    z-index: 1005;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px black;
+    display: block;
+    background: #fff url(../../img/load_indicator.gif) no-repeat center;
+    background-position-y: 18px;
+    display: none;
+}
+
+div#renose-print-load p {
+    font-size: 11px;
+    position: absolute;
+    bottom: 5px;
+    left: 20%;
+}

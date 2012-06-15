@@ -25,7 +25,7 @@
     <p><?= $this->Html->link('Bericht drucken', array(
         'action' => 'export',
         $report['Report']['id']
-    )) ?></p>
+    ), array('id' => 'renose-print')) ?></p>
     <h2>
         <?php echo $this->Html->image('icons/manager.png'); ?>
         Tätigkeiten
