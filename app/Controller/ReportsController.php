@@ -38,7 +38,8 @@ class ReportsController extends AppController
                 $this->render();
             }
 
-            if($this->request->is('post')) {
+            if($this->request->is('post') || isset($this->request->params['pass'][0])) {
+
                 $this->layout = false;
                 $this->autoRender = false;
                 set_time_limit(0);
@@ -178,9 +179,11 @@ class ReportsController extends AppController
 
 
     // pdfgen
-    public function export($debug = NULL) {
+    public function export($reportId = NULL, $debug = NULL) {
 
-        if($this->request->is('post')) {
+        if($this->request->is('post') || ($reportId != NULL)) {
+            $oneReport = false;
+
             App::import('Vendor', 'tcpdf/config/lang/ger');
             App::import('Vendor', 'tcpdf/tcpdf');
 
@@ -190,24 +193,53 @@ class ReportsController extends AppController
             $userProfile = $this->User->Profile->findByUserId($this->Auth->user('id'));
             #ChromePhp::log($userProfile);
 
-            $reports = $this->Report->find('all', array(
-                'conditions' => array(
-                    'User.id = ' => $this->Auth->user('id'),
-                    ),
-                    'fields' => array(
-                        'Report.date',
-                        'Report.number',
-                        'Report.year',
-                        'Report.week',
-                        'Report.number'
-                    ),
-                'recursive' => 0,
-                'order' => array(
-                    'Report.year' => 'asc',
-                    'Report.number' => 'asc',
-                    'Report.week' => 'asc'
-                )
-            ));
+            if(($reportId)) {
+                $reportId = intval($reportId);
+                // generate only one report
+                $oneReport = true;
+
+                $reports = $this->Report->find('all', array(
+                    'conditions' => array(
+                        'User.id = ' => $this->Auth->user('id'),
+                        'Report.id' => $reportId
+                        ),
+                        'fields' => array(
+                            'Report.date',
+                            'Report.number',
+                            'Report.year',
+                            'Report.week',
+                            'Report.number'
+                        ),
+                    'recursive' => 0,
+                ));
+
+            } else {
+                $reports = $this->Report->find('all', array(
+                    'conditions' => array(
+                        'User.id = ' => $this->Auth->user('id'),
+                        ),
+                        'fields' => array(
+                            'Report.date',
+                            'Report.number',
+                            'Report.year',
+                            'Report.week',
+                            'Report.number'
+                        ),
+                    'recursive' => 0,
+                    'order' => array(
+                        'Report.year' => 'asc',
+                        'Report.number' => 'asc',
+                        'Report.week' => 'asc'
+                    )
+                ));
+            }
+
+            if(!$reports) {
+                // no records found
+                Throw new ForbiddenException('Kein Datensatz gefunden, oder nicht berechtigt.');
+            }
+
+
 
             $this->set('templatePath', '/reportExportTemplates/ihk/');
 
@@ -226,84 +258,98 @@ class ReportsController extends AppController
             $pdf->setPrintFooter(false);
             //$pdf->SetFont('Arial', 'B', 20);
 
-            // add a page
-            $pdf->AddPage();
 
             // write first site which contains personal data
             // TODO
             $this->set('user', $userProfile);
-            $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
 
-            // set report overview for activityList
-            $this->set('reports', $reports);
-            $sizeOfReports = sizeof($reports);
+            if(isset($this->request->data['Report']['overview']) && $this->request->data['Report']['overview'] == 1) {
+                // generate overview
 
-            // max 31 records per page (A4)
-            $pageCounter = ceil($sizeOfReports / 31);
-
-            // fresh rendering for every page
-            for($i=0;$i<$pageCounter;$i++) {
+                // add a page
                 $pdf->AddPage();
 
-                $this->set('start', $i*31);
-                $this->set('end', ($i+1)* 31);
+                $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
+            }
 
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
+            if(isset($this->request->data['Report']['activityList']) && $this->request->data['Report']['activityList'] == 1) {
+                // generate activityList
+
+                // set report overview for activityList
+                $this->set('reports', $reports);
+                $sizeOfReports = sizeof($reports);
+
+                // max 31 records per page (A4)
+                $pageCounter = ceil($sizeOfReports / 31);
+
+                // fresh rendering for every page
+                for($i=0;$i<$pageCounter;$i++) {
+                    $pdf->AddPage();
+
+                    $this->set('start', $i*31);
+                    $this->set('end', ($i+1)* 31);
+
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/activityList'), true);
+                }
             }
 
 
-            // generate detailed week view
+            if((isset($this->request->data['Report']['allReports']) && $this->request->data['Report']['allReports'] == 1) || $oneReport) {
 
-            foreach($reports as $report) {
-                $fullReportData = $this->Report->find('first', array(
-                    'conditions' => array(
-                        'Report.id' => $report['Report']['id']
-                    )
-                ));
+                // generate detailed week view
 
-                $pdf->AddPage();
-                $pdf->SetAutoPageBreak(true, 0.5);
+                foreach($reports as $report) {
+                    $fullReportData = $this->Report->find('first', array(
+                        'conditions' => array(
+                            'Report.id' => $report['Report']['id']
+                        )
+                    ));
 
-                // write first header
-                $this->set('report', $fullReportData['Report']);
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
+                    $pdf->AddPage();
+                    $pdf->SetAutoPageBreak(true, 0.5);
 
-
-                // ReportActivity
-                $activity = array(
-                    'title' => 'Betriebliche Tätigkeit',
-                    'text' => $fullReportData['ReportActivity']['text']
-                );
-
-                $this->set('detail', $activity);
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
-
-                unset($activity);
-
-                // ReportInstruction
-                $instruction = array(
-                    'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
-                    'text' => $fullReportData['ReportInstruction']['text']
-                );
-                $this->set('detail', $instruction);
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
-
-                unset($instruction);
+                    // write first header
+                    $this->set('report', $fullReportData['Report']);
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
 
 
-                // school
-                $school = array(
-                    'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
-                    'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
-                );
-                $this->set('detail', $school);
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+                    // ReportActivity
+                    $activity = array(
+                        'title' => 'Betriebliche Tätigkeit',
+                        'text' => $fullReportData['ReportActivity']['text']
+                    );
 
-                unset($school);
+                    $this->set('detail', $activity);
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
 
-                $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+                    unset($activity);
 
-                unset($fullReportData);
+                    // ReportInstruction
+                    $instruction = array(
+                        'title' => 'Themen von Unterweisungen, Lehrgesprächen, betrieblichem Unterricht und außerbetrieblichen Schulungsveranstaltungen',
+                        'text' => $fullReportData['ReportInstruction']['text']
+                    );
+                    $this->set('detail', $instruction);
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                    unset($instruction);
+
+
+                    // school
+                    $school = array(
+                        'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
+                        'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
+                    );
+                    $this->set('detail', $school);
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
+
+                    unset($school);
+
+                    $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailFooter'), true);
+
+                    unset($fullReportData);
+
+                }
 
             }
 
