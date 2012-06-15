@@ -39,7 +39,7 @@ class ReportsController extends AppController
             }
 
             if($this->request->is('post') || isset($this->request->params['pass'][0])) {
-
+                header('Content-Type: application/pdf');
                 $this->layout = false;
                 $this->autoRender = false;
                 set_time_limit(0);
@@ -354,6 +354,7 @@ class ReportsController extends AppController
             }
 
             // kick it out
+            header('Content-Type: application/pdf');
             if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
         }
 
