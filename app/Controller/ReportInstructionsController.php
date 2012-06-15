@@ -23,11 +23,17 @@
 
 class ReportInstructionsController extends AppController
 {
-    public $scaffold;
+    public $components = array('Json');
 
     public function beforeFilter()
     {
         parent::beforeFilter();
+        
+        if($this->action == 'save' || $this->action == 'delete')
+        {
+            $this->Security->csrfCheck = false;
+            $this->Security->validatePost = false;
+        }
     }
 
     public function save()
