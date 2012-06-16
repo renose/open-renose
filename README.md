@@ -6,19 +6,21 @@
 * Firefox
 * Safari
 
-###NOT supported browsers (yet):
-* Internet Explorer 6, 7, 8, 9 (?)
+###Maybe supported browsers (won't be tested yet):
+* Internet Explorer 9
 * Opera
+
+###NOT supported browsers (yet):
+* Internet Explorer 6, 7, 8
 
 ---
 No download available yet, please checkout from master.
 
 ### Requirements
 * Web server (Apache, nginx)
-* MySQL database (others not tested)
-* PHP cURL for PDF generator
-* SMTP mail server
-* mod_rewrite apache module
+* Database supported by CakePHP, MySQL is recommended and tested
+* Mail server supported by CakePHP, Linux mail command or SMTP Server recommended
+* mod_rewrite (for nice url's) and cURL (for PDF generator) Apache/PHP Module
 
 ### Installation
 * Clone repository
