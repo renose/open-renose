@@ -35,6 +35,8 @@ echo $this->Form->input('contract_signed', array('label' => 'Vertrag abgeschloss
 echo $this->Form->input('contract_registered', array('label' => 'Eingetragen ins Verzeichnis der Berufsausbildungsregister', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
 echo $this->Form->input('assigned_board_of_trade', array('label' => 'Zuständige IHK, z.B. \'Region Stuttgart\''));
 
+echo $this->Form->input('past', array('label' => 'Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung'));
+
 
 echo $this->Form->end('Speichern');
 ?>

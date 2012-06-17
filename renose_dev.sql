@@ -9,7 +9,7 @@
  Target Server Version : 50509
  File Encoding         : utf-8
 
- Date: 05/29/2012 10:34:13 AM
+ Date: 06/17/2012 03:45:02 AM
 */
 
 SET NAMES utf8;
@@ -46,13 +46,13 @@ CREATE TABLE `jobs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `jobs`
 -- ----------------------------
 BEGIN;
-INSERT INTO `jobs` VALUES ('1', 'Fachinformatiker - Anwendungsentwicklung', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `jobs` VALUES ('1', 'Fachinformatiker - Anwendungsentwicklung', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', 'fiae', '2012-06-07 19:01:07', '2012-06-07 19:01:07');
 COMMIT;
 
 -- ----------------------------
@@ -79,6 +79,7 @@ CREATE TABLE `profiles` (
   `contract_registered` date NOT NULL,
   `contract_signed` date NOT NULL,
   `assigned_board_of_trade` varchar(255) NOT NULL COMMENT 'zuständige ihk',
+  `past` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -87,7 +88,7 @@ CREATE TABLE `profiles` (
 --  Records of `profiles`
 -- ----------------------------
 BEGIN;
-INSERT INTO `profiles` VALUES ('1', '1', 'Admin', 'reNose', null, null, null, null, '1999-01-01', '1', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', ''), ('2', '2', 'Simon', 'Wörner', null, null, null, null, null, null, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', ''), ('3', '3', 'Patrick', 'Hafner', 'Teststraße 1', '12345', 'Musterstadt', 'Musterort', '1992-01-01', '1', 'Example Ltd.', 'Web', '0000-00-00 00:00:00', '2012-05-29 10:33:33', '2010-01-01', '2013-01-01', '2010-01-01', '2010-01-01', 'Region Stuttgart');
+INSERT INTO `profiles` VALUES ('1', '1', 'Admin', 'reNose', '', null, '', '', '1999-01-01', '1', '', '', '0000-00-00 00:00:00', '2012-05-29 11:04:07', '2010-09-01', '2012-05-29', '2012-01-01', '2012-01-01', '', ''), ('2', '2', 'Simon', 'Wörner', 'foo', '12345', 'nope', 'rt', '1994-06-07', '2', 'firma', 'gesxghäftzstzewit', '0000-00-00 00:00:00', '2012-06-07 19:01:07', '2010-09-01', '2013-09-01', '2010-09-01', '2010-09-01', 'Region RT', ''), ('3', '3', 'Patrick', 'Hafner', 'Teststraße 1', '12345', 'Musterstadt', 'Musterort', '1992-01-01', '1', 'Example Ltd.', 'Web', '0000-00-00 00:00:00', '2012-06-15 14:40:30', '2010-01-01', '2013-01-01', '2010-01-01', '2010-01-01', 'Region Stuttgart', '1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule');
 COMMIT;
 
 -- ----------------------------
@@ -222,13 +223,13 @@ CREATE TABLE `schedules` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `schedules`
 -- ----------------------------
 BEGIN;
-INSERT INTO `schedules` VALUES ('1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `schedules` VALUES ('1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', '2', '2012-06-15 14:20:47', '2012-06-15 14:20:47');
 COMMIT;
 
 -- ----------------------------
