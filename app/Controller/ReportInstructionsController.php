@@ -52,7 +52,7 @@ class ReportInstructionsController extends AppController
             
             if($this->ReportInstruction->save($report))
             {
-                $this->data = $this->ReportInstruction->findById($report['ReportActivity']['id']);
+                $this->data = $this->ReportInstruction->findById($report['ReportInstruction']['id']);
                 $this->Json->response($this->data['ReportInstruction']['text'], 11);
             }
             else
