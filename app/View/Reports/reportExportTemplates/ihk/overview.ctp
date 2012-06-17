@@ -58,30 +58,18 @@
     <tr>
         <td class="no-border"><strong>Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung</strong></td>
     </tr>
-    <tr>
-        <td>1999 - 2000 : Schule</td>
-    </tr>
-    <tr>
-        <td>1999 - 2000 : Schule</td>
-    </tr>
-    <tr>
-        <td>1999 - 2000 : Schule</td>
-    </tr>
-    <tr>
-        <td>1999 - 2000 : Schule</td>
-    </tr>
-    <tr>
-        <td>1999 - 2000 : Schule</td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
+    <?php
+        $past = explode("\n", $user['Profile']['past']);
+        for($i=1;$i<=9;$i++) {
+            echo '<tr><td>';
+            if(isset($past[$i])) {
+                echo $past[$i];
+            } else {
+                echo '';
+            }
+            echo '</td></tr>';
+        }
+    ?>
 </table>
 
 <table border="0" width="100%" class="overview-table">
