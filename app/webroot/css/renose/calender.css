@@ -138,9 +138,7 @@
     background-image: -webkit-gradient(
         linear,
         left bottom,
-        left top,
-        color-stop(0.09, rgb(205,186,35)),
-        color-stop(0.78, rgb(255,255,95))
+        left top
     );
     background-image: -moz-linear-gradient(
         center bottom,
@@ -172,6 +170,47 @@
     -webkit-border-radius: 3px;
     border-radius: 3px;
 }
+
+.calendar-month tr td.calendar-week-view-missing
+{
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.34, rgb(255,48,48)),
+        color-stop(0.6, rgb(205,38,38))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(255,48,48) 34%,
+        rgb(205,38,38) 60%
+    );
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.calendar-month tr td.calendar-week-view-half
+{
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.34, rgb(255,255,0)),
+        color-stop(0.6, rgb(205,215,0))
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        rgb(255,255,0) 34%,
+        rgb(205,215,0) 60%
+    );
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
 
 .calendar-day-today {
     border: 1px solid red;
