@@ -80,7 +80,7 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
                                             echo "<td class='calendar-week calendar-week-view-full calendar-week-nopadding'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                         }
                                             
-                                            else if (isset($week_reports[$week]['ReportActivity']['id']) || isset($week_reports[$week]['ReportInstruction']['id']) || count($week_reports[$week]['ReportSchool']) > 1) 
+                                            else if (isset($week_reports[$week]['ReportActivity']['id']) || isset($week_reports[$week]['ReportInstruction']['id']) || count($week_reports[$week]['ReportSchool']) > 0) 
                                             {
                                                 echo "<td class='calendar-week calendar-week-view-half calendar-week-nopadding'>" . $this->Html->link($week, array('action' => 'view', $year_link, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                             }
