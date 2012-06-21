@@ -162,6 +162,7 @@ CREATE TABLE `reports` (
   `date` date NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `holiday` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `report` (`user_id`,`year`,`week`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
