@@ -29,7 +29,6 @@ class UsersController extends AppController
     {
         parent::beforeFilter();
         $this->Auth->allow(array('login', 'logout', 'register', 'activate', 'forgot', 'changepassword'));
-        //$this->Auth->allow('*');
     }
 
     function login()
@@ -155,9 +154,13 @@ class UsersController extends AppController
 
     function get_name()
     {
+        $this->autoRender = false;
         $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
-
-        return $profile['Profile']['first_name'] .' ' . $profile['Profile']['last_name'];
+        
+        if(isset($profile['Profile']['id']))
+            return $profile['Profile']['first_name'] .' ' . $profile['Profile']['last_name'];
+        else
+            return 'Unbekannter';
     }
 
 
