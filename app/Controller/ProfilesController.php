@@ -35,9 +35,7 @@ class ProfilesController extends AppController
         $profile = $this->Profile->findByUserId($this->Auth->user('id'));
         $jobs = $this->Job->find('all', array('recursive' => 0));
         $this->set('title_for_layout', 'Profil');
-        
-        if(!isset($profile['Profile']['user_id']))
-            $profile['Profile']['user_id'] = $this->Auth->user('id');
+
 
         $job_list = array();
         foreach($jobs as $job)
@@ -46,6 +44,9 @@ class ProfilesController extends AppController
         //Daten eingegeben? => Speichern
         if (!empty($this->request->data))
         {
+            if(!isset($profile['Profile']['user_id']))
+                $this->request->data['Profile']['user_id'] = $this->Auth->user('id');
+
             $job_name = $this->request->data['Profile']['job_name'];
             $job = $this->Job->findByName($job_name);
 
