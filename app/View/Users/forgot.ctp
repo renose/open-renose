@@ -3,8 +3,8 @@
 <div class="row">
     <div class="span3">&nbsp;</div>
     <div class="span6 well" style="margin-top: 20px">
-        <p>Falls du dein Passwort vergessen haben solltest, gebe hier bitte die E-Mail Adresse ein, die du bei der Registrierung angegeben hast.
-        <br />Wir werden dir umgehend eine Mail senden, in der du das Passwort ändern kannst.</p>
+        <p>Falls Sie ihr Passwort vergessen haben sollten, geben Sie hier bitte die E-Mail Adresse ein, die bei der Registrierung verwendet wurde.
+        <br />Wir werden Ihnen umgehend eine Mail senden, in der Sie das Passwort ändern können.</p>
         <?php
             echo $this->Form->create('User');
 

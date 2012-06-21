@@ -28,7 +28,7 @@ Du hast dich erfolgreich bei <i>open reNose</i> (http://www.renose.de) registrie
     <?php echo $this->Html->link(
         $this->Html->url(array('controller' => 'users', 'action' => 'activate', $user['User']['email'], $user['User']['activationkey']), true)); ?></p>
 
-<p>Sie haben sich mit folgender EMail angemeldet: <br/>
+<p>Sie haben sich mit folgender E-Mail Adresse angemeldet: <br/>
     <?php echo $user['User']['email']; ?></p>
 
 <p>Mit freundlichen Grüßen,<br/>
