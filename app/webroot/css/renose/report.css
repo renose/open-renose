@@ -60,6 +60,10 @@
 #report .edit-field {
     padding: 6px;
 }
+#report .edit-field textarea {
+    font-size: 100%;
+}
+
 #report .school-topic {
     width: 100%;
     padding-right: 20px;
