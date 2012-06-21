@@ -30,14 +30,19 @@
         ?>
     </p>
     
-    <p>
+    <div>
         <b>Datum:</b>
         <?php echo date('d.m.Y', strtotime($report['Report']['date'])); ?>
         <br/>
         
         <b>Abteilung:</b>
-        <?php echo $report['Report']['department']; ?>
-    </p>
+        <?php
+            echo '<div class="report-editfield edit-container" data-field="department" data-report="' . $report['Report']['id'] . '">';
+            echo $report['Report']['department']; 
+            echo '</div>';
+        ?>
+    </div>
+    <br/>
     
     <h2>
         <?php echo $this->Html->image('icons/manager.png'); ?>
@@ -125,6 +130,41 @@
 </div>
 
 <script type="text/javascript">
+    
+    $('.report-editfield').editable('<?php echo $this->Html->url(array('action' => 'save')); ?>', {
+        loadtext: 'Bitte warten...',
+        indicator: 'Speichern...',
+        placeholder: '-',
+        tooltip: 'Zum Ändern klicken...',
+        submit: 'Speichern',
+        cancel: 'Abbrechen',
+        height: 'none',
+        width: 'none',
+        rows: 10,
+        submitdata: function(value, settings) {
+            return {
+                report_id: $(this).attr('data-report'),
+                field: $(this).attr('data-field')
+            };
+        },
+        callback : function(value, settings) {
+
+            var data = jQuery.parseJSON(value);
+
+            if(data.status.code > 0)
+            {
+                $(this).html(data.data);
+            }
+            else
+            {
+                console.log(data);
+                $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
+
+                $(this).html('Fehler');
+            }
+
+        }
+    });
 
     editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities')); ?>');
     editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions')); ?>');
