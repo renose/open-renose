@@ -32,7 +32,7 @@ class ReportsController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        
+
         if($this->action == 'save' || $this->action == 'delete')
         {
             $this->Security->csrfCheck = false;
@@ -40,7 +40,7 @@ class ReportsController extends AppController
             Configure::write('Error.handler', 'JsonError::handleError');
             Configure::write('Exception.handler', 'JsonError::handleException');
         }
-        
+
         if($this->request->params['action'] == 'export') {
             if(!in_array('curl', get_loaded_extensions())) {
                 throw new InternalErrorException('cURL wurde nicht gefunden. Dieses Modul wird für den PDF Generator benötigt.');
@@ -185,7 +185,7 @@ class ReportsController extends AppController
         $report['Report']['number'] = $number;
         $report['Report']['department'] = $last_report['Report']['department'];
         $report['Report']['date'] = date('Y-m-d');
-        
+
         pr($report);
         if($this->Report->save($report))
         {
@@ -198,7 +198,7 @@ class ReportsController extends AppController
             $this->redirect( array('action' => 'display', $year) );
         }
     }
-    
+
     function save()
     {
         if(!isset($this->request->data['report_id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
@@ -207,16 +207,16 @@ class ReportsController extends AppController
             $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
         if($this->request->data['value'] == null || $this->request->data['value'] == '')
             $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
-        
+
         $this->loadModel('Report');
         $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
         $field = $this->request->data['field'];
         $value = $this->request->data['value'];
-        
+
         if(isset($report['Report']['id']))
         {
             $report['Report'][$field] = $value;
-            
+
             if($this->Report->save($report))
             {
                 $this->data = $this->Report->findById($report['Report']['id']);
@@ -389,10 +389,18 @@ class ReportsController extends AppController
 
 
                     // school
-                    $school = array(
+                    if($fullReportData['Report']['holiday'] == 1) {
+                        $school = array(
                         'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
-                        'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
-                    );
+                            'text' => 'Urlaub / Ferien'
+                        );
+                    } else {
+                        $school = array(
+                            'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
+                            'text' => $this->PdfGenerator->prepareSchoolTextWithTitleAndText($fullReportData['ReportSchool'], 'subject', 'text')
+                        );
+                    }
+
                     $this->set('detail', $school);
                     $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailElement'), false);
 
@@ -409,6 +417,34 @@ class ReportsController extends AppController
             // kick it out
             header('Content-Type: application/pdf');
             if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
+        }
+
+    }
+
+    public function setHoliday($reportId = null, $value = 0) {
+        $this->autoRender = false;
+
+        if($reportId == null) exit;
+
+        $report = $this->Report->find('first', array(
+            'conditions' => array(
+                'Report.id' => $reportId,
+                'Report.user_id' => $this->Auth->user('id')
+            )
+        ));
+
+        $this->Report->read(null, $report['Report']['id']);
+
+        if($value == 1) {
+            $this->Report->set('holiday', 1);
+        } else {
+            $this->Report->set('holiday', 0);
+        }
+
+        if($this->Report->save()) {
+            $this->Json->response('Urlaub / Ferien gespeichert', 11);
+        } else {
+            $this->Json->error('Urlaub / Ferien nicht gespeichert', -11);
         }
 
     }
