@@ -74,7 +74,7 @@ class ReportInstructionsController extends AppController
                 $this->Json->response($this->data['ReportInstruction']['text'], 12);
             }
             else
-                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -12, $this->request->data);
+                $this->Json->error('Fehler beim Speichern der Unterweisung.', -12, $this->request->data);
         }
     }
 }

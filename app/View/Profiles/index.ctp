@@ -41,7 +41,11 @@ echo $this->Form->input('past', array('label' => 'Kurzbericht über Schulbildung
 echo $this->Form->end('Speichern');
 ?>
 
-<?php pr($jobs); ?>
+<?php pr($jobs); 
+
+pr($this->data);
+
+?>
 
 <script type="text/javascript">
     $(function() {

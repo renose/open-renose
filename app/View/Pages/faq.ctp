@@ -37,5 +37,12 @@
 </li></ul>
 <br/><br/>
 
+<p>Was sind das für Farben im Kalender</p>
+<ul><li>
+    Nach dem anlegen eines Berichtes wird die Kalenderwoche Rot markiert. Das bedeutet das in dieser Woche noch KEINE einträge gemacht wurden.
+    Wenn schon Einträge für diese Woche gemacht wurden zeigt dir Übersicht Gelb an und wenn ein Bericht komplett Ausgefüllt ist wird die Woche Grün markiert.
+</li></ul>
+<br/><br/>
+
 <p>Der Quellcode ist scheiße, ich würde es besser machen</p>
 <ul><li>Dann schreib ihn selber ;-)</li></ul>

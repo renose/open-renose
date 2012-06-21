@@ -34,7 +34,7 @@ class AppController extends Controller
                 'controller' => 'users',
                 'action' => 'login',
             ),
-            'loginRedirect' => '/reports/display',
+            'loginRedirect' => '/',
             'logoutRedirect' => '/',
             'authError' => 'Sie sind nicht eingeloggt, bitte einloggen.',
             'authenticate' => array(
@@ -54,13 +54,40 @@ class AppController extends Controller
             $this->layout = 'frontpage';
         else
         {
+        
             //redirect login users from page home to report overview
             if($this->request->params['controller'] == 'pages' && $this->request->params['action'] == 'display')
             {
+                 //redirect login users from page home to edit profile (only if profile is not set)!!!
+                 $this->loadModel('Profile');
+                 $profile = $this->Profile->findByUserId($this->Auth->user('id'));
+
                 if(!isset($this->request->params['pass'][0]))
                     $this->redirect ('/reports');
-                else if($this->request->params['pass'][0] == 'home')
-                    $this->redirect ('/reports');
+                
+           //     else if($this->request->params['pass'][0] == 'home')
+           //         $this->redirect ('/reports');
+
+                else if 
+                      (!isset($profile['Profile']['first_name']) 
+                    || !isset($profile['Profile']['last_name'])
+                    || !isset($profile['Profile']['job_name']) 
+                    || !isset($profile['Profile']['street'])
+                    || !isset($profile['Profile']['zip_code']) 
+                    || !isset($profile['Profile']['city'])
+                    || !isset($profile['Profile']['birthday']) 
+                    || !isset($profile['Profile']['birthplace'])
+                    || !isset($profile['Profile']['company']) 
+                    || !isset($profile['Profile']['branch'])
+                    || !isset($profile['Profile']['start_training_period']) 
+                    || !isset($profile['Profile']['end_training_period'])
+                    || !isset($profile['Profile']['contract_signed']) 
+                    || !isset($profile['Profile']['contract_registered'])
+                    || !isset($profile['Profile']['assigned_board_of_trade']))
+                {
+                    $this->redirect ('/profiles');
+                }
+
             }
         }
     }

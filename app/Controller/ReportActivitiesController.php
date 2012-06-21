@@ -78,4 +78,30 @@ class ReportActivitiesController extends AppController
                 $this->Json->error('Fehler beim Speichern der Tätigkeit.', -12, $this->request->data);
         }
     }
+    
+    public function delete()
+    {
+        if(!isset($this->request->data['report_id']))
+            $this->Json->error('Fehler beim Speichern der Tätigkeit.', -20, $this->request->data);
+        
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $lesson = $this->ReportActivity->findByReportIdAndSubject(
+                $report['Report']['id'],
+                $this->request->data['subject']);
+        
+        //Report not found?
+        if(!$report)
+            $this->Json->error('Fehler beim Löschen der Tätigkeit. Tätigkeit wurde nicht gefunden.', -30, $this->request->data);
+        
+        if($lesson != null)
+        {
+            if($this->ReportActivity->delete($report['ReportActivity']['id']))
+                $this->Json->response('-', 13);
+            else
+                $this->Json->error('Fehler beim Löschen der Aktivität.', -13, $this->validationErrors);
+        }
+        else
+            $this->Json->error('Aktivität wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
+    }
 }

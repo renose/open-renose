@@ -69,7 +69,7 @@ class ReportSchoolsController extends AppController
     public function delete()
     {
         if(!isset($this->request->data['report_id']))
-            $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
+            $this->Json->error('Fehler beim Löschen des Schulthemas.', -20, $this->request->data);
         
         $this->loadModel('Report');
         $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
