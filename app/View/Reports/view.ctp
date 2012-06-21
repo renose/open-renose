@@ -22,10 +22,23 @@
 </div>
 
 <div id="report">
-    <p><?= $this->Html->link('Bericht drucken', array(
-        'action' => 'export',
-        $report['Report']['id']
-    ), array('id' => 'renose-print')) ?></p>
+    <p>
+        <?=
+        $this->Html->link('Bericht drucken',
+            array('action' => 'export', $report['Report']['id']),
+            array('id' => 'renose-print'))
+        ?>
+    </p>
+    
+    <p>
+        <b>Datum:</b>
+        <?php echo date('d.m.Y', strtotime($report['Report']['date'])); ?>
+        <br/>
+        
+        <b>Abteilung:</b>
+        <?php echo $report['Report']['department']; ?>
+    </p>
+    
     <h2>
         <?php echo $this->Html->image('icons/manager.png'); ?>
         Tätigkeiten

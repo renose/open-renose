@@ -129,71 +129,69 @@ class ReportsController extends AppController
     {
         $this->set('title_for_layout', 'Bericht erstellen');
 
-        if(!$year)
-            $year = date('Y');
+        if(!$year || !$week)
+            $this->redirect( array('action' => 'display', $year) );
 
-        if(!$week)
-            $week = date('W');
+        //Nummer auf 1 setzen falls nicht bestimmt werden kann oder erster Bericht erstellt wird
+        $number = 1;
 
-        if (!empty($this->request->data))
+        //Ersten Bericht suchen
+        $first_report =
+            $this->Report->find('first', array(
+                'order' => 'Report.number ASC',
+                'conditions' => array('User.id = ' => $this->Auth->user('id'))
+            ));
+        //Srech last report
+        $last_report =
+            $this->Report->find('first', array(
+                'order' => 'Report.number DESC',
+                'conditions' => array('User.id = ' => $this->Auth->user('id'))
+            ));
+
+        //Erster Bericht vorhanden? Nummer berechnen
+        if($first_report != null)
         {
-            $this->request->data['Report']['user_id'] = $this->Auth->user('id');
-
-            if ($this->Report->save($this->request->data))
+            //Bericht im selben Jahr wie erster
+            if($year == $first_report['Report']['year'])
             {
-                $this->Session->setFlash('Ihr Bericht wurde erstellt.', 'flash_success');
-                $this->redirect( array('action' => 'view', $this->request->data['Report']['year'], $this->request->data['Report']['week']) );
+                //Bericht NACH erstem erstellen
+                if($week > $first_report['Report']['week'])
+                    $number = $first_report['Report']['number'] + $week - $first_report['Report']['week'];
             }
+            else
+            {
+                //Wochen des ersten Jahres berechnen
+                $number = $first_report['Report']['number'] + date('W', mktime(0, 0, 0, 12, 31, $first_report['Report']['year'])) - $first_report['Report']['week'];
+
+                //Volle Jahre addieren
+                for($i = $first_report['Report']['year'] + 1; $i < $year; $i++)
+                    $number += date('W', mktime(0, 0, 0, 12, 1, $i));
+
+                //Wochen des letzten Jahres addieren
+                $number += $week;
+            }
+        }
+
+        //Daten setzen
+        $this->Report->create();
+        $report = array();
+        $report['Report']['user_id'] = $this->Auth->user('id');
+        $report['Report']['year'] = $year;
+        $report['Report']['week'] = $week;
+        $report['Report']['number'] = $number;
+        $report['Report']['department'] = $last_report['Report']['department'];
+        $report['Report']['date'] = date('Y-m-d');
+        
+        pr($report);
+        if($this->Report->save($report))
+        {
+            $this->Session->setFlash('Ihr Bericht wurde erstellt.', 'flash_success');
+            $this->redirect( array('action' => 'view', $report['Report']['year'], $report['Report']['week']) );
         }
         else
         {
-            //Nummer auf 1 setzen falls nicht bestimmt werden kann oder erster Bericht erstellt wird
-            $number = 1;
-
-            //Ersten Bericht suchen
-            $first_report =
-                $this->Report->find('first', array(
-                    'order' => 'Report.number ASC',
-                    'conditions' => array('User.id = ' => $this->Auth->user('id'))
-                ));
-
-            //Erster Bericht vorhanden? Nummer berechnen
-            if($first_report != null)
-            {
-                //Bericht VOR erstem erstellen
-                if($year < $first_report['Report']['year'])
-                    pr('FUCK OFF!!');
-                //Bericht im selben Jahr wie erster
-                else if($year == $first_report['Report']['year'])
-                {
-                    //Bericht VOR erstem erstellen
-                    if($week < $first_report['Report']['week'])
-                        pr('FUCK OFF!!');
-                    //Bericht gleich wie erster erstellen
-                    else if($week == $first_report['Report']['week'])
-                        pr('FUCK OFF!!');
-                    //Bericht NACH erstem erstellen
-                    else
-                        $number = $first_report['Report']['number'] + $week - $first_report['Report']['week'];
-                }
-                else
-                {
-                    //Wochen des ersten Jahres berechnen
-                    $number = $first_report['Report']['number'] + date('W', mktime(0, 0, 0, 12, 31, $first_report['Report']['year'])) - $first_report['Report']['week'];
-
-                    //Volle Jahre addieren
-                    for($i = $first_report['Report']['year'] + 1; $i < $year; $i++)
-                        $number += date('W', mktime(0, 0, 0, 12, 1, $i));
-
-                    //Wochen des letzten Jahres addieren
-                    $number += $week;
-                }
-            }
-
-            //Daten setzen
-            $this->request->data['Report']['year'] = $year;
-            $this->request->data['Report']['week'] = $week;
-            $this->request->data['Report']['number'] = $number;
+            $this->Session->setFlash('Fehler beim Erstellen des Berichtes.', 'flash_fail');
+            $this->redirect( array('action' => 'display', $year) );
         }
     }
 
