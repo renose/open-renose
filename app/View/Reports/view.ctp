@@ -106,11 +106,11 @@
             var checked = 0;
 
             if(jQuery('input#holidays:checked').length != 0) {
-                table.css('opacity', 0.2);
+                table.fadeOut();
                 checked = 1;
 
             } else {
-                table.css('opacity', 1.0);
+                table.fadeIn();
                 checked = 0;
             }
 
@@ -119,10 +119,19 @@
             $.ajax({
                 url : '<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'setHoliday')); ?>/'+reportId+'/'+checked,
                 success : function(data) {
-                    $.jGrowl(data);
+                    var res = $.parseJSON(data);
+                    $.jGrowl(res.data, {life: 500});
                 }
             });
 
+        });
+
+        jQuery('input#holidays').ready(function () {
+            var table = jQuery('table.school');
+
+            if(jQuery('input#holidays:checked').length != 0) {
+                table.hide();
+            }
         });
     </script>
 
