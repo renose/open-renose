@@ -147,10 +147,10 @@
         
         $(element).mouseenter(function() {
             if($(this).find('.edit-textbox').attr('data-exists') == 'true')
-                $(this).find('img').css('display', '');
+                $(this).find('.edit-delete').css('display', '');
         });
         $(element).mouseleave(function() {
-            $(this).find('img').css('display', 'none');
+            $(this).find('.edit-delete').css('display', 'none');
         });
         
         element.find('.edit-textbox').editable(url + '/save', {
@@ -224,10 +224,10 @@
 
         $(elements).find('.edit-container').mouseenter(function() {
             if($(this).find('.edit-textbox').attr('data-exists') == 'true')
-                $(this).find('img').css('display', '');
+                $(this).find('.edit-delete').css('display', '');
         });
         $(elements).find('.edit-container').mouseleave(function() {
-            $(this).find('img').css('display', 'none');
+            $(this).find('.edit-delete').css('display', 'none');
         });
 
         editable_school($(elements).find('.edit-textbox'));
