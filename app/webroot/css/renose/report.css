@@ -1,21 +1,21 @@
-#report .edit-field {
+#report .edit-container {
     cursor: text;
     padding-right: 20px;
     border: 1px solid #CCCCCC;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-#report .edit-field:hover {
+#report .edit-container:hover {
     border: 1px solid darkgrey;
 }
 
-#report .edit-field {
+#report .edit-container {
     padding: 1em;
 }
-#report .edit-field input {
+#report .edit-container input {
     font-size: 110%;
 }
-#report .edit-field button {
+#report .edit-container button {
     -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
     -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -41,44 +41,45 @@
     height: 32px;
     cursor: pointer;
 }
-#report .edit-field button:hover {
+#report .edit-container button:hover {
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
     background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
     background-color:#dfdfdf;
 }
-#report .edit-field button:active {
+#report .edit-container button:active {
     position:relative;
     top:1px;
+}
+
+#report .edit-container {
+    padding: 6px;
+    position: relative;
+    padding-right: 20px;
+    cursor: text;
+}
+
+#report .edit-textbox {
+    width: 100%;
+    float: left;
+}
+#report .edit-textbox textarea {
+    font-size: 100%;
+}
+
+#report .edit-delete {
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
 }
 
 #report .school-subject {
     width: 20%;
     text-align: center;
 }
-
-#report .edit-field {
-    padding: 6px;
-}
-#report .edit-field textarea {
-    font-size: 100%;
-}
-
 #report .school-topic {
     width: 100%;
-    padding-right: 20px;
-    cursor: text;
-}
-#report .school-topic-text {
-    width: 100%;
-    float: left;
-}
-
-#report .school-topic-delete {
-    position: absolute;
-    margin-left: -2px;
-    height: 16px;
-    width: 16px;
-    float: right;
-    cursor: pointer;
 }

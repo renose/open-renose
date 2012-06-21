@@ -41,7 +41,7 @@ class ReportInstructionsController extends AppController
     public function save()
     {
         if(!isset($this->request->data['report_id']))
-            $this->Json->error('Fehler beim Speichern der Tätigkeit.', -20, $this->request->data);
+            $this->Json->error('Fehler beim Speichern der Unterweisung.', -20, $this->request->data);
         
         $this->loadModel('Report');
         $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
@@ -56,7 +56,7 @@ class ReportInstructionsController extends AppController
                 $this->Json->response($this->data['ReportInstruction']['text'], 11);
             }
             else
-                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -11, $this->request->data);
+                $this->Json->error('Fehler beim Speichern der Unterweisung.', -11, $this->request->data);
         }
         else
         {
@@ -74,7 +74,26 @@ class ReportInstructionsController extends AppController
                 $this->Json->response($this->data['ReportInstruction']['text'], 12);
             }
             else
-                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -12, $this->request->data);
+                $this->Json->error('Fehler beim Speichern der Unterweisung.', -12, $this->request->data);
         }
+    }
+    
+    public function delete()
+    {
+        if(!isset($this->request->data['report_id']))
+            $this->Json->error('Fehler beim Löschen der Unterweisung.', -20, $this->request->data);
+        
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        
+        if(isset($report['ReportInstruction']['id']))
+        {
+            if($this->ReportInstruction->delete($report['ReportInstruction']['id']))
+                $this->Json->response('-', 13);
+            else
+                $this->Json->error('Fehler beim Löschen der Unterweisung.', -13, $this->validationErrors);
+        }
+        else
+            $this->Json->error('Unterweisung wurde nicht gefunden, Löschen abgebrochen.', -30, $this->request->data);
     }
 }

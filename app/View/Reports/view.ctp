@@ -30,17 +30,21 @@
         <?php echo $this->Html->image('icons/manager.png'); ?>
         Tätigkeiten
     </h2>
+    
     <?php
-        if(isset($report['ReportActivity']))
+        echo '<div id="ReportActivity" class="edit-container" data-report="'. $report['Report']['id'] .'">';
+        
+        if(isset($report['ReportActivity']['id']))
         {
-            echo '<div id="ReportActivity" class="edit-field" data-report="'. $report['Report']['id'] .'" data-exists="true">';
+            echo '<div class="edit-textbox" data-exists="true">';
             echo $report['ReportActivity']['text'];
             echo '</div>';
         }
         else
-        {
-            echo '<div id="ReportActivity" data-report="'. $report['Report']['id'] .'" data-exists="false"></div>';
-        }
+            echo '<div class="edit-textbox" data-exists="false"></div>';
+        
+        echo $this->Html->image('icons/delete.png', array('class' => 'activity-delete edit-delete', 'alt' => 'Diese Aktivität löschen'));
+        echo '<div style="clear: both;"></div></div>';
     ?>
     <br/>
 
@@ -48,17 +52,21 @@
         <?php echo $this->Html->image('icons/talk.png'); ?>
         Unterweisungen
     </h2>
+    
     <?php
-        if(isset($report['ReportInstruction']))
+        echo '<div id="ReportInstruction" class="edit-container" data-report="'. $report['Report']['id'] .'">';
+        
+        if(isset($report['ReportInstruction']['id']))
         {
-            echo '<div id="ReportInstruction" class="edit-field" data-report="'. $report['Report']['id'] .'" data-exists="true">';
+            echo '<div class="edit-textbox" data-exists="true">';
             echo $report['ReportInstruction']['text'];
             echo '</div>';
         }
         else
-        {
-            echo '<div id="ReportInstruction" data-report="'. $report['Report']['id'] .'" data-exists="false"></div>';
-        }
+            echo '<div class="edit-textbox" data-exists="false"></div>';
+        
+        echo $this->Html->image('icons/delete.png', array('class' => 'activity-delete edit-delete', 'alt' => 'Diese Aktivität löschen'));
+        echo '<div style="clear: both;"></div></div>';
     ?>
     <br/>
 
@@ -83,18 +91,18 @@
                 
                 if ($text != null)
                 {
-                    echo '<td class="school-topic edit-field" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
+                    echo '<td class="school-topic edit-container" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
                     
-                    echo '<div class="school-topic-text" data-exists="true">' . $text . '</div>';
-                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete', 'alt' => 'Dieses Thema löschen'));
+                    echo '<div class="school-topic-text edit-textbox" data-exists="true">' . $text . '</div>';
+                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete edit-delete', 'alt' => 'Dieses Thema löschen'));
 
                     echo '</td>';
                 }
                 else
                 {
-                    echo '<td class="school-topic edit-field" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
-                    echo '<div class="school-topic-text" data-exists="false"></div>';
-                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete', 'alt' => 'Dieses Thema löschen'));
+                    echo '<td class="school-topic edit-container" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
+                    echo '<div class="school-topic-text edit-textbox" data-exists="false"></div>';
+                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete edit-delete', 'alt' => 'Dieses Thema löschen'));
                     echo '</td>';
                 }
             }
@@ -105,12 +113,47 @@
 
 <script type="text/javascript">
 
-    editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities', 'action' => 'save')); ?>');
-    editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions', 'action' => 'save')); ?>');
+    editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities')); ?>');
+    editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions')); ?>');
 
-    function editable(elements, url)
+    function editable(element, url)
     {
-        elements.editable(url, {
+        $(element).find('.edit-delete').hide();
+        $(element).find('.edit-delete').click(function() {
+            var that = this;
+            $.ajax({
+                url: url + '/delete',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    report_id: $(that).parent().attr('data-report')
+                },
+                success: function(data) {
+                    if(data.status.code > 0)
+                    {
+                        $(that).parent().find('.edit-textbox').attr('data-exists', 'false');
+                        $(that).parent().find('.edit-textbox').html('-');
+                    }
+                    else
+                    {
+                        console.log(data);
+                        $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
+                    }
+                }
+            });
+
+            return false;
+        });
+        
+        $(element).mouseenter(function() {
+            if($(this).find('.edit-textbox').attr('data-exists') == 'true')
+                $(this).find('img').css('display', '');
+        });
+        $(element).mouseleave(function() {
+            $(this).find('img').css('display', 'none');
+        });
+        
+        element.find('.edit-textbox').editable(url + '/save', {
             type: 'wysihtml5',
             loadtext: 'Bitte warten...',
             indicator: 'Speichern...',
@@ -123,7 +166,7 @@
             rows: 10,
             submitdata: function(value, settings) {
                 return {
-                    report_id: $(this).attr('data-report')
+                    report_id: $(this).parent().attr('data-report')
                 };
             },
             callback : function(value, settings) {
@@ -151,8 +194,8 @@
     
     function init_school(elements)
     {
-        $(elements).find('.school-topic-delete').hide();
-        $(elements).find('.school-topic-delete').click(function() {
+        $(elements).find('.edit-delete').hide();
+        $(elements).find('.edit-delete').click(function() {
             var that = this;
             $.ajax({
                 url: '<?php echo $this->Html->url(array('controller' => 'report_schools', 'action' => 'delete')); ?>',
@@ -165,8 +208,8 @@
                 success: function(data) {
                     if(data.status.code > 0)
                     {
-                        $(that).parent().attr('data-exists', 'false');
-                        $(that).parent().find('.school-topic-text').html('-');
+                        $(that).parent().find('.edit-textbox').attr('data-exists', 'false');
+                        $(that).parent().find('.edit-textbox').html('-');
                     }
                     else
                     {
@@ -179,19 +222,15 @@
             return false;
         });
 
-        $(elements).find('.school-topic').mouseenter(function() {
-            if($(this).find('.school-topic-text').attr('data-exists') == 'true')
+        $(elements).find('.edit-container').mouseenter(function() {
+            if($(this).find('.edit-textbox').attr('data-exists') == 'true')
                 $(this).find('img').css('display', '');
         });
-        $(elements).find('.school-topic').mouseleave(function() {
+        $(elements).find('.edit-container').mouseleave(function() {
             $(this).find('img').css('display', 'none');
         });
 
-        editable_school($(elements).find('.school-topic-text'));
-        $(elements).find('.school-topic').click(function(e) {
-            if($(this).find('input').length == 0)
-                $(this).find('.school-topic-text').click();
-        });
+        editable_school($(elements).find('.edit-textbox'));
     }
     
     function editable_school(elements)
