@@ -28,8 +28,8 @@ class UsersController extends AppController
     public function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow(array('login', 'logout', 'register', 'activate'));
-        $this->Auth->allow('*');
+        $this->Auth->allow(array('login', 'logout', 'register', 'activate', 'forgot', 'changepassword'));
+        //$this->Auth->allow('*');
     }
 
     function login()
@@ -40,7 +40,7 @@ class UsersController extends AppController
             $this->Session->setFlash('Sie sind bereits eingeloggt.', 'flash_notice');
             $this->redirect($this->Auth->redirect());
         }
-        
+
         if($this->request->data)
         {
             if ($this->Auth->login())
@@ -68,7 +68,7 @@ class UsersController extends AppController
     }
 
     function register()
-    {        
+    {
         if ($this->request->data)
         {
             //Setze Activation Key
@@ -77,13 +77,13 @@ class UsersController extends AppController
             // manual hashing is required cause model validation function and save after positive result
             $this->request->data['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
             $this->request->data['User']['password_confirm'] = Security::hash($this->request->data['User']['password_confirm'], null, true);
-            
+
             if ($this->User->save($this->request->data))
             {
                 App::uses('CakeEmail', 'Network/Email');
-                
+
                 $user = $this->request->data;
-                
+
                 $email = new CakeEmail('default');
 
                 $email  ->to($user['User']['email'])
@@ -94,7 +94,7 @@ class UsersController extends AppController
                             'user' => $user
                             )
                         );
-                
+
                 try
                 {
                     $email->send();
@@ -102,12 +102,12 @@ class UsersController extends AppController
                 catch(Exception $e)
                 {
                     //pr($e);
-                    
+
                     $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
                     //$this->redirect(array('controller' => 'users', 'action' => 'register'));
                     $this->redirect(array('controller' => 'users', 'action' => 'activate', $user['User']['email'], $user['User']['activationkey']));
                 }
-                
+
                 $this->Session->setFlash('Registrierung erfolgreich. Bitte prüfen Sie ihr Email-Postfach für die Aktivierung ihres Accounts.', 'flash_success');
                 $this->redirect(array('controller' => 'users', 'action' => 'login'));
             }
@@ -158,5 +158,113 @@ class UsersController extends AppController
         $profile = $this->User->Profile->findByUserId($this->Auth->user('id'));
 
         return $profile['Profile']['first_name'] .' ' . $profile['Profile']['last_name'];
+    }
+
+
+    public function forgot() {
+        App::uses('CakeEmail', 'Network/Email');
+
+        if($this->request->is('post') && $this->request->data['User']['email'] != false) {
+
+            $data = $this->User->find('first', array(
+                'conditions' => array(
+                    'User.email' => $this->request->data['User']['email'],
+                    'User.is_active' => 1
+                )
+            ));
+
+            if(!$data) {
+                $this->Session->setFlash('User nicht gefunden.', 'flash_fail');
+                $this->redirect(array(
+                    'controller' => 'users',
+                    'action' => 'forgot'
+                ));
+            }
+
+            $this->User->read(null, $data['User']['id']);
+
+            $newAuthKey = Security::generateAuthKey();
+            $this->User->set('activationkey', $newAuthKey);
+
+            if($this->User->save()) {
+
+                $email = new CakeEmail('default');
+
+                $email->to($data['User']['email'])
+                            ->subject('open reNose | Passwort ändern')
+                            ->template('forgot')
+                            ->emailFormat('html')
+                            ->viewVars(array(
+                                'data' => $data,
+                                'newAuthKey' => $newAuthKey
+                                )
+                            );
+
+                try {
+                    $email->send();
+                }
+                catch(Exception $e) {
+                    $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
+                }
+                $this->Session->setFlash('E-Mail zur Passwortänderung wurde erfolgreich verschickt. Bitte prüfen Sie ihr E-Mail Postfach.', 'flash_success');
+                $this->redirect('/');
+            }
+
+        }
+
+        $this->set('title_for_layout', 'Passwort vergessen');
+    }
+
+
+    public function changepassword($email = null, $activationKey = null) {
+        //$this->autoRender = false;
+        $user = $this->User->find('first', array(
+            'fields' => array(
+                'User.email'
+            ),
+            'conditions' => array(
+                'User.email' => $email,
+                'User.activationkey' => $activationKey
+            )
+        ));
+
+        if($user != false) {
+            $this->set('email', $user['User']['email']);
+
+            if ($this->request->is('post') || $this->request->is('put')) {
+
+                if($this->User->save($this->request->data)) {
+                    $this->request->data['User']['activationkey'] = '';
+                    $this->request->data['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
+                    $this->request->data['User']['password_confirm'] = Security::hash($this->request->data['User']['password_confirm'], null, true);
+                    $this->User->save($this->request->data);
+
+                    $email = new CakeEmail('default');
+
+                    $email->to($user['User']['email'])
+                                ->subject('open reNose | Passwort wurde geändert')
+                                ->template('passwordchanged')
+                                ->emailFormat('html');
+
+                    try {
+                        $email->send();
+                    }
+                    catch(Exception $e) {
+                        $this->Session->setFlash('Fehler beim Verschicken der Mail.', 'flash_fail');
+                    }
+
+                    $this->Session->setFlash('Passwort wurde zurückgesetzt.', 'flash_success');
+                    $this->redirect('/');
+                }
+                //$this->User->read(null, $data['User']['id']);
+            } else {
+                $this->request->data = $user;
+            }
+            //$this->render();
+        } else {
+            $this->Session->setFlash('E-Mail Adresse oder Aktivierungsschlüssel ungültig.', 'flash_fail');
+            $this->redirect('/');
+        }
+        $this->set('title_for_layout', 'Passwort ändern');
     }
 }
