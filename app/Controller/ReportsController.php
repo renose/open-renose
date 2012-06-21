@@ -181,7 +181,7 @@ class ReportsController extends AppController
         $report['Report']['number'] = $number;
         $report['Report']['department'] = $last_report['Report']['department'];
         $report['Report']['date'] = date('Y-m-d');
-        
+
         pr($report);
         if($this->Report->save($report))
         {
@@ -375,6 +375,34 @@ class ReportsController extends AppController
             // kick it out
             header('Content-Type: application/pdf');
             if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
+        }
+
+    }
+
+    public function setHoliday($reportId = null, $value = 0) {
+        $this->autoRender = false;
+
+        if($reportId == null) exit;
+
+        $report = $this->Report->find('first', array(
+            'conditions' => array(
+                'Report.id' => $reportId,
+                'Report.user_id' => $this->Auth->user('id')
+            )
+        ));
+
+        $this->Report->read(null, $report['Report']['id']);
+
+        if($value == 1) {
+            $this->Report->set('holiday', 1);
+        } else {
+            $this->Report->set('holiday', 0);
+        }
+
+        if($this->Report->save()) {
+            return 'saved';
+        } else {
+            return 'not saved';
         }
 
     }
