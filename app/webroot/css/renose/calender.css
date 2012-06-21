@@ -157,13 +157,13 @@
         linear,
         left bottom,
         left top,
-        color-stop(0.34, rgb(128,199,77)),
-        color-stop(0.6, rgb(147,245,98))
+        color-stop(0.6, rgb(147,245,98)),
+        color-stop(0.34, rgb(128,199,77))
     );
     background-image: -moz-linear-gradient(
         center bottom,
-        rgb(128,199,77) 34%,
-        rgb(147,245,98) 60%
+        rgb(147,245,98) 60%,
+        rgb(128,199,77) 34%
     );
 
     -moz-border-radius: 3px;
@@ -177,8 +177,8 @@
         linear,
         left bottom,
         left top,
-        color-stop(0.34, rgb(255,48,48)),
-        color-stop(0.6, rgb(205,38,38))
+        color-stop(0.6, rgb(255,48,48)),
+        color-stop(0.34, rgb(205,38,38))
     );
     background-image: -moz-linear-gradient(
         center bottom,
@@ -197,8 +197,8 @@
         linear,
         left bottom,
         left top,
-        color-stop(0.34, rgb(255,255,0)),
-        color-stop(0.6, rgb(205,215,0))
+        color-stop(0.6, rgb(255,255,0)),
+        color-stop(0.34, rgb(205,215,0))
     );
     background-image: -moz-linear-gradient(
         center bottom,
