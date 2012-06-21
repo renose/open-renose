@@ -27,11 +27,20 @@ class ReportsController extends AppController
     public $scaffold;
 
     public $helpers = array('Time', 'reNoseDate', 'Form');
-    public $components = array('PdfGenerator');
+    public $components = array('PdfGenerator', 'Json');
 
     public function beforeFilter()
     {
         parent::beforeFilter();
+        
+        if($this->action == 'save' || $this->action == 'delete')
+        {
+            $this->Security->csrfCheck = false;
+            $this->Security->validatePost = false;
+            Configure::write('Error.handler', 'JsonError::handleError');
+            Configure::write('Exception.handler', 'JsonError::handleException');
+        }
+        
         if($this->request->params['action'] == 'export') {
             if(!in_array('curl', get_loaded_extensions())) {
                 throw new InternalErrorException('cURL wurde nicht gefunden. Dieses Modul wird für den PDF Generator benötigt.');
@@ -47,11 +56,6 @@ class ReportsController extends AppController
             }
 
         }
-    }
-
-    public function beforeRender()
-    {
-        parent::beforeRender();
     }
 
     function index()
@@ -193,6 +197,36 @@ class ReportsController extends AppController
             $this->Session->setFlash('Fehler beim Erstellen des Berichtes.', 'flash_fail');
             $this->redirect( array('action' => 'display', $year) );
         }
+    }
+    
+    function save()
+    {
+        if(!isset($this->request->data['report_id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
+            $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
+        if($this->request->data['field'] != 'date' && $this->request->data['field'] != 'department')
+            $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
+        if($this->request->data['value'] == null || $this->request->data['value'] == '')
+            $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
+        
+        $this->loadModel('Report');
+        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $field = $this->request->data['field'];
+        $value = $this->request->data['value'];
+        
+        if(isset($report['Report']['id']))
+        {
+            $report['Report'][$field] = $value;
+            
+            if($this->Report->save($report))
+            {
+                $this->data = $this->Report->findById($report['Report']['id']);
+                $this->Json->response($this->data['Report'][$field], 11);
+            }
+            else
+                $this->Json->error('Fehler beim Speichern der Tätigkeit.', -11, $this->request->data);
+        }
+        else
+            $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
     }
 
 
