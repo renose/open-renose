@@ -185,11 +185,10 @@ class ReportsController extends AppController
         $report['Report']['number'] = $number;
         $report['Report']['department'] = '';
         $report['Report']['date'] = date('Y-m-d');
-        
+
         if(isset($last_report['Report']['department']))
             $report['Report']['department'] = $last_report['Report']['department'];
 
-        pr($report);
         if($this->Report->save($report))
         {
             $this->Session->setFlash('Ihr Bericht wurde erstellt.', 'flash_success');
