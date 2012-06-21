@@ -65,7 +65,9 @@ class ProfilesController extends AppController
         }
         else
         {
-            $profile['Profile']['job_name'] = $profile['Job']['name'];
+            if(isset($profile['Job']['name']))
+                $profile['Profile']['job_name'] = $profile['Job']['name'];
+            
             $this->request->data = $profile;
         }
 

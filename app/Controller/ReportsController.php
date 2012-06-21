@@ -183,8 +183,11 @@ class ReportsController extends AppController
         $report['Report']['year'] = $year;
         $report['Report']['week'] = $week;
         $report['Report']['number'] = $number;
-        $report['Report']['department'] = $last_report['Report']['department'];
+        $report['Report']['department'] = '';
         $report['Report']['date'] = date('Y-m-d');
+        
+        if(isset($last_report['Report']['department']))
+            $report['Report']['department'] = $last_report['Report']['department'];
 
         pr($report);
         if($this->Report->save($report))
