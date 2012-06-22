@@ -98,29 +98,40 @@
         Schule
     </h2>
 
-    <input type="checkbox" id="holidays" value="holidays" data-report="<?= $report['Report']['id'] ?>" <?php if($report['Report']['holiday'] == 1) { echo 'checked="checked"'; } ?> /><label for="holidays">Ferien / Urlaub</label>
+    <input type="checkbox" id="holidays" value="holidays" data-field="holiday" data-report="<?= $report['Report']['id'] ?>" <?php if($report['Report']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
+    <label for="holidays">Ferien / Urlaub</label>
 
     <script type="text/javascript">
         jQuery('input#holidays').click(function () {
             var table = jQuery('table.school');
             var checked = 0;
 
-            if(jQuery('input#holidays:checked').length != 0) {
+            if($('input#holidays:checked').length != 0) {
                 table.fadeOut();
-                checked = 1;
-
             } else {
                 table.fadeIn();
-                checked = 0;
             }
 
-            var reportId = $(this).attr('data-report');
-
             $.ajax({
-                url : '<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'setHoliday')); ?>/'+reportId+'/'+checked,
-                success : function(data) {
-                    var res = $.parseJSON(data);
-                    $.jGrowl(res.data, {life: 500});
+                url : '<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'save')); ?>',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    report_id: $(this).attr('data-report'),
+                    field: $(this).attr('data-field'),
+                    value: $('input#holidays:checked').length != 0
+                },
+                success : function(data)
+                {
+                    if(data.status.code > 0)
+                    {
+                        $.jGrowl('Ferien erfolgreich gespeichert.');
+                    }
+                    else
+                    {
+                        console.log(data);
+                        $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
+                    }
                 }
             });
 

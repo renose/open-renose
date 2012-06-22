@@ -205,7 +205,7 @@ class ReportsController extends AppController
     {
         if(!isset($this->request->data['report_id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
             $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
-        if($this->request->data['field'] != 'date' && $this->request->data['field'] != 'department')
+        if($this->request->data['field'] != 'date' && $this->request->data['field'] != 'department' && $this->request->data['field'] != 'holiday')
             $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
         if($this->request->data['value'] == null || $this->request->data['value'] == '')
             $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
@@ -419,34 +419,6 @@ class ReportsController extends AppController
             // kick it out
             header('Content-Type: application/pdf');
             if(!isset($debug)) $pdf->Output('pdf.pdf', 'I');
-        }
-
-    }
-
-    public function setHoliday($reportId = null, $value = 0) {
-        $this->autoRender = false;
-
-        if($reportId == null) exit;
-
-        $report = $this->Report->find('first', array(
-            'conditions' => array(
-                'Report.id' => $reportId,
-                'Report.user_id' => $this->Auth->user('id')
-            )
-        ));
-
-        $this->Report->read(null, $report['Report']['id']);
-
-        if($value == 1) {
-            $this->Report->set('holiday', 1);
-        } else {
-            $this->Report->set('holiday', 0);
-        }
-
-        if($this->Report->save()) {
-            $this->Json->response('Urlaub / Ferien gespeichert', 11);
-        } else {
-            $this->Json->error('Urlaub / Ferien nicht gespeichert', -11);
         }
 
     }
