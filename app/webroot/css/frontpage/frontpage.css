@@ -1,6 +1,8 @@
 img.teaser-image {
     margin: 0 auto 20px auto;
     display: block;
+    width: 75%;
+    height: 75%;
     border: 1px solid black;
     border-radius: 3px;
 }

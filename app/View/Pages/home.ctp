@@ -32,7 +32,7 @@
 
 	<div class="row">
 	    <div class="span12">
-		<?= $this->Html->image('frontpage/frontpage-reports-renose.png', array('alt' => 'Foo bar beschreibung', 'class' => 'teaser-image')); ?>
+		<?= $this->Html->image('frontpage/frontpage-reports-renose.png', array('alt' => 'open reNose - Berichtsübersicht', 'class' => 'teaser-image')); ?>
 	    </div>
 	</div>
 
@@ -62,17 +62,17 @@
 	<div class="span4">
 	    <?= $this->Html->image('icons/solutions.png', array('class' => 'bs-icon')) ?>
 	    <h2>Einfache Bedienung</h2>
-	    <p>Wir haben viel Wert auf einfache Bedienung gelegt, damit dich auf das Kernthema konzentrieren kannst: Berichte erstellen</p>
+	    <p>Wir haben viel Wert auf einfache Bedienung gelegt, damit dich auf das Kernthema konzentrieren kannst: Berichte erstellen.</p>
 	</div>
 	<div class="span4">
 	    <?= $this->Html->image('icons/clipboard.png', array('class' => 'bs-icon')) ?>
 	    <h2>Berichtsübersicht</h2>
-	    <p>In der Jahresübersicht siehst du, welche Wochen du noch nicht eingetragen hast und kannst dies sofort nachholen</p>
+	    <p>In der Jahresübersicht siehst du, welche Wochen du noch nicht eingetragen hast und kannst dies sofort nachholen.</p>
 	</div>
         <div class="span4">
             <?= $this->Html->image('icons/book_stack.png', array('class' => 'bs-icon')) ?>
             <h2>Berufsschulthemen</h2>
-            <p>Foo</p>
+            <p>Berufsschulthemen können bequem anhand des Stundenplanes eingetragen werden.</p>
         </div>
     </div><!--/row-->
     <div class="row">
