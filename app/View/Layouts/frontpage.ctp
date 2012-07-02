@@ -23,7 +23,7 @@
         ?>
 
 	<!--[if lt IE 9]>
-	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
     </head>
@@ -70,7 +70,7 @@
 
 		<p>&copy; 2012 by <a href="mailto:simon@renose.de">Simon Wörner</a>,
 		    <a href="mailto:patrick@renose.de">Patrick Hafner</a> & <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
-		    <a href="http://www.renose.de">renose.de</a>
+		    <a href="https://www.renose.de">renose.de</a>
                 </p>
 	    </footer>
 
