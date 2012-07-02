@@ -27,14 +27,8 @@ CREATE TABLE `calendar_entries` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
---  Records of `calendar_entries`
--- ----------------------------
-BEGIN;
-INSERT INTO `calendar_entries` VALUES ('1', '1', '2011-12-24', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', '1', '2012-12-24', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('3', '1', '2012-05-01', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-COMMIT;
 
 -- ----------------------------
 --  Table structure for `jobs`
@@ -46,14 +40,7 @@ CREATE TABLE `jobs` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `jobs`
--- ----------------------------
-BEGIN;
-INSERT INTO `jobs` VALUES ('1', 'Fachinformatiker - Anwendungsentwicklung', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', 'fiae', '2012-06-07 19:01:07', '2012-06-07 19:01:07');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `profiles`
@@ -82,14 +69,7 @@ CREATE TABLE `profiles` (
   `past` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `profiles`
--- ----------------------------
-BEGIN;
-INSERT INTO `profiles` VALUES ('1', '1', 'Admin', 'reNose', '', null, '', '', '1999-01-01', '1', '', '', '0000-00-00 00:00:00', '2012-05-29 11:04:07', '2010-09-01', '2012-05-29', '2012-01-01', '2012-01-01', '', ''), ('2', '2', 'Simon', 'Wörner', 'foo', '12345', 'nope', 'rt', '1994-06-07', '2', 'firma', 'gesxghäftzstzewit', '0000-00-00 00:00:00', '2012-06-07 19:01:07', '2010-09-01', '2013-09-01', '2010-09-01', '2010-09-01', 'Region RT', ''), ('3', '3', 'Patrick', 'Hafner', 'Teststraße 1', '12345', 'Musterstadt', 'Musterort', '1992-01-01', '1', 'Example Ltd.', 'Web', '0000-00-00 00:00:00', '2012-06-15 14:40:30', '2010-01-01', '2013-01-01', '2010-01-01', '2010-01-01', 'Region Stuttgart', '1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule\r\n1999 - 2000 : Schule');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_activities`
@@ -103,14 +83,7 @@ CREATE TABLE `report_activities` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report_id` (`report_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `report_activities`
--- ----------------------------
-BEGIN;
-INSERT INTO `report_activities` VALUES ('1', '1', 'Report via Scaffolding getestet', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('3', '4', 'Hallo, <i>Welt</i><b>!</b><br><b>(:</b>', '2012-05-28 01:20:22', '2012-05-28 01:20:22');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_instructions`
@@ -124,14 +97,7 @@ CREATE TABLE `report_instructions` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report_id` (`report_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `report_instructions`
--- ----------------------------
-BEGIN;
-INSERT INTO `report_instructions` VALUES ('1', '1', 'Prototyp mit cakePHP und Scaffolfing erstellen.', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `report_schools`
@@ -165,14 +131,7 @@ CREATE TABLE `reports` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `report` (`user_id`,`year`,`week`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `reports`
--- ----------------------------
-BEGIN;
-INSERT INTO `reports` VALUES ('1', '1', '2010', '35', '1', '', '2011-05-03', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', '1', '2011', '33', '51', '', '2011-08-16', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('3', '1', '2012', '21', '87', '', '2012-05-25', '2012-05-25 10:48:57', '2012-05-25 10:48:57'), ('4', '1', '2012', '7', '73', '', '2012-05-25', '2012-05-25 11:03:57', '2012-05-25 11:03:57'), ('5', '1', '2012', '22', '88', '', '2012-05-28', '2012-05-28 13:44:44', '2012-05-28 13:44:44');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `resumes`
@@ -205,14 +164,7 @@ CREATE TABLE `schedule_lessons` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `schedule_lessons`
--- ----------------------------
-BEGIN;
-INSERT INTO `schedule_lessons` VALUES ('1', '1', '4', '0', 'BWL', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', '1', '4', '1', 'BWL', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('35', '1', '4', '3', 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('36', '1', '4', '4', 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('37', '1', '4', '5', 'SAE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `schedules`
@@ -224,14 +176,7 @@ CREATE TABLE `schedules` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
---  Records of `schedules`
--- ----------------------------
-BEGIN;
-INSERT INTO `schedules` VALUES ('1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'), ('2', '2', '2012-06-15 14:20:47', '2012-06-15 14:20:47');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `users`
@@ -247,13 +192,7 @@ CREATE TABLE `users` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
---  Records of `users`
--- ----------------------------
-BEGIN;
-INSERT INTO `users` VALUES ('1', 'admin@renose.de', '67ef003adb4b7da80cf36e17fad6260b94dbcb16', '1', null, '2011-04-15 23:17:20', '2011-04-15 23:17:20'), ('2', 'simon@renose.de', '492a4d8fbf9da1a0aa036b948ff5cef09ce6b6eb', '1', null, '2011-04-16 11:45:53', '2011-04-16 11:45:53'), ('3', 'patrick@renose.de', 'ead2222b5def6d0223d8685f38cc3736be8887bf', '1', null, '2011-04-16 11:45:53', '2011-04-16 11:45:53');
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
