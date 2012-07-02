@@ -153,7 +153,7 @@
         {
             line += '<td class="lesson" data-day="' + i + '" data-number="' + number + '">';
             line += '<div class="lesson-subject" data-exists="false"></div>';
-            line += '<img src="/renose/img/icons/delete.png" class="lesson-delete" alt="Diese Stunde löschen">';
+            line += '<?= $this->Html->image('icons/delete.png', array('class' => 'lesson-delete', 'alt' => 'Diese Stunde löschen')) ?>';
             line += '</td>';
         }
         
