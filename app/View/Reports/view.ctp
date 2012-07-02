@@ -104,13 +104,12 @@
     <script type="text/javascript">
         jQuery('input#holidays').click(function () {
             var table = jQuery('table.school');
-            var checked = 0;
+            var checked = $('input#holidays:checked').length != 0;
 
-            if($('input#holidays:checked').length != 0) {
-                table.fadeOut();
-            } else {
-                table.fadeIn();
-            }
+            if(checked)
+				table.fadeOut();
+            else
+				table.fadeIn();
 
             $.ajax({
                 url : '<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'save')); ?>',
@@ -119,7 +118,7 @@
                 data: {
                     report_id: $(this).attr('data-report'),
                     field: $(this).attr('data-field'),
-                    value: $('input#holidays:checked').length != 0
+                    value: (checked ? 1 : 0)
                 },
                 success : function(data)
                 {
