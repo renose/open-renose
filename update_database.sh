@@ -1,2 +1,2 @@
 cd app
-Console\cake schema update
+Console/cake schema update
