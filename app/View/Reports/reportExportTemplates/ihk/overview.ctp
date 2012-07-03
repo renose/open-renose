@@ -60,7 +60,7 @@
     </tr>
     <?php
         $past = explode("\n", $user['Profile']['past']);
-        for($i=1;$i<=9;$i++) {
+        for($i=0;$i<=8;$i++) {
             echo '<tr><td>';
             if(isset($past[$i])) {
                 echo $past[$i];
