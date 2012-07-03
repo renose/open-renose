@@ -100,7 +100,7 @@
                 <a href="mailto:simon@renose.de">Simon Wörner</a>,
                 <a href="mailto:patrick@renose.de">Patrick Hafner</a> and
                 <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
-                <a href="https://www.renose.de">renose.de</a></p>
+                <a href="https://renose.de">renose.de</a></p>
             </div>
         </footer>
         <?php echo $this->Js->writeBuffer(); ?>

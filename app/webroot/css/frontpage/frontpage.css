@@ -100,3 +100,8 @@ h1 img {
     width: 16px;
     vertical-align: middle;
 }
+
+div.jGrowl.top-right {
+    right: 0px;
+    top: 45px;
+}

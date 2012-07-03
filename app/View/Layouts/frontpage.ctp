@@ -8,6 +8,7 @@
         echo $this->Html->meta('icon');
 
         echo $this->Html->css(array(
+            'jquery.jgrowl',
     	    'frontpage/bootstrap',
 	    'frontpage/bootstrap-responsive',
 	    'frontpage/docs',
@@ -16,6 +17,7 @@
 
         echo $this->Html->script(array(
             'jquery.min',
+            'jquery.jgrowl.min',
             'frontpage/bootstrap-collapse'
         ));
 
@@ -25,7 +27,6 @@
 	<!--[if lt IE 9]>
 	  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
     </head>
 
     <body data-spy="scroll" data-target=".subnav" data-offset="50">
@@ -70,7 +71,7 @@
 
 		<p>&copy; 2012 by <a href="mailto:simon@renose.de">Simon Wörner</a>,
 		    <a href="mailto:patrick@renose.de">Patrick Hafner</a> & <a href="mailto:daniel@renose.de">Daniel Greiner</a> |
-		    <a href="https://www.renose.de">renose.de</a>
+		    <a href="https://renose.de">renose.de</a>
                 </p>
 	    </footer>
 

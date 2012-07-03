@@ -107,9 +107,9 @@
             var checked = $('input#holidays:checked').length != 0;
 
             if(checked)
-				table.fadeOut();
+                table.fadeOut();
             else
-				table.fadeIn();
+                table.fadeIn();
 
             $.ajax({
                 url : '<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'save')); ?>',
@@ -123,9 +123,7 @@
                 success : function(data)
                 {
                     if(data.status.code > 0)
-                    {
                         $.jGrowl('Ferien erfolgreich gespeichert.');
-                    }
                     else
                     {
                         console.log(data);

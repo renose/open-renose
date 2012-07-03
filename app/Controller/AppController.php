@@ -37,6 +37,11 @@ class AppController extends Controller
             'loginRedirect' => '/reports/display',
             'logoutRedirect' => '/',
             'authError' => 'Sie sind nicht eingeloggt, bitte einloggen.',
+            'flash' => array(
+                'element' => 'flash_fail',
+                'key' => 'auth',
+                'params' => array()
+            ),
             'authenticate' => array(
                 'Form' => array(
                     'userModel' => 'User', // needed for mac
