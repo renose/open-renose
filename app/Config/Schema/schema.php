@@ -91,10 +91,6 @@ class AppSchema extends CakeSchema {
 		'week' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 2),
 		'department' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'date' => array('type' => 'date', 'null' => false, 'default' => null),
-		'activity' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'instruction' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'vacation' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'holiday' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(

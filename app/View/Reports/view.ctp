@@ -52,7 +52,7 @@
             'icon' => 'icons/manager.png',
             'id' => $report['Report']['id'],
             'field' => 'activity',
-            'data' => $report['Report']['activity']
+            'data' => $report['ReportWeek']['activity']
         ));
         
         echo $this->element('report/week', array(
@@ -60,7 +60,7 @@
             'icon' => 'icons/talk.png',
             'id' => $report['Report']['id'],
             'field' => 'instruction',
-            'data' => $report['Report']['instruction']
+            'data' => $report['ReportWeek']['instruction']
         ));
     ?>
 
@@ -140,8 +140,8 @@
 
     $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
 
-    $('#report .activity').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
-    $('#report .instruction').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    $('#report .activity').editbox('<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>');
+    $('#report .instruction').editbox('<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>');
 
     init_school($('#report .school'));
 

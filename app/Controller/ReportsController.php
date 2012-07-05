@@ -25,16 +25,15 @@ class ReportsController extends AppController
 {
 
     public $helpers = array('Time', 'reNoseDate', 'Form');
-    public $components = array('PdfGenerator', 'Json');
+    public $components = array('PdfGenerator', 'Json', 'DateTime');
     
-    protected $ajax_editfileds = array('date', 'department', 'vacation', 'holiday', 'activity', 'instruction');
-    protected $ajax_deletefileds = array('activity', 'instruction');
+    protected $ajax_editfileds = array('date', 'department');
 
     public function beforeFilter()
     {
         parent::beforeFilter();
 
-        if($this->action == 'save' || $this->action == 'delete')
+        if($this->action == 'save')
         {
             $this->Security->csrfCheck = false;
             $this->Security->validatePost = false;
@@ -71,7 +70,57 @@ class ReportsController extends AppController
         //Kein Jahr übergeben => dieses Jahr nehmen
         if(!$year)
             $year = date('Y');
+        
+        //get reprots
+        $reports = $this->Report->find('all', array(
+            'order' => array('Report.year ASC', 'Report.week ASC'),
+            'conditions' => array(
+                'Report.user_id = ' => $this->Auth->user('id'),
+                'Report.year = ' => $year),
+        ));
+        
+        //get user proflie
+        $this->loadModel('Profile');
+        $profile = $this->Profile->findByUserId($this->Auth->user('id'));
+        $training_start = $profile['Profile']['start_training_period'];
+        
+        foreach ($reports as $report)
+        $week_reports[$report['Report']['year']][$report['Report']['week']] = $report;
+        
+        //reorder reports and calc report number
+        $week_reports = array();
+        for($i = 0; $i < count($reports); $i++)
+        {
+            $year = $reports[$i]['Report']['year'];
+            $week = $reports[$i]['Report']['week'];
+            
+            //calc report number
+            $reports[$i]['Report']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
+            
+            //add to year-week list
+            $week_reports[$year][$week] = $reports[$i]['Report'];
+            
+            //weekly reports
+            if(true)
+            {
+                $activity = $reports[$i]['ReportWeek']['activity'] != null;
+                $instruction = $reports[$i]['ReportWeek']['instruction'] != null;
+                //$school = count($reports[$i]['ReportWeek']['ReportWeekSchoolTopics']) > 0 || $reports[$i]['Report']['holiday'];
+                $school = false;
+                $status = null;
+                
+                if($activity && $instruction && $school)
+                    $status = 'full';
+                else if($activity || $instruction || $school)
+                    $status = 'half';
+                else
+                    $status = 'missing';
+                
+                $week_reports[$year][$week]['status'] = $status;
+            }
+        }
 
+        //get calendar entries
         $this->loadModel('CalendarEntry');
         $calendar_entries = $this->CalendarEntry->find('all', array(
             'recursive' => 0,
@@ -82,18 +131,14 @@ class ReportsController extends AppController
             'fields' => array('CalendarEntry.day', 'CalendarEntry.type')
         ));
         $calendar = array();
-
+        
+        //sort calendar entries
         foreach($calendar_entries as $entry)
             $calendar[$entry['CalendarEntry']['day']][] = $entry['CalendarEntry']['type'];
 
         $this->set('year', $year);
         $this->set('calendar', $calendar);
-        $this->set('reports', $this->Report->find('all', array(
-            'order' => array('Report.year ASC', 'Report.week ASC'),
-            'conditions' => array(
-                'Report.user_id = ' => $this->Auth->user('id'),
-                'Report.year = ' => $year),
-        )));
+        $this->set('reports', $week_reports);
     }
 
     public function view($year, $week)
@@ -105,7 +150,20 @@ class ReportsController extends AppController
                     'Report.year = ' => $year,
                     'Report.week = ' => $week)
             ));
-
+        
+        //create report if not exsists
+        if(!isset($report['Report']['id']))
+            $this->redirect( array('action' => 'add', $report['Report']['year'], $report['Report']['week']) );
+        
+        //get user proflie
+        $this->loadModel('Profile');
+        $profile = $this->Profile->findByUserId($this->Auth->user('id'));
+        $training_start = $profile['Profile']['start_training_period'];
+        
+        //calc report number
+        $report['Report']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
+        
+        //get school lessons
         $this->loadModel('Schedule');
         $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
         $lessons = array();
@@ -132,50 +190,18 @@ class ReportsController extends AppController
 
     function add($year = null, $week = null)
     {
-        $this->set('title_for_layout', 'Bericht erstellen');
-
         if(!$year || !$week)
             $this->redirect( array('action' => 'display', $year) );
-
-        //Nummer auf 1 setzen falls nicht bestimmt werden kann oder erster Bericht erstellt wird
-        $number = 1;
-
-        //Ersten Bericht suchen
-        $first_report =
-            $this->Report->find('first', array(
-                'order' => 'Report.number ASC',
-                'conditions' => array('User.id = ' => $this->Auth->user('id'))
-            ));
-        //Srech last report
+        
+        //Search last report
         $last_report =
-            $this->Report->find('first', array(
-                'order' => 'Report.number DESC',
-                'conditions' => array('User.id = ' => $this->Auth->user('id'))
-            ));
-
-        //Erster Bericht vorhanden? Nummer berechnen
-        if($first_report != null)
-        {
-            //Bericht im selben Jahr wie erster
-            if($year == $first_report['Report']['year'])
-            {
-                //Bericht NACH erstem erstellen
-                if($week > $first_report['Report']['week'])
-                    $number = $first_report['Report']['number'] + $week - $first_report['Report']['week'];
-            }
-            else
-            {
-                //Wochen des ersten Jahres berechnen
-                $number = $first_report['Report']['number'] + date('W', mktime(0, 0, 0, 12, 31, $first_report['Report']['year'])) - $first_report['Report']['week'];
-
-                //Volle Jahre addieren
-                for($i = $first_report['Report']['year'] + 1; $i < $year; $i++)
-                    $number += date('W', mktime(0, 0, 0, 12, 1, $i));
-
-                //Wochen des letzten Jahres addieren
-                $number += $week;
-            }
-        }
+            $this->Report->find('all', array(
+            'order' => array('Report.year DESC', 'Report.week DESC'),
+            'conditions' => array(
+                'Report.user_id = ' => $this->Auth->user('id'),
+                'Report.year < ' => $year,
+                'Report.week < ' => $week),
+        ));
 
         //Daten setzen
         $this->Report->create();
@@ -183,7 +209,6 @@ class ReportsController extends AppController
         $report['Report']['user_id'] = $this->Auth->user('id');
         $report['Report']['year'] = $year;
         $report['Report']['week'] = $week;
-        $report['Report']['number'] = $number;
         $report['Report']['department'] = '';
         $report['Report']['date'] = date('Y-m-d');
 
@@ -192,7 +217,7 @@ class ReportsController extends AppController
 
         if($this->Report->save($report))
         {
-            $this->Session->setFlash('Ihr Bericht wurde erstellt.', 'flash_success');
+            $this->Session->setFlash('Bericht wurde erstellt.', 'flash_success');
             $this->redirect( array('action' => 'view', $report['Report']['year'], $report['Report']['week']) );
         }
         else
@@ -217,9 +242,10 @@ class ReportsController extends AppController
 
         if(isset($report['Report']['id']))
         {
-            $report['Report'][$field] = $value != 'null' ? $value : null;
+            $this->Report->id = $report['Report']['id'];
+            $value = $value != 'null' ? $value : null;
 
-            if($this->Report->save($report))
+            if($this->Report->saveField($field, $value))
             {
                 $this->data = $this->Report->findById($report['Report']['id']);
                 $this->Json->response($this->data['Report'][$field], 11, $this->data);
