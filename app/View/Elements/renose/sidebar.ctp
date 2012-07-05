@@ -25,16 +25,16 @@ $nav = array(
         'Main' => array(
             'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
             'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedules'),
-#           'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
+//           'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
         'Berichte' => array(
             'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),
             'Export' => array('img' => 'icons/pdf.png', 'url' => '/reports/export')
         ),
-        /*'Seiten' => array(
+        'Seiten' => array(
             'Über das Projekt' => array('img' => 'icons/info.png', 'url' => '/page/about'),
             'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq')
-        )*/
+        )
     );
 
     $this->Navigation->show($nav);

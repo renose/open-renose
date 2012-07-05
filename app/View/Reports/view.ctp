@@ -38,14 +38,9 @@
         <br/>
 
         <b>Abteilung:</b>
-        <?php echo $report['Report']['department']; ?>
-    </p>
-
-        <?php
-            echo '<div class="report-editfield edit-container" data-field="department" data-report="' . $report['Report']['id'] . '">';
-            echo $report['Report']['department'];
-            echo '</div>';
-        ?>
+        <div class="report-editfield edit-container" data-field="department" data-report="<?= $report['Report']['id']; ?>">
+            <?= $report['Report']['department']; ?>
+        </div>
     </div>
     <br/>
 
@@ -55,12 +50,12 @@
     </h2>
 
     <?php
-        echo '<div id="ReportActivity" class="edit-container" data-report="'. $report['Report']['id'] .'">';
+        echo '<div class="edit-container activity" data-field="activity" data-report="'. $report['Report']['id'] .'">';
 
-        if(isset($report['ReportActivity']['id']))
+        if($report['Report']['activity'])
         {
             echo '<div class="edit-textbox" data-exists="true">';
-            echo $report['ReportActivity']['text'];
+            echo $report['Report']['activity'];
             echo '</div>';
         }
         else
@@ -77,12 +72,12 @@
     </h2>
 
     <?php
-        echo '<div id="ReportInstruction" class="edit-container" data-report="'. $report['Report']['id'] .'">';
+        echo '<div class="edit-container instruction" data-field="instruction" data-report="'. $report['Report']['id'] .'">';
 
-        if(isset($report['ReportInstruction']['id']))
+        if($report['Report']['instruction'])
         {
             echo '<div class="edit-textbox" data-exists="true">';
-            echo $report['ReportInstruction']['text'];
+            echo $report['Report']['instruction'];
             echo '</div>';
         }
         else
@@ -99,7 +94,7 @@
     </h2>
 
     <input type="checkbox" id="holidays" value="holidays" data-field="holiday" data-report="<?= $report['Report']['id'] ?>" <?php if($report['Report']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
-    <label for="holidays">Ferien / Urlaub</label>
+    <label for="holidays">Ferien</label>
 
     <script type="text/javascript">
         jQuery('input#holidays').click(function () {
@@ -204,6 +199,7 @@
             if(data.status.code > 0)
             {
                 $(this).html(data.data);
+                $.jGrowl('Änderung erfolgreich gespeichert.');
             }
             else
             {
@@ -216,26 +212,28 @@
         }
     });
 
-    editable($('#ReportActivity'), '<?php echo $this->Html->url(array('controller' => 'report_activities')); ?>');
-    editable($('#ReportInstruction'), '<?php echo $this->Html->url(array('controller' => 'report_instructions')); ?>');
+    editable($('#report .activity'));
+    editable($('#report .instruction'));
 
-    function editable(element, url)
+    function editable(element)
     {
         $(element).find('.edit-delete').hide();
         $(element).find('.edit-delete').click(function() {
             var that = this;
             $.ajax({
-                url: url + '/delete',
+                url: '<?php echo $this->Html->url(array('action' => 'delete')); ?>',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    report_id: $(that).parent().attr('data-report')
+                    report_id: $(that).parent().attr('data-report'),
+                    field: $(that).parent().attr('data-field')
                 },
                 success: function(data) {
                     if(data.status.code > 0)
                     {
                         $(that).parent().find('.edit-textbox').attr('data-exists', 'false');
                         $(that).parent().find('.edit-textbox').html('-');
+                        $.jGrowl('Löschen erfolgreich.');
                     }
                     else
                     {
@@ -256,7 +254,7 @@
             $(this).find('.edit-delete').css('display', 'none');
         });
 
-        element.find('.edit-textbox').editable(url + '/save', {
+        element.find('.edit-textbox').editable('<?php echo $this->Html->url(array('action' => 'save')); ?>', {
             type: 'wysihtml5',
             loadtext: 'Bitte warten...',
             indicator: 'Speichern...',
@@ -269,7 +267,8 @@
             rows: 10,
             submitdata: function(value, settings) {
                 return {
-                    report_id: $(this).parent().attr('data-report')
+                    report_id: $(this).parent().attr('data-report'),
+                    field: $(this).parent().attr('data-field')
                 };
             },
             callback : function(value, settings) {
@@ -280,6 +279,7 @@
                 {
                     $(this).html(data.data);
                     $(this).attr('data-exists', 'true');
+                    $.jGrowl('Änderung erfolgreich gespeichert.');
                 }
                 else
                 {
@@ -313,6 +313,7 @@
                     {
                         $(that).parent().find('.edit-textbox').attr('data-exists', 'false');
                         $(that).parent().find('.edit-textbox').html('-');
+                        $.jGrowl('Löschen erfolgreich.');
                     }
                     else
                     {
@@ -361,6 +362,7 @@
                 {
                     $(this).html(data.data);
                     $(this).attr('data-exists', 'true');
+                    $.jGrowl('Änderung erfolgreich gespeichert.');
                 }
                 else
                 {
