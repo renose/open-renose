@@ -38,55 +38,31 @@
         <br/>
 
         <b>Abteilung:</b>
-        <div class="report-editfield edit-container" data-field="department" data-report="<?= $report['Report']['id']; ?>">
-            <?= $report['Report']['department']; ?>
-        </div>
+        <?= $this->element('report/editfield', array(
+            'id' => $report['Report']['id'],
+            'field' => 'department',
+            'data' => $report['Report']['department']
+        )) ?>
     </div>
     <br/>
 
-    <h2>
-        <?php echo $this->Html->image('icons/manager.png'); ?>
-        Tätigkeiten
-    </h2>
-
     <?php
-        echo '<div class="edit-container activity" data-field="activity" data-report="'. $report['Report']['id'] .'">';
-
-        if($report['Report']['activity'])
-        {
-            echo '<div class="edit-textbox" data-exists="true">';
-            echo $report['Report']['activity'];
-            echo '</div>';
-        }
-        else
-            echo '<div class="edit-textbox" data-exists="false"></div>';
-
-        echo $this->Html->image('icons/delete.png', array('class' => 'activity-delete edit-delete', 'alt' => 'Diese Aktivität löschen'));
-        echo '<div style="clear: both;"></div></div>';
+        echo $this->element('report/week', array(
+            'header' => 'Tätigkeiten',
+            'icon' => 'icons/manager.png',
+            'id' => $report['Report']['id'],
+            'field' => 'activity',
+            'data' => $report['Report']['activity']
+        ));
+        
+        echo $this->element('report/week', array(
+            'header' => 'Unterweisungen',
+            'icon' => 'icons/talk.png',
+            'id' => $report['Report']['id'],
+            'field' => 'instruction',
+            'data' => $report['Report']['instruction']
+        ));
     ?>
-    <br/>
-
-    <h2>
-        <?php echo $this->Html->image('icons/talk.png'); ?>
-        Unterweisungen
-    </h2>
-
-    <?php
-        echo '<div class="edit-container instruction" data-field="instruction" data-report="'. $report['Report']['id'] .'">';
-
-        if($report['Report']['instruction'])
-        {
-            echo '<div class="edit-textbox" data-exists="true">';
-            echo $report['Report']['instruction'];
-            echo '</div>';
-        }
-        else
-            echo '<div class="edit-textbox" data-exists="false"></div>';
-
-        echo $this->Html->image('icons/delete.png', array('class' => 'activity-delete edit-delete', 'alt' => 'Diese Aktivität löschen'));
-        echo '<div style="clear: both;"></div></div>';
-    ?>
-    <br/>
 
     <h2>
         <?php echo $this->Html->image('icons/books.png'); ?>
@@ -149,25 +125,11 @@
             <?php
             foreach($lessons as $subject => $text)
             {
-                echo '<tr>';
-                echo '<td class="school-subject">' . $subject . '</td>';
-
-                if ($text != null)
-                {
-                    echo '<td class="school-topic edit-container" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
-
-                    echo '<div class="school-topic-text edit-textbox" data-exists="true">' . $text . '</div>';
-                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete edit-delete', 'alt' => 'Dieses Thema löschen'));
-
-                    echo '</td>';
-                }
-                else
-                {
-                    echo '<td class="school-topic edit-container" data-report="'. $report['Report']['id'] .'" data-subject="'. $subject .'">';
-                    echo '<div class="school-topic-text edit-textbox" data-exists="false"></div>';
-                    echo $this->Html->image('icons/delete.png', array('class' => 'school-topic-delete edit-delete', 'alt' => 'Dieses Thema löschen'));
-                    echo '</td>';
-                }
+                echo $this->element('report/school', array(
+                    'id' => $report['Report']['id'],
+                    'subject' => $subject,
+                    'data' => $text
+                ));
             }
             ?>
         </tbod>
@@ -176,122 +138,10 @@
 
 <script type="text/javascript">
 
-    $('.report-editfield').editable('<?php echo $this->Html->url(array('action' => 'save')); ?>', {
-        loadtext: 'Bitte warten...',
-        indicator: 'Speichern...',
-        placeholder: '-',
-        tooltip: 'Zum Ändern klicken...',
-        submit: 'Speichern',
-        cancel: 'Abbrechen',
-        height: 'none',
-        width: 'none',
-        rows: 10,
-        submitdata: function(value, settings) {
-            return {
-                report_id: $(this).attr('data-report'),
-                field: $(this).attr('data-field')
-            };
-        },
-        callback : function(value, settings) {
+    $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
 
-            var data = jQuery.parseJSON(value);
-
-            if(data.status.code > 0)
-            {
-                $(this).html(data.data);
-                $.jGrowl('Änderung erfolgreich gespeichert.');
-            }
-            else
-            {
-                console.log(data);
-                $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
-
-                $(this).html('Fehler');
-            }
-
-        }
-    });
-
-    editable($('#report .activity'));
-    editable($('#report .instruction'));
-
-    function editable(element)
-    {
-        $(element).find('.edit-delete').hide();
-        $(element).find('.edit-delete').click(function() {
-            var that = this;
-            $.ajax({
-                url: '<?php echo $this->Html->url(array('action' => 'delete')); ?>',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    report_id: $(that).parent().attr('data-report'),
-                    field: $(that).parent().attr('data-field')
-                },
-                success: function(data) {
-                    if(data.status.code > 0)
-                    {
-                        $(that).parent().find('.edit-textbox').attr('data-exists', 'false');
-                        $(that).parent().find('.edit-textbox').html('-');
-                        $.jGrowl('Löschen erfolgreich.');
-                    }
-                    else
-                    {
-                        console.log(data);
-                        $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
-                    }
-                }
-            });
-
-            return false;
-        });
-
-        $(element).mouseenter(function() {
-            if($(this).find('.edit-textbox').attr('data-exists') == 'true')
-                $(this).find('.edit-delete').css('display', '');
-        });
-        $(element).mouseleave(function() {
-            $(this).find('.edit-delete').css('display', 'none');
-        });
-
-        element.find('.edit-textbox').editable('<?php echo $this->Html->url(array('action' => 'save')); ?>', {
-            type: 'wysihtml5',
-            loadtext: 'Bitte warten...',
-            indicator: 'Speichern...',
-            placeholder: '-',
-            tooltip: 'Zum Ändern klicken...',
-            submit: 'Speichern',
-            cancel: 'Abbrechen',
-            height: 'none',
-            width: 'none',
-            rows: 10,
-            submitdata: function(value, settings) {
-                return {
-                    report_id: $(this).parent().attr('data-report'),
-                    field: $(this).parent().attr('data-field')
-                };
-            },
-            callback : function(value, settings) {
-
-                var data = jQuery.parseJSON(value);
-
-                if(data.status.code > 0)
-                {
-                    $(this).html(data.data);
-                    $(this).attr('data-exists', 'true');
-                    $.jGrowl('Änderung erfolgreich gespeichert.');
-                }
-                else
-                {
-                    console.log(data);
-                    $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
-
-                    $(this).html('Fehler');
-                }
-
-            }
-        });
-    }
+    $('#report .activity').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    $('#report .instruction').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
 
     init_school($('#report .school'));
 
@@ -305,7 +155,7 @@
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
-                    report_id: $(that).parent().attr('data-report'),
+                    id: $(that).parent().attr('data-id'),
                     subject: $(that).parent().attr('data-subject')
                 },
                 success: function(data) {
@@ -350,7 +200,7 @@
             width: 'none',
             submitdata: function(value, settings) {
                 return {
-                    report_id: $(this).parent().attr('data-report'),
+                    id: $(this).parent().attr('data-id'),
                     subject: $(this).parent().attr('data-subject')
                 };
             },

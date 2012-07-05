@@ -20,13 +20,13 @@ class ReportSchoolsController extends AppController
     
     public function save()
     {
-        if(!isset($this->request->data['report_id']) || !isset($this->request->data['value']))
+        if(!isset($this->request->data['id']) || !isset($this->request->data['value']))
             $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
         if($this->request->data['value'] == null || $this->request->data['value'] == '')
             $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
         
         $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $report = $this->Report->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
         $lesson = $this->ReportSchool->findByReportIdAndSubject(
                 $report['Report']['id'],
                 $this->request->data['subject']);
@@ -70,11 +70,11 @@ class ReportSchoolsController extends AppController
     
     public function delete()
     {
-        if(!isset($this->request->data['report_id']))
+        if(!isset($this->request->data['id']))
             $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
         
         $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $report = $this->Report->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
         $lesson = $this->ReportSchool->findByReportIdAndSubject(
                 $report['Report']['id'],
                 $this->request->data['subject']);

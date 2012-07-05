@@ -89,7 +89,7 @@ class ReportsController extends AppController
         $this->set('year', $year);
         $this->set('calendar', $calendar);
         $this->set('reports', $this->Report->find('all', array(
-            'order' => 'Report.number ASC',
+            'order' => array('Report.year ASC', 'Report.week ASC'),
             'conditions' => array(
                 'Report.user_id = ' => $this->Auth->user('id'),
                 'Report.year = ' => $year),
@@ -204,58 +204,31 @@ class ReportsController extends AppController
 
     function save()
     {
-        if(!isset($this->request->data['report_id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
+        if(!isset($this->request->data['id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
             $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
         if(!in_array($this->request->data['field'], $this->ajax_editfileds))
             $this->Json->error('Fehler beim Speichern.', -21, $this->request->data);
-        if($this->request->data['value'] == null || $this->request->data['value'] == '')
-            $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
 
         $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
+        $report = $this->Report->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
         $field = $this->request->data['field'];
         $value = $this->request->data['value'];
+        
 
         if(isset($report['Report']['id']))
         {
-            $report['Report'][$field] = $value;
+            $report['Report'][$field] = $value != 'null' ? $value : null;
 
             if($this->Report->save($report))
             {
                 $this->data = $this->Report->findById($report['Report']['id']);
-                $this->Json->response($this->data['Report'], 11, $this->data);
+                $this->Json->response($this->data['Report'][$field], 11, $this->data);
             }
             else
                 $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);
         }
         else
             $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
-    }
-    public function delete()
-    {
-        if(!isset($this->request->data['report_id']) || !isset($this->request->data['field']))
-            $this->Json->error('Fehler beim Löschen.', -20, $this->request->data);
-        if(!in_array($this->request->data['field'], $this->ajax_deletefileds))
-            $this->Json->error('Fehler beim Löschen.', -21, $this->request->data);
-        
-        $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['report_id'], $this->Auth->user('id'));
-        $field = $this->request->data['field'];
-        
-        if(isset($report['Report']['id']))
-        {
-            $report['Report'][$field] = null;
-
-            if($this->Report->save($report))
-            {
-                $this->data = $this->Report->findById($report['Report']['id']);
-                $this->Json->response($this->data['Report'][$field], 11);
-            }
-            else
-                $this->Json->error('Fehler beim Löschen.', -11, $this->request->data);
-        }
-        else
-            $this->Json->error('Fehler beim Löschen: Bericht wurde nicht gefunden.', -30, $this->request->data);
     }
 
     // pdfgen

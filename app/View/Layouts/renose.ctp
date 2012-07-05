@@ -24,13 +24,15 @@
             'Math.uuid',
             'jquery.min',
             'jquery-ui.custom.min',
-            'jquery.jeditable', //'jquery.jeditable.min',
+            'jquery.jeditable',
             'jquery.jeditable.wysihtml5',
             'jquery.jgrowl.min',
             'wysihtml5/parser_rules/simple',
             'wysihtml5/wysihtml5.min',
             'jquery.tipTip.minified',
             'jquery.loadindicator',
+            'jquery.renose.editbox',
+            'jquery.renose.editfield',
             'jquery.renose.load'
         ));
 
