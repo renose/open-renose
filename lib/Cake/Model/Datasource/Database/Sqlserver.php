@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model.Datasource.Database
  * @since         CakePHP(tm) v 0.10.5.1790
@@ -75,7 +75,8 @@ class Sqlserver extends DboSource {
 		'host' => 'localhost\SQLEXPRESS',
 		'login' => '',
 		'password' => '',
-		'database' => 'cake'
+		'database' => 'cake',
+		'schema' => '',
 	);
 
 /**
@@ -98,29 +99,10 @@ class Sqlserver extends DboSource {
 	);
 
 /**
- * Index of basic SQL commands
- *
- * @var array
- */
-	protected $_commands = array(
-		'begin'    => 'BEGIN TRANSACTION',
-		'commit'   => 'COMMIT',
-		'rollback' => 'ROLLBACK'
-	);
-
-/**
  * Magic column name used to provide pagination support for SQLServer 2008
  * which lacks proper limit/offset support.
  */
 	const ROW_COUNTER = '_cake_page_rownum_';
-
-/**
- * The version of SQLServer being used.  If greater than 11
- * Normal limit offset statements will be used
- *
- * @var string
- */
-	protected $_version;
 
 /**
  * Connects to the database using options in the given configuration array.
@@ -150,7 +132,6 @@ class Sqlserver extends DboSource {
 			throw new MissingConnectionException(array('class' => $e->getMessage()));
 		}
 
-		$this->_version = $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 		return $this->connected;
 	}
 
@@ -200,7 +181,8 @@ class Sqlserver extends DboSource {
  * @throws CakeException
  */
 	public function describe($model) {
-		$cache = parent::describe($model);
+		$table = $this->fullTableName($model, false);
+		$cache = parent::describe($table);
 		if ($cache != null) {
 			return $cache;
 		}
@@ -255,7 +237,6 @@ class Sqlserver extends DboSource {
 		return $fields;
 	}
 
-
 /**
  * Generates the fields list of an SQL query.
  *
@@ -265,7 +246,7 @@ class Sqlserver extends DboSource {
  * @param boolean $quote
  * @return array
  */
-	public function fields($model, $alias = null, $fields = array(), $quote = true) {
+	public function fields(Model $model, $alias = null, $fields = array(), $quote = true) {
 		if (empty($alias)) {
 			$alias = $model->alias;
 		}
@@ -302,14 +283,14 @@ class Sqlserver extends DboSource {
 						$fieldAlias = $this->name($alias . '__' . $fields[$i]);
 					} else {
 						$build = explode('.', $fields[$i]);
-						$this->_fieldMappings[$build[0] . '__'  . $build[1]] = $fields[$i];
-						$fieldName  = $this->name($build[0] . '.' . $build[1]);
+						$this->_fieldMappings[$build[0] . '__' . $build[1]] = $fields[$i];
+						$fieldName = $this->name($build[0] . '.' . $build[1]);
 						$fieldAlias = $this->name(preg_replace("/^\[(.+)\]$/", "$1", $build[0]) . '__' . $build[1]);
 					}
 					if ($model->getColumnType($fields[$i]) == 'datetime') {
 						$fieldName = "CONVERT(VARCHAR(20), {$fieldName}, 20)";
 					}
-					$fields[$i] =  "{$fieldName} AS {$fieldAlias}";
+					$fields[$i] = "{$fieldName} AS {$fieldAlias}";
 				}
 				$result[] = $prepend . $fields[$i];
 			}
@@ -387,7 +368,7 @@ class Sqlserver extends DboSource {
 			}
 			$rt .= ' ' . $limit;
 			if (is_int($offset) && $offset > 0) {
-				$rt = ' OFFSET ' . intval($offset)  . ' ROWS FETCH FIRST ' . intval($limit) . ' ROWS ONLY';
+				$rt = ' OFFSET ' . intval($offset) . ' ROWS FETCH FIRST ' . intval($limit) . ' ROWS ONLY';
 			}
 			return $rt;
 		}
@@ -514,7 +495,7 @@ class Sqlserver extends DboSource {
 				}
 
 				// For older versions use the subquery version of pagination.
-				if (version_compare($this->_version, '11', '<') && preg_match('/FETCH\sFIRST\s+([0-9]+)/i', $limit, $offset)) {
+				if (version_compare($this->getVersion(), '11', '<') && preg_match('/FETCH\sFIRST\s+([0-9]+)/i', $limit, $offset)) {
 					preg_match('/OFFSET\s*(\d+)\s*.*?(\d+)\s*ROWS/', $limit, $limitOffset);
 
 					$limit = 'TOP ' . intval($limitOffset[2]);
@@ -655,12 +636,15 @@ class Sqlserver extends DboSource {
 /**
  * Generate a database-native column schema string
  *
- * @param array $column An array structured like the following: array('name'=>'value', 'type'=>'value'[, options]),
+ * @param array $column An array structured like the 
+ *   following: array('name'=>'value', 'type'=>'value'[, options]),
  *   where options can be 'default', 'length', or 'key'.
  * @return string
  */
 	public function buildColumn($column) {
-		$result = preg_replace('/(int|integer)\([0-9]+\)/i', '$1', parent::buildColumn($column));
+		$result = parent::buildColumn($column);
+		$result = preg_replace('/(int|integer)\([0-9]+\)/i', '$1', $result);
+		$result = preg_replace('/(bit)\([0-9]+\)/i', '$1', $result);
 		if (strpos($result, 'DEFAULT NULL') !== false) {
 			if (isset($column['default']) && $column['default'] === '') {
 				$result = str_replace('DEFAULT NULL', "DEFAULT ''", $result);
@@ -688,7 +672,7 @@ class Sqlserver extends DboSource {
 		foreach ($indexes as $name => $value) {
 			if ($name == 'PRIMARY') {
 				$join[] = 'PRIMARY KEY (' . $this->name($value['column']) . ')';
-			} else if (isset($value['unique']) && $value['unique']) {
+			} elseif (isset($value['unique']) && $value['unique']) {
 				$out = "ALTER TABLE {$table} ADD CONSTRAINT {$name} UNIQUE";
 
 				if (is_array($value['column'])) {
@@ -706,7 +690,7 @@ class Sqlserver extends DboSource {
 /**
  * Makes sure it will return the primary key
  *
- * @param mixed $model Model instance of table name
+ * @param Model|string $model Model instance of table name
  * @return string
  */
 	protected function _getPrimaryKey($model) {
@@ -742,10 +726,11 @@ class Sqlserver extends DboSource {
  * @param array $prepareOptions Options to be used in the prepare statement
  * @return mixed PDOStatement if query executes with no problem, true as the result of a successful, false on error
  * query returning no rows, such as a CREATE statement, false otherwise
+ * @throws PDOException
  */
 	protected function _execute($sql, $params = array(), $prepareOptions = array()) {
 		$this->_lastAffected = false;
-		if (strncasecmp($sql, 'SELECT', 6) == 0) {
+		if (strncasecmp($sql, 'SELECT', 6) == 0 || preg_match('/^EXEC(?:UTE)?\s/mi', $sql) > 0) {
 			$prepareOptions += array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL);
 			return parent::_execute($sql, $params, $prepareOptions);
 		}
@@ -780,11 +765,19 @@ class Sqlserver extends DboSource {
 		$out = '';
 		foreach ($schema->tables as $curTable => $columns) {
 			if (!$table || $table == $curTable) {
-				$t =  $this->fullTableName($curTable);
-				$out .= "IF OBJECT_ID('" . $this->fullTableName($curTable, false). "', 'U') IS NOT NULL DROP TABLE " .  $this->fullTableName($curTable) . ";\n";
+				$out .= "IF OBJECT_ID('" . $this->fullTableName($curTable, false) . "', 'U') IS NOT NULL DROP TABLE " . $this->fullTableName($curTable) . ";\n";
 			}
 		}
 		return $out;
+	}
+
+/**
+ * Gets the schema name
+ *
+ * @return string The schema name
+ */
+	public function getSchemaName() {
+		return $this->config['schema'];
 	}
 
 }

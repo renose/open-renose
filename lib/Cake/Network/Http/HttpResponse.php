@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Network.Http
  * @since         CakePHP(tm) v 2.0.0
@@ -125,6 +125,15 @@ class HttpResponse implements ArrayAccess {
 	}
 
 /**
+ * If return is a valid 3xx (Redirection)
+ *
+ * @return boolean
+ */
+	public function isRedirect() {
+		return in_array($this->code, array(301, 302, 303, 307)) && !is_null($this->getHeader('Location'));
+	}
+
+/**
  * Parses the given message and breaks it down in parts.
  *
  * @param string $message Message to parse
@@ -169,7 +178,7 @@ class HttpResponse implements ArrayAccess {
  * 'body' and 'header' or false on failure.
  *
  * @param string $body A string containing the body to decode.
- * @param mixed $encoding Can be false in case no encoding is being used, or a string representing the encoding.
+ * @param string|boolean $encoding Can be false in case no encoding is being used, or a string representing the encoding.
  * @return mixed Array of response headers and body or false.
  */
 	protected function _decodeBody($body, $encoding = 'chunked') {
@@ -229,9 +238,7 @@ class HttpResponse implements ArrayAccess {
 			$chunkLength = hexdec($hexLength);
 			$chunk = substr($body, 0, $chunkLength);
 			if (!empty($chunkExtensionName)) {
-				/**
-				 * @todo See if there are popular chunk extensions we should implement
-				 */
+				 // @todo See if there are popular chunk extensions we should implement
 			}
 			$decodedBody .= $chunk;
 			if ($chunkLength !== 0) {
@@ -366,7 +373,7 @@ class HttpResponse implements ArrayAccess {
 /**
  * ArrayAccess - Offset Exists
  *
- * @param mixed $offset
+ * @param string $offset
  * @return boolean
  */
 	public function offsetExists($offset) {
@@ -376,7 +383,7 @@ class HttpResponse implements ArrayAccess {
 /**
  * ArrayAccess - Offset Get
  *
- * @param mixed $offset
+ * @param string $offset
  * @return mixed
  */
 	public function offsetGet($offset) {
@@ -413,22 +420,20 @@ class HttpResponse implements ArrayAccess {
 /**
  * ArrayAccess - Offset Set
  *
- * @param mixed $offset
+ * @param string $offset
  * @param mixed $value
  * @return void
  */
 	public function offsetSet($offset, $value) {
-		return;
 	}
 
 /**
  * ArrayAccess - Offset Unset
  *
- * @param mixed $offset
+ * @param string $offset
  * @return void
  */
 	public function offsetUnset($offset) {
-		return;
 	}
 
 /**

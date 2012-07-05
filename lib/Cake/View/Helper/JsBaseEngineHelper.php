@@ -1,16 +1,12 @@
 <?php
 /**
- * JsEngineBaseClass
- *
- * PHP 5
- *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.View.Helper
  * @since         CakePHP(tm) v 2.0
@@ -60,16 +56,6 @@ abstract class JsBaseEngineHelper extends AppHelper {
 	protected $_callbackArguments = array();
 
 /**
- * Constructor.
- *
- * @param View $View
- * @param array $settings
- */
-	public function __construct($View, $settings = array()) {
-		parent::__construct($View, $settings);
-	}
-
-/**
  * Create an `alert()` message in Javascript
  *
  * @param string $message Message you want to alter.
@@ -83,7 +69,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * Redirects to a URL.  Creates a window.location modification snippet
  * that can be used to trigger 'redirects' from Javascript.
  *
- * @param mixed $url
+ * @param string|array $url
  * @param array  $options
  * @return string completed redirect in javascript
  */
@@ -380,7 +366,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * - `dataExpression` - Should the `data` key be treated as a callback.  Useful for supplying `$options['data']` as
  *    another Javascript expression.
  *
- * @param mixed $url Array or String URL to target with the request.
+ * @param string|array $url Array or String URL to target with the request.
  * @param array $options Array of options. See above for cross library supported options
  * @return string XHR request.
  */
@@ -538,7 +524,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  *
  * @param string $method Name of the method you are preparing callbacks for.
  * @param array $options Array of options being parsed
- * @param string $callbacks Additional Keys that contain callbacks
+ * @param array $callbacks Additional Keys that contain callbacks
  * @return array Array of options with callbacks added.
  */
 	protected function _prepareCallbacks($method, $options, $callbacks = array()) {
@@ -602,4 +588,5 @@ abstract class JsBaseEngineHelper extends AppHelper {
 		}
 		return $out;
 	}
+
 }

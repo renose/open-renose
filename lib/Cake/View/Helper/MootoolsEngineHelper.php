@@ -1,24 +1,12 @@
 <?php
 /**
- * MooTools Engine Helper for JsHelper
- *
- * Provides MooTools specific Javascript for JsHelper.
- * Assumes that you have the following MooTools packages
- *
- * - Remote, Remote.HTML, Remote.JSON
- * - Fx, Fx.Tween, Fx.Morph
- * - Selectors, DomReady,
- * - Drag, Drag.Move
- *
- * PHP 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.View.Helper
  * @since         CakePHP(tm) v 1.3
@@ -41,6 +29,7 @@ App::uses('JsBaseEngineHelper', 'View/Helper');
  * @package       Cake.View.Helper
  */
 class MootoolsEngineHelper extends JsBaseEngineHelper {
+
 /**
  * Option mappings for MooTools
  *
@@ -133,7 +122,7 @@ class MootoolsEngineHelper extends JsBaseEngineHelper {
 	public function get($selector) {
 		$this->_multipleSelection = false;
 		if ($selector == 'window' || $selector == 'document') {
-			$this->selection = "$(" . $selector .")";
+			$this->selection = "$(" . $selector . ")";
 			return $this;
 		}
 		if (preg_match('/^#[^\s.]+$/', $selector)) {
@@ -240,7 +229,7 @@ class MootoolsEngineHelper extends JsBaseEngineHelper {
  * Requires `Request`.  If you wish to use 'update' key you must have ```Request.HTML```
  * if you wish to do Json requests you will need ```JSON``` and ```Request.JSON```.
  *
- * @param mixed $url
+ * @param string|array $url
  * @param array $options
  * @return string The completed ajax call.
  */
@@ -383,4 +372,5 @@ class MootoolsEngineHelper extends JsBaseEngineHelper {
 		}
 		return $selection . $method;
 	}
+
 }
