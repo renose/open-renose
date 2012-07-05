@@ -22,7 +22,7 @@
  * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-class NavigationHelper extends AppHelper {
+class NavigationHelper extends Helper {
 
     public $helpers = array('Html');
 

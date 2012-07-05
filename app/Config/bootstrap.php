@@ -26,6 +26,25 @@
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+// Enable the Dispatcher filters for plugin assets, and
+// CacheHelper.
+Configure::write('Dispatcher.filters', array(
+    'AssetDispatcher',
+    'CacheDispatcher'
+));
+
+// Add logging configuration.
+CakeLog::config('debug', array(
+    'engine' => 'FileLog',
+    'types' => array('notice', 'info', 'debug'),
+    'file' => 'debug',
+));
+CakeLog::config('error', array(
+    'engine' => 'FileLog',
+    'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+    'file' => 'error',
+));
+
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
  *
