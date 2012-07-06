@@ -45,110 +45,76 @@
         )) ?>
     </div>
     <br/>
-
-    <?php
-        echo $this->element('report/week', array(
-            'header' => 'Tätigkeiten',
-            'icon' => 'icons/manager.png',
-            'id' => $report['ReportWeek']['id'],
-            'field' => 'activity',
-            'data' => $report['ReportWeek']['activity']
-        ));
+    
+    <div class="hide-container">
+        <input id="vacation" type="checkbox" class="hide-checkbox" data-field="vacation" data-id="<?= $report['ReportWeek']['id'] ?>" <?php if($report['ReportWeek']['vacation'] == 1) { echo 'checked="checked"'; } ?> />
+        <label for="vacation">Urlaub</label>
         
-        echo $this->element('report/week', array(
-            'header' => 'Unterweisungen',
-            'icon' => 'icons/talk.png',
-            'id' => $report['ReportWeek']['id'],
-            'field' => 'instruction',
-            'data' => $report['ReportWeek']['instruction']
-        ));
-    ?>
+        <div class="hide-element">
+            <?php
+                echo $this->element('report/week', array(
+                    'header' => 'Tätigkeiten',
+                    'icon' => 'icons/manager.png',
+                    'id' => $report['ReportWeek']['id'],
+                    'field' => 'activity',
+                    'data' => $report['ReportWeek']['activity']
+                ));
+
+                echo $this->element('report/week', array(
+                    'header' => 'Unterweisungen',
+                    'icon' => 'icons/talk.png',
+                    'id' => $report['ReportWeek']['id'],
+                    'field' => 'instruction',
+                    'data' => $report['ReportWeek']['instruction']
+                ));
+            ?>
+        </div>
+    </div>
 
     <h2>
         <?php echo $this->Html->image('icons/books.png'); ?>
         Schule
     </h2>
 
-    <input type="checkbox" id="holidays" value="holidays" data-field="holiday" data-id="<?= $report['ReportWeek']['id'] ?>" <?php if($report['ReportWeek']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
-    <label for="holidays">Ferien</label>
+    <div class="hide-container">
+        <input id="holiday" type="checkbox" class="hide-checkbox" data-field="holiday" data-id="<?= $report['ReportWeek']['id'] ?>" <?php if($report['ReportWeek']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
+        <label for="holiday">Ferien</label>
 
-    <script type="text/javascript">
-        jQuery('input#holidays').click(function () {
-            var table = jQuery('table.school');
-            var checked = $('input#holidays:checked').length != 0;
-
-            $.ajax({
-                url : '<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {
-                    id: $(this).attr('data-id'),
-                    field: $(this).attr('data-field'),
-                    value: (checked ? 1 : 0)
-                },
-                success : function(data)
+        <table class="school hide-element">
+            <thead>
+                <tr>
+                    <th class="school-subject">Fach</th>
+                    <th class="school-topic">Thema</th>
+                </tr>
+            </thead>
+            <tbod>
+                <?php
+                foreach($lessons as $subject => $text)
                 {
-                    if(data.status.code > 0)
-                    {
-                        if(checked)
-                            table.fadeOut();
-                        else
-                            table.fadeIn();
-                        
-                        $.jGrowl('Ferien erfolgreich gespeichert.');
-                    }
-                    else
-                    {
-                        console.log(data);
-                        $.jGrowl(data.message, { header: 'Fehler', life: 10000 });
-                    }
+                    echo $this->element('report/school', array(
+                        'id' => $report['Report']['id'],
+                        'subject' => $subject,
+                        'data' => $text
+                    ));
                 }
-            });
-
-        });
-
-        jQuery('input#holidays').ready(function () {
-            var table = jQuery('table.school');
-
-            if(jQuery('input#holidays:checked').length != 0) {
-                table.hide();
-            }
-        });
-    </script>
-
-    <table class="school">
-        <thead>
-            <tr>
-                <th class="school-subject">Fach</th>
-                <th class="school-topic">Thema</th>
-            </tr>
-        </thead>
-        <tbod>
-            <?php
-            foreach($lessons as $subject => $text)
-            {
-                echo $this->element('report/school', array(
-                    'id' => $report['Report']['id'],
-                    'subject' => $subject,
-                    'data' => $text
-                ));
-            }
-            ?>
-        </tbod>
-    </table>
+                ?>
+            </tbod>
+        </table>
+    </div>
 </div>
 
 <script type="text/javascript">
-
     $('.editfield').editfield('<?php echo $this->Html->url(array('controller' => 'reports', 'action' => 'save')); ?>');
-
+    
     $('#report .activity').editbox('<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>');
     $('#report .instruction').editbox('<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>');
-
+    
     $('#report .school .edit-container').tableeditfield(
         '<?php echo $this->Html->url(array('controller' => 'report_week_school_subjects', 'action' => 'save')); ?>',
         '<?php echo $this->Html->url(array('controller' => 'report_week_school_subjects', 'action' => 'delete')); ?>'
     );
+        
+    $('.hide-container').hide_element('<?php echo $this->Html->url(array('controller' => 'report_weeks', 'action' => 'save')); ?>');
 </script>
 
 <?php

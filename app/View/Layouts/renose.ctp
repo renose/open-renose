@@ -34,6 +34,7 @@
             'jquery.renose.editbox',
             'jquery.renose.editfield',
             'jquery.renose.tableeditfield',
+            'jquery.renose.hide_element',
             'jquery.renose.load'
         ));
 
