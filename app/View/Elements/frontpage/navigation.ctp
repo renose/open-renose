@@ -4,6 +4,7 @@
             'Home' => array('img' => 'icons_white/home.png', 'url' => '/'),
             'Über das Projekt' => array('img' => 'icons_white/info.png', 'url' => '/page/about'),
             'FAQ' => array('img' => 'icons_white/help.png', 'url' => '/page/faq'),
+            'Impressum' => array('img' => 'icons_white/bookmark.png', 'url' => '/page/legal'),
             'Registrieren' => array('img' => 'icons_white/key.png', 'url' => '/users/register')
         )
     );

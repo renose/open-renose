@@ -138,6 +138,15 @@ header #logo span {
     color: #0A9ECE;
 }
 
+.logo-text {
+    font-family: Helvetica;
+    font-size: 16px;
+    letter-spacing: -2px;
+}
+.logo-text span {
+    color: #0A9ECE;
+}
+
 header #global-search {
     margin: 12px 15px;
     float: left;
