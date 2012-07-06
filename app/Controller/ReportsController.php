@@ -155,37 +155,9 @@ class ReportsController extends AppController
         if(!isset($report['Report']['id']))
             $this->redirect( array('action' => 'add', $report['Report']['year'], $report['Report']['week']) );
         
-        //get user proflie
-        $this->loadModel('Profile');
-        $profile = $this->Profile->findByUserId($this->Auth->user('id'));
-        $training_start = $profile['Profile']['start_training_period'];
-        
-        //calc report number
-        $report['Report']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
-        
-        //get school lessons
-        $this->loadModel('Schedule');
-        $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
-        $lessons = array();
-
-        if($schedule)
-        {
-            $this->loadModel('ScheduleLesson');
-            $schedule_lessons = $this->ScheduleLesson->find('all', array(
-                'conditions' => array('Schedule.id' => $schedule['Schedule']['id']),
-                'group' => 'ScheduleLesson.subject'
-            ));
-
-            foreach ($schedule_lessons as $lesson)
-                $lessons[$lesson['ScheduleLesson']['subject']] = null;
-        }
-
-        foreach ($report['ReportSchool'] as $lesson)
-            $lessons[$lesson['subject']] = $lesson['text'];
-
-        $this->set('title_for_layout', 'Bericht Nr. ' . $report['Report']['number']);
-        $this->set('report', $report);
-        $this->set('lessons', $lessons);
+        //weekly reports
+        if(true)
+            $this->redirect( array('controller' => 'report_weeks', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
     }
 
     function add($year = null, $week = null)

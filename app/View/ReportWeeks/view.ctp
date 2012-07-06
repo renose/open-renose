@@ -50,7 +50,7 @@
         echo $this->element('report/week', array(
             'header' => 'Tätigkeiten',
             'icon' => 'icons/manager.png',
-            'id' => $report['Report']['id'],
+            'id' => $report['ReportWeek']['id'],
             'field' => 'activity',
             'data' => $report['ReportWeek']['activity']
         ));
@@ -58,7 +58,7 @@
         echo $this->element('report/week', array(
             'header' => 'Unterweisungen',
             'icon' => 'icons/talk.png',
-            'id' => $report['Report']['id'],
+            'id' => $report['ReportWeek']['id'],
             'field' => 'instruction',
             'data' => $report['ReportWeek']['instruction']
         ));
@@ -69,7 +69,7 @@
         Schule
     </h2>
 
-    <input type="checkbox" id="holidays" value="holidays" data-field="holiday" data-report="<?= $report['Report']['id'] ?>" <?php if($report['Report']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
+    <input type="checkbox" id="holidays" value="holidays" data-field="holiday" data-report="<?= $report['Report']['id'] ?>" <?php if($report['ReportWeek']['holiday'] == 1) { echo 'checked="checked"'; } ?> />
     <label for="holidays">Ferien</label>
 
     <script type="text/javascript">
@@ -228,5 +228,5 @@
 </script>
 
 <?php
-pr($lessons);
 pr($report);
+pr($lessons);
