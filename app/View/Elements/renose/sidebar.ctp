@@ -33,8 +33,7 @@ $nav = array(
         ),
         'Seiten' => array(
             'Über das Projekt' => array('img' => 'icons/info.png', 'url' => '/page/about'),
-            'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq'),
-            'Impressum' => array('img' => 'icons/bookmark.png', 'url' => '/page/legal')
+            'FAQ' => array('img' => 'icons/help.png', 'url' => '/page/faq')
         )
     );
 
