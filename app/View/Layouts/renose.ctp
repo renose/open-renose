@@ -33,6 +33,7 @@
             'jquery.loadindicator',
             'jquery.renose.editbox',
             'jquery.renose.editfield',
+            'jquery.renose.tableeditfield',
             'jquery.renose.load'
         ));
 
@@ -105,6 +106,18 @@
                 <a href="https://renose.de">renose.de</a></p>
             </div>
         </footer>
+        
+        <script type="text/javascript">
+            $('#content').ajaxError(function(e, jqxhr, settings, exception) {
+                console.log({'ajaxError': {
+                    e: e,
+                    jqxhr: jqxhr,
+                    settings: settings,
+                    exception: exception
+                }});
+                $.jGrowl('Interner Fehler', { header: 'Fehler', life: 10000 });
+            });
+        </script>
         <?php echo $this->Js->writeBuffer(); ?>
     </body>
 </html>

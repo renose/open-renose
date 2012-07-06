@@ -141,8 +141,11 @@ class ReportsController extends AppController
         $this->set('reports', $week_reports);
     }
 
-    public function view($year, $week)
+    public function view($year = null, $week = null)
     {
+        if(!$year || !$week)
+            $this->redirect( array('action' => 'display', $year) );
+        
         $report =
             $this->Report->find('first', array(
                 'conditions' => array(
@@ -153,11 +156,11 @@ class ReportsController extends AppController
         
         //create report if not exsists
         if(!isset($report['Report']['id']))
-            $this->redirect( array('action' => 'add', $report['Report']['year'], $report['Report']['week']) );
+            $this->redirect( array('action' => 'add', $year, $week) );
         
         //weekly reports
         if(true)
-            $this->redirect( array('controller' => 'report_weeks', 'action' => 'view', $report['Report']['year'], $report['Report']['week']) );
+            $this->redirect( array('controller' => 'report_weeks', 'action' => 'view', $year, $week) );
     }
 
     function add($year = null, $week = null)

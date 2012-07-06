@@ -20,8 +20,11 @@ class ReportWeeksController extends AppController
         }
     }
     
-    public function view($year, $week)
+    public function view($year = null, $week = null)
     {
+        if(!$year || !$week)
+            $this->redirect( array('action' => 'display', $year) );
+        
         $report =
             $this->ReportWeek->find('first', array(
                 'conditions' => array(
@@ -30,9 +33,9 @@ class ReportWeeksController extends AppController
                     'Report.week = ' => $week)
             ));
         
-        //create report if not exsists
-        if(!isset($report['Report']['id']))
-            $this->redirect( array('controller' => 'reports', 'action' => 'add', $report['Report']['year'], $report['Report']['week']) );
+        //create report_week if not exsists
+        if(!isset($report['ReportWeek']['id']))
+            $this->redirect( array('action' => 'add', $year, $week) );
         
         //get user proflie
         $this->loadModel('Profile');
@@ -66,6 +69,42 @@ class ReportWeeksController extends AppController
         $this->set('report', $report);
         $this->set('lessons', $lessons);
     }
+    
+    function add($year = null, $week = null)
+    {
+        if(!$year || !$week)
+            $this->redirect( array('action' => 'display', $year) );
+        
+        //find report
+        $this->loadModel('Report');
+        $report =
+            $this->Report->find('first', array(
+            'conditions' => array(
+                'Report.user_id = ' => $this->Auth->user('id'),
+                'Report.year = ' => $year,
+                'Report.week = ' => $week),
+        ));
+        
+        //create report if not exsists
+        if(!isset($report['Report']['id']))
+            $this->redirect( array('controller' => 'reports', 'action' => 'add', $year, $week) );
+
+        //Daten setzen
+        $this->ReportWeek->create();
+        $report_week = array();
+        $report_week['ReportWeek']['report_id'] = $report['Report']['id'];
+
+        if($this->ReportWeek->save($report_week))
+        {
+            $this->Session->setFlash('Bericht wurde erstellt.', 'flash_success');
+            $this->redirect( array('action' => 'view', $year, $week) );
+        }
+        else
+        {
+            $this->Session->setFlash('Fehler beim Erstellen des Berichtes.', 'flash_fail');
+            $this->redirect( array('action' => 'display', $year) );
+        }
+    }
 
     function save()
     {
@@ -74,40 +113,28 @@ class ReportWeeksController extends AppController
         if(!in_array($this->request->data['field'], $this->ajax_editfileds))
             $this->Json->error('Fehler beim Speichern.', -21, $this->request->data);
 
-        $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
+        $report =
+            $this->ReportWeek->find('first', array(
+                'conditions' => array(
+                    'ReportWeek.id = ' => $this->request->data['id'],
+                    'Report.user_id = ' => $this->Auth->user('id')
+                    )
+            ));
         $field = $this->request->data['field'];
         $value = $this->request->data['value'];
 
-        if(isset($report['Report']['id']))
+        if(isset($report['ReportWeek']['id']))
         {
+            $this->ReportWeek->id = $report['ReportWeek']['id'];
             $value = $value != 'null' ? $value : null;
-            
-            if(!isset($report['ReportWeek']['id']))
+
+            if($this->ReportWeek->saveField($field, $value))
             {
-                $report['ReportWeek'] = array(
-                    'report_id' => $report['Report']['id'],
-                    $field => $value
-                );
-                
-                $this->ReportWeek->create($report);
-                $this->ReportWeek->save($report);
-                
-                $this->data = $this->ReportWeek->findById($this->ReportWeek->getLastInsertId());
-                $this->Json->response($this->data['ReportWeek'][$field], 12, $this->data);
+                $this->data = $this->ReportWeek->findById($report['ReportWeek']['id']);
+                $this->Json->response($this->data['ReportWeek'][$field], 11, $this->data);
             }
             else
-            {
-                $this->ReportWeek->id = $report['ReportWeek']['id'];
-
-                if($this->ReportWeek->saveField($field, $value))
-                {
-                    $this->data = $this->ReportWeek->findById($report['ReportWeek']['id']);
-                    $this->Json->response($this->data['ReportWeek'][$field], 11, $this->data);
-                }
-                else
-                    $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);
-            }
+                $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);
         }
         else
             $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
