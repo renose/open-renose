@@ -66,6 +66,7 @@ class ReportsController extends AppController
     public function display($year = null)
     {
         $this->set('title_for_layout', 'Berichte Verwalten');
+        $this->loadModel('ReportWeekSchoolSubject');
 
         //Kein Jahr übergeben => dieses Jahr nehmen
         if(!$year)
@@ -103,10 +104,18 @@ class ReportsController extends AppController
             //weekly reports
             if(true)
             {
-                $activity = $reports[$i]['ReportWeek']['activity'] != null;
-                $instruction = $reports[$i]['ReportWeek']['instruction'] != null;
-                //$school = count($reports[$i]['ReportWeek']['ReportWeekSchoolTopics']) > 0 || $reports[$i]['Report']['holiday'];
-                $school = false;
+                $vacation = $reports[$i]['ReportWeek']['vacation'];
+                $holiday = $reports[$i]['ReportWeek']['holiday'];
+                
+                $activity = $reports[$i]['ReportWeek']['activity'] != null || $vacation;
+                $instruction = $reports[$i]['ReportWeek']['instruction'] != null || $vacation;
+                
+                $school_topics_count = $this->ReportWeekSchoolSubject->find('count', array(
+                    'conditions' => array(
+                        'ReportWeek.id' => $reports[$i]['ReportWeek']['id']
+                    )));
+                $school = $school_topics_count > 0 || $holiday;
+                
                 $status = null;
                 
                 if($activity && $instruction && $school)
