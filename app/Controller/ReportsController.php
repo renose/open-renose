@@ -170,11 +170,11 @@ class ReportsController extends AppController
         
         //Search last report
         $last_report =
-            $this->Report->find('all', array(
+            $this->Report->find('first', array(
             'order' => array('Report.year DESC', 'Report.week DESC'),
             'conditions' => array(
                 'Report.user_id = ' => $this->Auth->user('id'),
-                'Report.year < ' => $year,
+                'Report.year <= ' => $year,
                 'Report.week < ' => $week),
         ));
 
