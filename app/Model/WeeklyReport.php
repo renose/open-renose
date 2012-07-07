@@ -3,6 +3,6 @@ App::uses('AppModel', 'Model');
 
 class WeeklyReport extends AppModel {
 
-	public $hasMany = array('WeeklyReportSchoolSubject');
+	public $hasMany = array('WeeklyReportSchoolEntry');
 
 }

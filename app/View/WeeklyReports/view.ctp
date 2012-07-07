@@ -110,8 +110,8 @@
     $('#report .instruction').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     $('#report .school .edit-container').tableeditfield(
-        '<?php echo $this->Html->url(array('controller' => 'report_week_school_subjects', 'action' => 'save')); ?>',
-        '<?php echo $this->Html->url(array('controller' => 'report_week_school_subjects', 'action' => 'delete')); ?>'
+        '<?php echo $this->Html->url(array('controller' => 'weekly_report_school_entries', 'action' => 'save')); ?>',
+        '<?php echo $this->Html->url(array('controller' => 'weekly_report_school_entries', 'action' => 'delete')); ?>'
     );
         
     $('.hide-container').hide_element('<?php echo $this->Html->url(array('action' => 'save')); ?>');

@@ -61,7 +61,7 @@ class WeeklyReportsController extends AppController
                 $lessons[$lesson['ScheduleLesson']['subject']] = null;
         }
 
-        foreach ($report['WeeklyReportSchoolSubject'] as $lesson)
+        foreach ($report['WeeklyReportSchoolEntry'] as $lesson)
             $lessons[$lesson['subject']] = $lesson['text'];
 
         $this->set('title_for_layout', 'Bericht Nr. ' . $report['WeeklyReport']['number']);

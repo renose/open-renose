@@ -73,7 +73,7 @@ class ReportsController extends AppController
         {
             $report_type = 'weekly_reports';
             $this->loadModel('WeeklyReport');
-            $this->loadModel('WeeklyReportSchoolSubject');
+            $this->loadModel('WeeklyReportSchoolEntry');
 
             //get reprots
             $reports = $this->WeeklyReport->find('all', array(
@@ -97,7 +97,7 @@ class ReportsController extends AppController
 
                 $activity = $report['WeeklyReport']['activity'] != null || $vacation;
                 $instruction = $report['WeeklyReport']['instruction'] != null || $vacation;
-                $school = count($report['WeeklyReportSchoolSubject']) > 0 || $holiday;
+                $school = count($report['WeeklyReportSchoolEntry']) > 0 || $holiday;
 
                 $status = null;
 

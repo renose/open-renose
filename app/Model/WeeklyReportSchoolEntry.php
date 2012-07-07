@@ -1,7 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 
-class WeeklyReportSchoolSubject extends AppModel {
+class WeeklyReportSchoolEntry extends AppModel {
 
 	public $belongsTo = array('WeeklyReport');
 
