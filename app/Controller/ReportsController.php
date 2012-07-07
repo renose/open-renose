@@ -26,20 +26,10 @@ class ReportsController extends AppController
 
     public $helpers = array('Time', 'reNoseDate', 'Form');
     public $components = array('PdfGenerator', 'Json', 'DateTime');
-    
-    protected $ajax_editfileds = array('date', 'department');
 
     public function beforeFilter()
     {
         parent::beforeFilter();
-
-        if($this->action == 'save')
-        {
-            $this->Security->csrfCheck = false;
-            $this->Security->validatePost = false;
-            Configure::write('Error.handler', 'JsonError::handleError');
-            Configure::write('Exception.handler', 'JsonError::handleException');
-        }
 
         if($this->request->params['action'] == 'export') {
             if(!in_array('curl', get_loaded_extensions())) {
@@ -66,67 +56,66 @@ class ReportsController extends AppController
     public function display($year = null)
     {
         $this->set('title_for_layout', 'Berichte Verwalten');
-        $this->loadModel('ReportWeekSchoolSubject');
-
-        //Kein Jahr übergeben => dieses Jahr nehmen
+        
         if(!$year)
             $year = date('Y');
-        
-        //get reprots
-        $reports = $this->Report->find('all', array(
-            'order' => array('Report.year ASC', 'Report.week ASC'),
-            'conditions' => array(
-                'Report.user_id = ' => $this->Auth->user('id'),
-                'Report.year = ' => $year),
-        ));
         
         //get user proflie
         $this->loadModel('Profile');
         $profile = $this->Profile->findByUserId($this->Auth->user('id'));
         $training_start = $profile['Profile']['start_training_period'];
         
-        foreach ($reports as $report)
-        $week_reports[$report['Report']['year']][$report['Report']['week']] = $report;
-        
-        //reorder reports and calc report number
+        //reports sorted in year and week
         $week_reports = array();
-        for($i = 0; $i < count($reports); $i++)
+        
+        //weekly reports
+        if(true)
         {
-            $year = $reports[$i]['Report']['year'];
-            $week = $reports[$i]['Report']['week'];
-            
-            //calc report number
-            $reports[$i]['Report']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
-            
-            //add to year-week list
-            $week_reports[$year][$week] = $reports[$i]['Report'];
-            
-            //weekly reports
-            if(true)
+            $report_type = 'weekly_reports';
+            $this->loadModel('WeeklyReport');
+            $this->loadModel('WeeklyReportSchoolSubject');
+
+            //get reprots
+            $reports = $this->WeeklyReport->find('all', array(
+                'order' => array('WeeklyReport.year ASC', 'WeeklyReport.week ASC'),
+                'conditions' => array(
+                    'WeeklyReport.user_id = ' => $this->Auth->user('id'),
+                    'WeeklyReport.year = ' => $year),
+            ));
+
+            foreach ($reports as $report)
             {
-                $vacation = $reports[$i]['ReportWeek']['vacation'];
-                $holiday = $reports[$i]['ReportWeek']['holiday'];
+                $year = $report['WeeklyReport']['year'];
+                $week = $report['WeeklyReport']['week'];
+
+                //calc report number
+                $report['WeeklyReport']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
                 
-                $activity = $reports[$i]['ReportWeek']['activity'] != null || $vacation;
-                $instruction = $reports[$i]['ReportWeek']['instruction'] != null || $vacation;
-                
-                $school_topics_count = $this->ReportWeekSchoolSubject->find('count', array(
-                    'conditions' => array(
-                        'ReportWeek.id' => $reports[$i]['ReportWeek']['id']
-                    )));
-                $school = $school_topics_count > 0 || $holiday;
-                
+                //get traffic light status
+                $vacation = $report['WeeklyReport']['vacation'];
+                $holiday = $report['WeeklyReport']['holiday'];
+
+                $activity = $report['WeeklyReport']['activity'] != null || $vacation;
+                $instruction = $report['WeeklyReport']['instruction'] != null || $vacation;
+                $school = count($report['WeeklyReportSchoolSubject']) > 0 || $holiday;
+
                 $status = null;
-                
+
                 if($activity && $instruction && $school)
                     $status = 'full';
                 else if($activity || $instruction || $school)
                     $status = 'half';
                 else
                     $status = 'missing';
+
+                $report['WeeklyReport']['status'] = $status;
                 
-                $week_reports[$year][$week]['status'] = $status;
+                $week_reports[$year][$week] = $report['WeeklyReport'];
             }
+        }
+        else
+        {
+            throw new NotImplementedException();
         }
 
         //get calendar entries
@@ -148,97 +137,7 @@ class ReportsController extends AppController
         $this->set('year', $year);
         $this->set('calendar', $calendar);
         $this->set('reports', $week_reports);
-    }
-
-    public function view($year = null, $week = null)
-    {
-        if(!$year || !$week)
-            $this->redirect( array('action' => 'display', $year) );
-        
-        $report =
-            $this->Report->find('first', array(
-                'conditions' => array(
-                    'Report.user_id = ' => $this->Auth->user('id'),
-                    'Report.year = ' => $year,
-                    'Report.week = ' => $week)
-            ));
-        
-        //create report if not exsists
-        if(!isset($report['Report']['id']))
-            $this->redirect( array('action' => 'add', $year, $week) );
-        
-        //weekly reports
-        if(true)
-            $this->redirect( array('controller' => 'report_weeks', 'action' => 'view', $year, $week) );
-    }
-
-    function add($year = null, $week = null)
-    {
-        if(!$year || !$week)
-            $this->redirect( array('action' => 'display', $year) );
-        
-        //Search last report
-        $last_report =
-            $this->Report->find('first', array(
-            'order' => array('Report.year DESC', 'Report.week DESC'),
-            'conditions' => array(
-                'Report.user_id = ' => $this->Auth->user('id'),
-                'Report.year <= ' => $year,
-                'Report.week < ' => $week),
-        ));
-
-        //Daten setzen
-        $this->Report->create();
-        $report = array();
-        $report['Report']['user_id'] = $this->Auth->user('id');
-        $report['Report']['year'] = $year;
-        $report['Report']['week'] = $week;
-        $report['Report']['department'] = '';
-        $report['Report']['date'] = date('Y-m-d');
-
-        if(isset($last_report['Report']['department']))
-            $report['Report']['department'] = $last_report['Report']['department'];
-
-        if($this->Report->save($report))
-        {
-            $this->Session->setFlash('Bericht wurde erstellt.', 'flash_success');
-            $this->redirect( array('action' => 'view', $report['Report']['year'], $report['Report']['week']) );
-        }
-        else
-        {
-            $this->Session->setFlash('Fehler beim Erstellen des Berichtes.', 'flash_fail');
-            $this->redirect( array('action' => 'display', $year) );
-        }
-    }
-
-    function save()
-    {
-        if(!isset($this->request->data['id']) || !isset($this->request->data['field']) || !isset($this->request->data['value']))
-            $this->Json->error('Fehler beim Speichern.', -20, $this->request->data);
-        if(!in_array($this->request->data['field'], $this->ajax_editfileds))
-            $this->Json->error('Fehler beim Speichern.', -21, $this->request->data);
-
-        $this->loadModel('Report');
-        $report = $this->Report->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
-        $field = $this->request->data['field'];
-        $value = $this->request->data['value'];
-        
-
-        if(isset($report['Report']['id']))
-        {
-            $this->Report->id = $report['Report']['id'];
-            $value = $value != 'null' ? $value : null;
-
-            if($this->Report->saveField($field, $value))
-            {
-                $this->data = $this->Report->findById($report['Report']['id']);
-                $this->Json->response($this->data['Report'][$field], 11, $this->data);
-            }
-            else
-                $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);
-        }
-        else
-            $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
+        $this->set('report_type', $report_type);
     }
 
     // pdfgen
@@ -327,7 +226,7 @@ class ReportsController extends AppController
             // TODO
             $this->set('user', $userProfile);
 
-            if(isset($this->request->data['Report']['overview']) && $this->request->data['Report']['overview'] == 1) {
+            if(isset($this->request->data['WeeklyReport']['overview']) && $this->request->data['WeeklyReport']['overview'] == 1) {
                 // generate overview
 
                 // add a page
@@ -336,7 +235,7 @@ class ReportsController extends AppController
                 $pdf->writeHTML($this->render('reportExportTemplates/ihk/overview'), true);
             }
 
-            if(isset($this->request->data['Report']['activityList']) && $this->request->data['Report']['activityList'] == 1) {
+            if(isset($this->request->data['WeeklyReport']['activityList']) && $this->request->data['WeeklyReport']['activityList'] == 1) {
                 // generate activityList
 
                 // set report overview for activityList
@@ -358,14 +257,14 @@ class ReportsController extends AppController
             }
 
 
-            if((isset($this->request->data['Report']['allReports']) && $this->request->data['Report']['allReports'] == 1) || $oneReport) {
+            if((isset($this->request->data['WeeklyReport']['allReports']) && $this->request->data['WeeklyReport']['allReports'] == 1) || $oneReport) {
 
                 // generate detailed week view
 
                 foreach($reports as $report) {
                     $fullReportData = $this->Report->find('first', array(
                         'conditions' => array(
-                            'Report.id' => $report['Report']['id']
+                            'Report.id' => $report['WeeklyReport']['id']
                         )
                     ));
 
@@ -373,7 +272,7 @@ class ReportsController extends AppController
                     $pdf->SetAutoPageBreak(true, 0.5);
 
                     // write first header
-                    $this->set('report', $fullReportData['Report']);
+                    $this->set('WeeklyReport', $fullReportData['WeeklyReport']);
                     $pdf->writeHTML($this->render('reportExportTemplates/ihk/detailHeader'), true);
 
 
@@ -400,7 +299,7 @@ class ReportsController extends AppController
 
 
                     // school
-                    if($fullReportData['Report']['holiday'] == 1) {
+                    if($fullReportData['WeeklyReport']['holiday'] == 1) {
                         $school = array(
                         'title' => 'Berufsschule (Themen des Unterrichts in den einzelnen Fächern)',
                             'text' => 'Urlaub / Ferien'

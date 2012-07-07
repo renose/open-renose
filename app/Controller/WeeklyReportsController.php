@@ -1,11 +1,10 @@
 <?php
 
-class ReportWeeksController extends AppController
+class WeeklyReportsController extends AppController
 {
 
     public $components = array('Json', 'DateTime');
-    
-    protected $ajax_editfileds = array('vacation', 'holiday', 'activity', 'instruction');
+    protected $ajax_editfileds = array('date', 'department', 'vacation', 'holiday', 'activity', 'instruction');
 
     public function beforeFilter()
     {
@@ -26,15 +25,15 @@ class ReportWeeksController extends AppController
             $this->redirect( array('action' => 'display', $year) );
         
         $report =
-            $this->ReportWeek->find('first', array(
+            $this->WeeklyReport->find('first', array(
                 'conditions' => array(
-                    'Report.user_id = ' => $this->Auth->user('id'),
-                    'Report.year = ' => $year,
-                    'Report.week = ' => $week)
+                    'WeeklyReport.user_id = ' => $this->Auth->user('id'),
+                    'WeeklyReport.year = ' => $year,
+                    'WeeklyReport.week = ' => $week)
             ));
         
         //create report_week if not exsists
-        if(!isset($report['ReportWeek']['id']))
+        if(!isset($report['WeeklyReport']['id']))
             $this->redirect( array('action' => 'add', $year, $week) );
         
         //get user proflie
@@ -43,7 +42,7 @@ class ReportWeeksController extends AppController
         $training_start = $profile['Profile']['start_training_period'];
         
         //calc report number
-        $report['Report']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
+        $report['WeeklyReport']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
         
         //get school lessons
         $this->loadModel('Schedule');
@@ -62,10 +61,10 @@ class ReportWeeksController extends AppController
                 $lessons[$lesson['ScheduleLesson']['subject']] = null;
         }
 
-        foreach ($report['ReportWeekSchoolSubject'] as $lesson)
+        foreach ($report['WeeklyReportSchoolSubject'] as $lesson)
             $lessons[$lesson['subject']] = $lesson['text'];
 
-        $this->set('title_for_layout', 'Bericht Nr. ' . $report['Report']['number']);
+        $this->set('title_for_layout', 'Bericht Nr. ' . $report['WeeklyReport']['number']);
         $this->set('report', $report);
         $this->set('lessons', $lessons);
     }
@@ -75,26 +74,29 @@ class ReportWeeksController extends AppController
         if(!$year || !$week)
             $this->redirect( array('action' => 'display', $year) );
         
-        //find report
-        $this->loadModel('Report');
-        $report =
-            $this->Report->find('first', array(
+        //Search last report
+        $last_report =
+            $this->WeeklyReport->find('first', array(
+            'order' => array('WeeklyReport.year DESC', 'WeeklyReport.week DESC'),
             'conditions' => array(
-                'Report.user_id = ' => $this->Auth->user('id'),
-                'Report.year = ' => $year,
-                'Report.week = ' => $week),
+                'WeeklyReport.user_id = ' => $this->Auth->user('id'),
+                'WeeklyReport.year <= ' => $year,
+                'WeeklyReport.week < ' => $week),
         ));
-        
-        //create report if not exsists
-        if(!isset($report['Report']['id']))
-            $this->redirect( array('controller' => 'reports', 'action' => 'add', $year, $week) );
 
         //Daten setzen
-        $this->ReportWeek->create();
-        $report_week = array();
-        $report_week['ReportWeek']['report_id'] = $report['Report']['id'];
+        $this->WeeklyReport->create();
+        $report = array();
+        $report['WeeklyReport']['user_id'] = $this->Auth->user('id');
+        $report['WeeklyReport']['year'] = $year;
+        $report['WeeklyReport']['week'] = $week;
+        $report['WeeklyReport']['department'] = '';
+        $report['WeeklyReport']['date'] = date('Y-m-d');
 
-        if($this->ReportWeek->save($report_week))
+        if(isset($last_report['WeeklyReport']['department']))
+            $report['WeeklyReport']['department'] = $last_report['WeeklyReport']['department'];
+
+        if($this->WeeklyReport->save($report))
         {
             $this->Session->setFlash('Bericht wurde erstellt.', 'flash_success');
             $this->redirect( array('action' => 'view', $year, $week) );
@@ -113,25 +115,19 @@ class ReportWeeksController extends AppController
         if(!in_array($this->request->data['field'], $this->ajax_editfileds))
             $this->Json->error('Fehler beim Speichern.', -21, $this->request->data);
 
-        $report =
-            $this->ReportWeek->find('first', array(
-                'conditions' => array(
-                    'ReportWeek.id = ' => $this->request->data['id'],
-                    'Report.user_id = ' => $this->Auth->user('id')
-                    )
-            ));
+        $report = $this->WeeklyReport->findByIdAndUserId($this->request->data['id'], $this->Auth->user('id'));
         $field = $this->request->data['field'];
         $value = $this->request->data['value'];
 
-        if(isset($report['ReportWeek']['id']))
+        if(isset($report['WeeklyReport']['id']))
         {
-            $this->ReportWeek->id = $report['ReportWeek']['id'];
+            $this->WeeklyReport->id = $report['WeeklyReport']['id'];
             $value = $value != 'null' ? $value : null;
 
-            if($this->ReportWeek->saveField($field, $value))
+            if($this->WeeklyReport->saveField($field, $value))
             {
-                $this->data = $this->ReportWeek->findById($report['ReportWeek']['id']);
-                $this->Json->response($this->data['ReportWeek'][$field], 11, $this->data);
+                $this->data = $this->WeeklyReport->findById($report['WeeklyReport']['id']);
+                $this->Json->response($this->data['WeeklyReport'][$field], 11, $this->data);
             }
             else
                 $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);

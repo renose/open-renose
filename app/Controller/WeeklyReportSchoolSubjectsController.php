@@ -1,7 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 
-class ReportWeekSchoolSubjectsController extends AppController
+class WeeklyReportSchoolSubjectsController extends AppController
 {
     public $components = array('Json');
     
@@ -25,30 +25,30 @@ class ReportWeekSchoolSubjectsController extends AppController
         if($this->request->data['value'] == null || $this->request->data['value'] == '')
             $this->Json->error('Fehler beim Speichern: Bitte geben Sie einen Text ein.', -21, $this->request->data);
         
-        $this->loadModel('ReportWeek');
+        $this->loadModel('WeeklyReport');
         $report =
-            $this->ReportWeek->find('first', array(
+            $this->WeeklyReport->find('first', array(
                 'conditions' => array(
-                    'ReportWeek.id = ' => $this->request->data['id'],
+                    'WeeklyReport.id = ' => $this->request->data['id'],
                     'Report.user_id = ' => $this->Auth->user('id')
                     )
             ));
-        $lesson = $this->ReportWeekSchoolSubject->findByReportWeekIdAndSubject(
-                $report['ReportWeek']['id'],
+        $lesson = $this->WeeklyReportSchoolSubject->findByWeeklyReportIdAndSubject(
+                $report['WeeklyReport']['id'],
                 $this->request->data['subject']);
         
         //Schedule not found?
         if(!$report)
             $this->Json->error('Fehler beim Speichern des Schulthemas. Bericht wurde nicht gefunden.', -30, $this->request->data);
         
-        if(isset($lesson['ReportWeekSchoolSubject']['id']))
+        if(isset($lesson['WeeklyReportSchoolSubject']['id']))
         {
-            $lesson['ReportWeekSchoolSubject']['text'] = $this->request->data['value'];
+            $lesson['WeeklyReportSchoolSubject']['text'] = $this->request->data['value'];
             
-            if($this->ReportWeekSchoolSubject->save($lesson))
+            if($this->WeeklyReportSchoolSubject->save($lesson))
             {
-                $this->data = $this->ReportWeekSchoolSubject->findById($lesson['ReportWeekSchoolSubject']['id']);
-                $this->Json->response($this->data['ReportWeekSchoolSubject']['text'], 11);
+                $this->data = $this->WeeklyReportSchoolSubject->findById($lesson['WeeklyReportSchoolSubject']['id']);
+                $this->Json->response($this->data['WeeklyReportSchoolSubject']['text'], 11);
             }
             else
                 $this->Json->error('Fehler beim Speichern des Schulthemas.', -11, $this->validationErrors);
@@ -56,18 +56,18 @@ class ReportWeekSchoolSubjectsController extends AppController
         else
         {
             $lesson = array(
-                'ReportWeekSchoolSubject' => array(
-                    'report_week_id' => $report['ReportWeek']['id'],
+                'WeeklyReportSchoolSubject' => array(
+                    'report_week_id' => $report['WeeklyReport']['id'],
                     'subject' => $this->request->data['subject'],
                     'text' => $this->request->data['value']
                 )
             );
             
-            $this->ReportWeekSchoolSubject->create();
-            if($this->ReportWeekSchoolSubject->save($lesson))
+            $this->WeeklyReportSchoolSubject->create();
+            if($this->WeeklyReportSchoolSubject->save($lesson))
             {
-                $this->data = $this->ReportWeekSchoolSubject->findById($this->ReportWeekSchoolSubject->getLastInsertId());
-                $this->Json->response($this->data['ReportWeekSchoolSubject']['text'], 12);
+                $this->data = $this->WeeklyReportSchoolSubject->findById($this->WeeklyReportSchoolSubject->getLastInsertId());
+                $this->Json->response($this->data['WeeklyReportSchoolSubject']['text'], 12);
             }
             else
                 $this->Json->error('Fehler beim Speichern des Schulthemas.', -12, $this->validationErrors);
@@ -79,16 +79,16 @@ class ReportWeekSchoolSubjectsController extends AppController
         if(!isset($this->request->data['id']))
             $this->Json->error('Fehler beim Speichern des Schulthemas.', -20, $this->request->data);
         
-        $this->loadModel('ReportWeek');
+        $this->loadModel('WeeklyReport');
         $report =
-            $this->ReportWeek->find('first', array(
+            $this->WeeklyReport->find('first', array(
                 'conditions' => array(
-                    'ReportWeek.id = ' => $this->request->data['id'],
+                    'WeeklyReport.id = ' => $this->request->data['id'],
                     'Report.user_id = ' => $this->Auth->user('id')
                     )
             ));
-        $lesson = $this->ReportWeekSchoolSubject->findByReportWeekIdAndSubject(
-                $report['ReportWeek']['id'],
+        $lesson = $this->WeeklyReportSchoolSubject->findByWeeklyReportIdAndSubject(
+                $report['WeeklyReport']['id'],
                 $this->request->data['subject']);
         
         //Report not found?
@@ -97,7 +97,7 @@ class ReportWeekSchoolSubjectsController extends AppController
         
         if($lesson != null)
         {
-            if($this->ReportWeekSchoolSubject->delete($lesson['ReportWeekSchoolSubject']['id']))
+            if($this->WeeklyReportSchoolSubject->delete($lesson['WeeklyReportSchoolSubject']['id']))
                 $this->Json->response('-', 13);
             else
                 $this->Json->error('Fehler beim Löschen des Schulthemas.', -13, $this->validationErrors);
