@@ -38,7 +38,7 @@ class NavigationHelper extends Helper {
             {
                 echo '<a href="' . $this->Html->url($options['url']) . '">';
 
-                if($this->Html->url(null) == $this->Html->url($options['url']))
+                if(strpos($this->Html->url(null), $this->Html->url($options['url'])) === 0)
                     echo '<li class="active">';
                 else
                     echo '<li>';
