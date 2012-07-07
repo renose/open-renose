@@ -27,7 +27,8 @@
 <br/>
 
 <b>Geburtstag:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'birthday', 'data' => $profile['Profile']['birthday'])) ?>
+<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'birthday', 'data' => $profile['Profile']['birthday'])) ?>
+<br/>
 <b>Geburtsort:</b>
 <?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'birthplace', 'data' => $profile['Profile']['birthplace'])) ?>
 <br/>
