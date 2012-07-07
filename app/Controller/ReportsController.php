@@ -64,6 +64,7 @@ class ReportsController extends AppController
         $this->loadModel('Profile');
         $profile = $this->Profile->findByUserId($this->Auth->user('id'));
         $training_start = $profile['Profile']['start_training_period'];
+        $training_end = $profile['Profile']['end_training_period'];
         
         //reports sorted in year and week
         $week_reports = array();
@@ -106,7 +107,7 @@ class ReportsController extends AppController
                 else if($activity || $instruction || $school)
                     $status = 'half';
                 else
-                    $status = 'missing';
+                    $status = 'empty';
 
                 $report['WeeklyReport']['status'] = $status;
                 
@@ -117,6 +118,20 @@ class ReportsController extends AppController
         {
             throw new NotImplementedException();
         }
+        
+        //check for missing reports
+        $first_week = $this->DateTime->mkdate(1, 1, $year);
+        $last_week = $this->DateTime->mkdate(31, 12, $year);
+        for($i = $first_week; $i <= $last_week; $i += 604800)
+        {
+            if($i >= strtotime($training_start) && $i <= strtotime($training_end))
+            {
+                $tmp_year = date('o', $i);
+                $tmp_week = date('W', $i) * 1;
+                if(!isset($week_reports[$tmp_year][$tmp_week]['id']))
+                    $week_reports[$tmp_year][$tmp_week]['status'] = 'missing';
+            }
+        }        
 
         //get calendar entries
         $this->loadModel('CalendarEntry');

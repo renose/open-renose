@@ -56,33 +56,30 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
                         {
                             //Woche ermitteln
                             $week = date('W', mkdate($day, $month, $year)) * 1;
+                            $week_year = date('o', mkdate($day, $month, $year));
 
                             //Neue Woche am Montag anfangen (und am 1. des Monats) und Wochennummer anzeigen
                             if (date('N', mkdate($day, $month, $year)) == 1 || $day == 1)
                             {
                                 echo "<tr>";
 
-                                //Erste Woche die noch zum letzten Jahr gehört
-                                if ($day == 1 && $month == 1 && $week > 1)
-                                    $week_year = $year - 1;
-                                else if ($month == 12 && $week == 1)
-                                    $week_year = $year + 1;
-                                else
-                                    $week_year = $year;
-
                                 //Ampelsystem, wenn Report angelegt ist
-                                if (isset($reports[$week_year][$week]))
-                                {
+                                if(isset($reports[$week_year][$week]['status']))
                                     $status = $reports[$week_year][$week]['status'];
-                                    
+                                else
+                                    $status = null;
+                                
+                                if (isset($reports[$week_year][$week]['id']))
+                                {
                                     if ($status == 'full')
                                         echo "<td class='calendar-week calendar-week-view-full calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                     else if ($status == 'half')
                                         echo "<td class='calendar-week calendar-week-view-half calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                     else
-                                        echo "<td class='calendar-week calendar-week-view-missing calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
+                                        echo "<td class='calendar-week calendar-week-view-empty calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
                                 }
-
+                                else if($status == 'missing')
+                                    echo "<td class='calendar-week calendar-week-missing calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'add', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} hinzufügen")) . "</td>";
                                 else
                                     echo "<td class='calendar-week calendar-week-add calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'add', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} hinzufügen")) . "</td>";
 
@@ -112,7 +109,7 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
                 </tbody>
             </table>
         </div>
-<?php endfor; ?>
+    <?php endfor; ?>
 </div>
 
 <div style="clear: both;"></div>
