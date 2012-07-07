@@ -43,6 +43,8 @@ class WeeklyReportsController extends AppController
         
         //calc report number
         $report['WeeklyReport']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
+        $report['WeeklyReport']['from'] = $this->DateTime->get_date($year, $week, 1);
+        $report['WeeklyReport']['to'] = $this->DateTime->get_date($year, $week, 5);
         
         //get school lessons
         $this->loadModel('Schedule');

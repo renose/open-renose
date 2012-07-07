@@ -8,6 +8,19 @@ class DateTimeComponent extends Component
         return mktime(0, 0, 0, $month, $day, $year);
     }
     
+    public function get_date($year, $week, $day)
+    {
+        return date('Y-m-d', strtotime($year . 'W' . str_pad($week, 2 ,'0', STR_PAD_LEFT) . $day));
+    }
+    public function get_friday($year, $week)
+    {
+        return
+            $this->diff('W',
+                $training_start,
+                $year . 'W' . str_pad($week, 2 ,'0', STR_PAD_LEFT)
+            ) + 1;
+    }
+    
     public function get_report_number($training_start, $year, $week)
     {
         return

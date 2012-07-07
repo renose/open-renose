@@ -306,6 +306,12 @@ nav#breadcrumb a {
     text-decoration: none;
 }
 
+#content-toolbar img {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+}
+
 div.jGrowl.top-right {
     right: 5px;
     top: 75px;
@@ -369,12 +375,6 @@ footer a:hover {
 /* make cake errors visible */
 .cake-sql-log caption {
     color: black;
-}
-
-.icon-small {
-    height: 16px;
-    width: 16px;
-    vertical-align: middle;
 }
 
 /* input fields */

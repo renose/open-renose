@@ -22,19 +22,13 @@
         echo $title_for_layout;
     ?>
 </h1>
-<br/>
-
-<div id="wysihtml5-toolbar" class="wysihtml5-toolbar" style="display: none;">
-    <a data-wysihtml5-command="bold" title="Fett" class="wysihtml5-command" href="javascript:;">
-        <?php echo $this->Html->image('icons/bold.png'); ?>
-    </a>
-    <a data-wysihtml5-command="italic" title="Kursiv" class="wysihtml5-command" href="javascript:;">
-        <?php echo $this->Html->image('icons/italic.png'); ?>
-    </a>
-</div>
 
 <div id="report">
     <div>
+        für die Zeit vom <?= date('d.m.Y', strtotime($report['WeeklyReport']['from'])) ?>
+        bis <?= date('d.m.Y', strtotime($report['WeeklyReport']['to'])) ?>
+        <br/><br/>
+        
         <b>Datum:</b>
         <?= $this->element('report/inputfield', array(
             'type' => 'date',
@@ -52,6 +46,15 @@
         )) ?>
     </div>
     <br/>
+    
+    <div id="wysihtml5-toolbar" class="wysihtml5-toolbar" style="display: none;">
+        <a data-wysihtml5-command="bold" title="Fett" class="wysihtml5-command" href="javascript:;">
+            <?php echo $this->Html->image('icons/bold.png'); ?>
+        </a>
+        <a data-wysihtml5-command="italic" title="Kursiv" class="wysihtml5-command" href="javascript:;">
+            <?php echo $this->Html->image('icons/italic.png'); ?>
+        </a>
+    </div>
     
     <div class="hide-container">
         <input id="vacation" type="checkbox" class="hide-checkbox" data-field="vacation" data-id="<?= $report['WeeklyReport']['id'] ?>" <?php if($report['WeeklyReport']['vacation'] == 1) { echo 'checked="checked"'; } ?> />

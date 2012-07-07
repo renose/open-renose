@@ -44,6 +44,15 @@ div.navbar-inner a#logo span {
 	color: #0A9ECE;
 }
 
+.logo-text {
+    font-family: Helvetica;
+    font-size: 16px;
+    letter-spacing: -2px;
+}
+.logo-text span {
+    color: #0A9ECE;
+}
+
 /* navigation links */
 .navbar .nav > li > a {
     color: #ddd;
