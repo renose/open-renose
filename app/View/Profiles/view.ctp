@@ -61,6 +61,7 @@
 
 <script type="text/javascript">
     $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    $('.inputfield').inputfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     var availableTags = [
         "<?php echo implode('", "', $jobs); ?>"
