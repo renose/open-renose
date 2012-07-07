@@ -4,6 +4,18 @@
     $this->Html->addCrumb('Bericht ' . $report['WeeklyReport']['number']);
 ?>
 
+<nav id="content-toolbar">
+    <a id="renose-print" href="<?= $this->Html->url(array('action' => 'export', $report['WeeklyReport']['id'])) ?>">
+        <?= $this->Html->image('icons/pdf.png', array('class' => 'icon-small')) ?>
+        Export
+    </a>
+
+    <a href="<?= $this->Html->url(array('action' => 'delete', $report['WeeklyReport']['id'])) ?>">
+        <?= $this->Html->image('icons/delete.png', array('class' => 'icon-small')) ?>
+        Löschen
+    </a>
+</nav>
+
 <h1>
     <?php
         echo $this->Html->image('icons/clipboard.png');
@@ -22,16 +34,6 @@
 </div>
 
 <div id="report">
-    <p>
-        <?=
-        $this->Html->link('Bericht drucken',
-            array('action' => 'export', $report['WeeklyReport']['id']),
-            array('id' => 'renose-print'))
-        ?>
-    </p>
-
-    <p>
-
     <div>
         <b>Datum:</b>
         <?= $this->element('report/inputfield', array(

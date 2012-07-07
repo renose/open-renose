@@ -33,13 +33,14 @@ class WeeklyReportSchoolEntriesController extends AppController
                     'WeeklyReport.user_id = ' => $this->Auth->user('id')
                     )
             ));
-        $lesson = $this->WeeklyReportSchoolEntry->findByWeeklyReportIdAndSubject(
-                $report['WeeklyReport']['id'],
-                $this->request->data['subject']);
         
         //Schedule not found?
         if(!$report)
             $this->Json->error('Fehler beim Speichern des Schulthemas. Bericht wurde nicht gefunden.', -30, $this->request->data);
+        
+        $lesson = $this->WeeklyReportSchoolEntry->findByWeeklyReportIdAndSubject(
+                $report['WeeklyReport']['id'],
+                $this->request->data['subject']);
         
         if(isset($lesson['WeeklyReportSchoolEntry']['id']))
         {
@@ -57,7 +58,7 @@ class WeeklyReportSchoolEntriesController extends AppController
         {
             $lesson = array(
                 'WeeklyReportSchoolEntry' => array(
-                    'report_week_id' => $report['WeeklyReport']['id'],
+                    'weekly_report_id' => $report['WeeklyReport']['id'],
                     'subject' => $this->request->data['subject'],
                     'text' => $this->request->data['value']
                 )

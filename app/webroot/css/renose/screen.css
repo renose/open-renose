@@ -289,6 +289,23 @@ nav#breadcrumb a {
     -webkit-border-radius: 1ex;
 }
 
+#content-toolbar {
+    float: right;
+}
+
+#content-toolbar a {
+    margin-left: 10px;
+}
+#content-toolbar a, #content-toolbar a:visited {
+    color: black;
+    border-bottom: 1px dotted whiteSmoke;
+    text-decoration: none;
+}
+#content-toolbar a:hover {
+    color: #AAA;
+    text-decoration: none;
+}
+
 div.jGrowl.top-right {
     right: 5px;
     top: 75px;
@@ -352,6 +369,12 @@ footer a:hover {
 /* make cake errors visible */
 .cake-sql-log caption {
     color: black;
+}
+
+.icon-small {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
 }
 
 /* input fields */

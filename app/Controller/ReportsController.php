@@ -82,7 +82,7 @@ class ReportsController extends AppController
                     'WeeklyReport.user_id = ' => $this->Auth->user('id'),
                     'WeeklyReport.year = ' => $year),
             ));
-
+            
             foreach ($reports as $report)
             {
                 $year = $report['WeeklyReport']['year'];

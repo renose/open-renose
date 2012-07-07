@@ -22,7 +22,7 @@ class WeeklyReportsController extends AppController
     public function view($year = null, $week = null)
     {
         if(!$year || !$week)
-            $this->redirect( array('action' => 'display', $year) );
+            $this->redirect( array('controller' => 'reports', 'action' => 'display', $year) );
         
         $report =
             $this->WeeklyReport->find('first', array(
@@ -72,7 +72,7 @@ class WeeklyReportsController extends AppController
     function add($year = null, $week = null)
     {
         if(!$year || !$week)
-            $this->redirect( array('action' => 'display', $year) );
+            $this->redirect( array('controller' => 'reports', 'action' => 'display', $year) );
         
         //Search last report
         $last_report =
@@ -104,7 +104,7 @@ class WeeklyReportsController extends AppController
         else
         {
             $this->Session->setFlash('Fehler beim Erstellen des Berichtes.', 'flash_fail');
-            $this->redirect( array('action' => 'display', $year) );
+            $this->redirect( array('controller' => 'reports', 'action' => 'display', $year) );
         }
     }
 
@@ -134,6 +134,27 @@ class WeeklyReportsController extends AppController
         }
         else
             $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
+    }
+    
+    function delete($id)
+    {
+        $report = $this->WeeklyReport->findByIdAndUserId($id, $this->Auth->user('id'));
+        
+        $year = null;
+        if($report['WeeklyReport']['year'])
+            $year = $report['WeeklyReport']['year'];
+
+        if(isset($report['WeeklyReport']['id']))
+        {
+            if($this->WeeklyReport->delete($report['WeeklyReport']['id']))
+                $this->Session->setFlash('Bericht wurde gelöscht.', 'flash_success');
+            else
+                $this->Session->setFlash('Fehler beim Löschen des Berichts.', 'flash_fail');
+        }
+        else
+            $this->Session->setFlash('Fehler beim Löschen, Bericht nicht gefunden.', 'flash_fail');
+        
+        $this->redirect( array('controller' => 'reports', 'action' => 'display', $year) );
     }
 
 }
