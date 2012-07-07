@@ -7,10 +7,7 @@ jQuery.fn.tableeditfield = function(save_url, delete_url){
                 url: delete_url,
                 type: 'POST',
                 dataType: 'JSON',
-                data: {
-                    id: $(that).parent().attr('data-id'),
-                    subject: $(that).parent().attr('data-subject')
-                },
+                data: $(that).parent().data(),
                 success: function(data) {
                     if(data.status.code > 0)
                     {
@@ -47,10 +44,7 @@ jQuery.fn.tableeditfield = function(save_url, delete_url){
             height: 'none',
             width: 'none',
             submitdata: function(value, settings) {
-                return {
-                    id: $(this).parent().attr('data-id'),
-                    subject: $(this).parent().attr('data-subject')
-                };
+                return $(this).parent().data();
             },
             callback : function(value, settings) {
 

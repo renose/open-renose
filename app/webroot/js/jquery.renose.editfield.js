@@ -8,10 +8,7 @@ jQuery.fn.editfield = function(url){
             submit: 'Speichern',
             cancel: 'Abbrechen',
             submitdata: function(value, settings) {
-                return {
-                    id: $(this).attr('data-id'),
-                    field: $(this).attr('data-field')
-                };
+                return $(this).data();
             },
             callback : function(value, settings) {
                 var data = jQuery.parseJSON(value);

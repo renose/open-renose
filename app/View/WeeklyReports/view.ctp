@@ -34,7 +34,12 @@
 
     <div>
         <b>Datum:</b>
-        <?php echo date('d.m.Y', strtotime($report['WeeklyReport']['date'])); ?>
+        <?= $this->element('report/inputfield', array(
+            'type' => 'date',
+            'id' => $report['WeeklyReport']['id'],
+            'field' => 'date',
+            'data' => $report['WeeklyReport']['date']
+        )) ?>
         <br/>
 
         <b>Abteilung:</b>
@@ -104,6 +109,7 @@
 </div>
 
 <script type="text/javascript">
+    $('.inputfield').inputfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     $('#report .activity').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');

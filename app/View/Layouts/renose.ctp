@@ -13,6 +13,7 @@
             'cake.generic',
             'renose/wysihtml5',
             'renose/screen',
+            'renose/editfields',
             'renose/calender',
             'renose/schedule',
             'renose/jquery.loadindicator',
@@ -33,6 +34,7 @@
             'jquery.loadindicator',
             'jquery.renose.editbox',
             'jquery.renose.editfield',
+            'jquery.renose.inputfield',
             'jquery.renose.tableeditfield',
             'jquery.renose.hide_element',
             'jquery.renose.load'

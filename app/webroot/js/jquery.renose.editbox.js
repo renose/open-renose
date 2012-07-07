@@ -3,15 +3,14 @@ jQuery.fn.editbox = function(url){
         $(this).find('.edit-delete').hide();
         $(this).find('.edit-delete').click(function() {
             var that = this;
+            var data = $(that).parent().data();
+            data.value = null;
+            
             $.ajax({
                 url: url,
                 type: 'POST',
                 dataType: 'JSON',
-                data: {
-                    id: $(that).parent().attr('data-id'),
-                    field: $(that).parent().attr('data-field'),
-                    value: null
-                },
+                data: data,
                 success: function(data) {
                     if(data.status.code > 0)
                     {
@@ -50,10 +49,7 @@ jQuery.fn.editbox = function(url){
             width: 'none',
             rows: 10,
             submitdata: function(value, settings) {
-                return {
-                    id: $(this).parent().attr('data-id'),
-                    field: $(this).parent().attr('data-field')
-                };
+                return $(this).parent().data();
             },
             callback : function(value, settings) {
 

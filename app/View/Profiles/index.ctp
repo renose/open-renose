@@ -8,48 +8,65 @@
 </h1>
 <br/>
 
-<?php
-echo $this->Form->create('Profile');
-echo $this->Form->hidden('id');
+<b>Vorname:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'first_name', 'data' => $profile['Profile']['first_name'])) ?>
+<b>Nachname:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'last_name', 'data' => $profile['Profile']['last_name'])) ?>
+<br/>
 
-echo $this->Form->input('first_name', array('label' => 'Vorname'));
-echo $this->Form->input('last_name', array('label' => 'Nachname'));
+<b>Beruf:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'job_name', 'data' => $profile['Profile']['job_name'])) ?>
+<br/>
 
-echo $this->Form->input('job_name', array('label' => 'Beruf', 'type' => 'text'));
-echo '<hr />';
-echo $this->Form->input('street', array('label' => 'Straße'));
+<b>Straße:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'street', 'data' => $profile['Profile']['street'])) ?>
+<b>Postleitzahl:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'zip_code', 'data' => $profile['Profile']['zip_code'])) ?>
+<b>Stadt:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'city', 'data' => $profile['Profile']['city'])) ?>
+<br/>
 
-echo $this->Form->input('zip_code', array('label' => 'Postleitzahl'));
-echo $this->Form->input('city', array('label' => 'Stadt'));
+<b>Geburtstag:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'birthday', 'data' => $profile['Profile']['birthday'])) ?>
+<b>Geburtsort:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'birthplace', 'data' => $profile['Profile']['birthplace'])) ?>
+<br/>
 
-echo $this->Form->input('birthday', array('label' => 'Geburtstag', 'dateFormat' => 'DMY', 'minYear' => date('Y') -70 ,'maxYear' => date('Y')));
-echo $this->Form->input('birthplace', array('label' => 'Geburtsort'));
-echo '<hr />';
-echo $this->Form->input('company', array('label' => 'Ausbildungsfirma'));
-echo $this->Form->input('branch', array('label' => 'Geschäftszweig'));
-echo '<hr />';
-echo $this->Form->input('start_training_period', array('label' => 'Vertragliche Ausbildungszeit vom', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
-echo $this->Form->input('end_training_period', array('label' => 'bis', 'dateFormat' => 'DMY', 'minYear' => date('Y') ,'maxYear' => date('Y')+5));
-echo '<hr />';
-echo $this->Form->input('contract_signed', array('label' => 'Vertrag abgeschlossen am', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
-echo $this->Form->input('contract_registered', array('label' => 'Eingetragen ins Verzeichnis der Berufsausbildungsregister', 'dateFormat' => 'DMY', 'minYear' => date('Y') -5 ,'maxYear' => date('Y')));
-echo $this->Form->input('assigned_board_of_trade', array('label' => 'Zuständige IHK, z.B. \'Region Stuttgart\''));
+<b>Ausbildungsfirma:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'company', 'data' => $profile['Profile']['company'])) ?>
+<b>Geschäftszweig:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'branch', 'data' => $profile['Profile']['branch'])) ?>
+<br/>
 
-echo $this->Form->input('past', array('label' => 'Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung'));
+<b>Vertragliche Ausbildungszeit von:</b>
+<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'start_training_period', 'data' => $profile['Profile']['start_training_period'])) ?>
+<b>bis:</b>
+<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'end_training_period', 'data' => $profile['Profile']['end_training_period'])) ?>
+<br/>
 
+<b>Vertrag abgeschlossen am:</b>
+<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_signed', 'data' => $profile['Profile']['contract_signed'])) ?>
+<b>Eingetragen ins Verzeichnis der Berufsausbildungsregister:</b>
+<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_registered', 'data' => $profile['Profile']['contract_registered'])) ?>
+<br/><br/>
 
-echo $this->Form->end('Speichern');
-?>
+<b>Zuständige IHK, z.B. 'Region Stuttgart':</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'assigned_board_of_trade', 'data' => $profile['Profile']['assigned_board_of_trade'])) ?>
+<br/>
 
-<?php pr($jobs); ?>
+<b>Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung:</b>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'past', 'data' => $profile['Profile']['past'])) ?>
+
 
 <script type="text/javascript">
-    $(function() {
-        var availableTags = [
-            "<?php echo implode('", "', $jobs); ?>"
-        ];
-        $( "#ProfileJobName" ).autocomplete({
-            source: availableTags
-        });
+    $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    
+    var availableTags = [
+        "<?php echo implode('", "', $jobs); ?>"
+    ];
+    $( "#ProfileJobName" ).autocomplete({
+        source: availableTags
     });
 </script>
+
+<?php pr($jobs); ?>

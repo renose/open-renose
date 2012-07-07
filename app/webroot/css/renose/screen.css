@@ -353,3 +353,9 @@ footer a:hover {
 .cake-sql-log caption {
     color: black;
 }
+
+/* input fields */
+input {
+    font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+    padding: 0.5em;
+}
