@@ -124,7 +124,9 @@ class ReportsController extends AppController
         $last_week = $this->DateTime->mkdate(31, 12, $year);
         for($i = $first_week; $i <= $last_week; $i += 604800)
         {
-            if($i >= strtotime($training_start) && $i <= strtotime($training_end))
+            if( $i >= strtotime($training_start) &&
+                $i <= strtotime($training_end) + 604800 &&
+                $i < time() )
             {
                 $tmp_year = date('o', $i);
                 $tmp_week = date('W', $i) * 1;
