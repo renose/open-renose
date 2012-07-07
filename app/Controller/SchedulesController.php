@@ -21,6 +21,11 @@ class SchedulesController extends AppController
     
     public function index()
     {
+        $this->redirect( array('action' => 'view') );
+    }
+    
+    public function view()
+    {
         $schedule = $this->_findCreateSchedule();
         $days = array();
         $max_lesson = 0;

@@ -29,10 +29,7 @@ class Profile extends AppModel
             'full_name' => "CONCAT(Profile.first_name, ' ', Profile.last_name)"
         );
 
-        public $belongsTo = array(
-            'User',
-            'Job'
-        );
+        public $belongsTo = array('User', 'Job');
 
     public $displayField = 'full_name';
 

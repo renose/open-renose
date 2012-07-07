@@ -28,48 +28,45 @@ class ProfilesController extends AppController
 
     public function index()
     {
+        $this->redirect( array('action' => 'view') );
+    }
+    
+    public function view()
+    {
+        $this->set('title_for_layout', 'Profil');
+        
         $this->loadModel('Job');
         $profile = $this->Profile->findByUserId($this->Auth->user('id'));
         $jobs = $this->Job->find('all', array('recursive' => 0));
-        $this->set('title_for_layout', 'Profil');
-
+        
+        if(!isset($profile['Profile']['id']))
+            $this->redirect( array('action' => 'add') );
 
         $job_list = array();
         foreach($jobs as $job)
             $job_list[] = $job['Job']['name'];
 
-        //Daten eingegeben? => Speichern
-        if (!empty($this->request->data))
+        $this->set('jobs', $job_list);
+        $this->set('profile', $profile);
+    }
+    
+    function add()
+    {
+        //Daten setzen
+        $this->Profile->create();
+        $profile = array();
+        $profile['Profile']['user_id'] = $this->Auth->user('id');
+
+        if($this->Profile->save($profile))
         {
-            if(!isset($profile['Profile']['user_id']))
-                $this->request->data['Profile']['user_id'] = $this->Auth->user('id');
-
-            $job_name = $this->request->data['Profile']['job_name'];
-            $job = $this->Job->findByName($job_name);
-
-            if($job != null)
-                $this->request->data['Profile']['job_id'] = $job['Job']['id'];
-            else
-                $this->request->data['Job']['name'] = $job_name;
-
-            if ($this->Profile->saveAssociated($this->request->data))
-            {
-                $this->Session->setFlash('Dein Profil wurde gespeichert.', 'flash_success');
-                $this->redirect( array('controller' => 'profiles', 'action' => 'index') );
-            }
-            else
-                $this->Session->setFlash('Fehler beim Speichern des Profils.');
+            $this->Session->setFlash('Profil wurde erstellt.', 'flash_success');
+            $this->redirect( array('action' => 'view') );
         }
         else
         {
-            if(isset($profile['Job']['name']))
-                $profile['Profile']['job_name'] = $profile['Job']['name'];
-            
-            $this->request->data = $profile;
+            $this->Session->setFlash('Fehler beim Erstellen des Profils.', 'flash_fail');
+            $this->redirect('/');
         }
-
-        $this->set('jobs', $job_list);
-        $this->set('profile', $profile);
     }
     
     function save()
@@ -111,6 +108,6 @@ class ProfilesController extends AppController
                 $this->Json->error('Fehler beim Speichern.', -11, $this->request->data);
         }
         else
-            $this->Json->error('Fehler beim Speichern: Bericht wurde nicht gefunden.', -30, $this->request->data);
+            $this->Json->error('Fehler beim Speichern.', -30, $this->request->data);
     }
 }

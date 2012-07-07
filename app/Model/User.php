@@ -61,7 +61,14 @@ class User extends AppModel
             'dependent' => true
         )
     );
-    public $hasMany = array('CalendarEntry');
+    public $hasMany = array(
+        'CalendarEntry' => array(
+            'dependent' => true
+        ),
+        /*'WeeklyReport' => array(
+            'dependent' => true
+        ),*/
+    );
 
     function equalToField($data, $options)
     {

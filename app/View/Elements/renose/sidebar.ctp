@@ -23,8 +23,8 @@
 
 $nav = array(
         'Main' => array(
-            'Profil' => array('img' => 'icons/user.png', 'url' => '/profiles'),
-            'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedules'),
+            'Profil' => array('img' => 'icons/user.png', 'url' => '/profile'),
+            'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedule'),
 //           'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
         ),
         'Berichte' => array(

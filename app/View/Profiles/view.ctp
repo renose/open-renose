@@ -15,7 +15,7 @@
 <br/>
 
 <b>Beruf:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'job_name', 'data' => $profile['Profile']['job_name'])) ?>
+<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'job_name', 'data' => $profile['Job']['name'])) ?>
 <br/>
 
 <b>Straße:</b>
