@@ -65,9 +65,9 @@ class User extends AppModel
         'CalendarEntry' => array(
             'dependent' => true
         ),
-        /*'WeeklyReport' => array(
+        'WeeklyReport' => array(
             'dependent' => true
-        ),*/
+        )
     );
 
     function equalToField($data, $options)

@@ -1,12 +1,14 @@
 <?php
+
 App::uses('AppModel', 'Model');
 
-class WeeklyReport extends AppModel {
+class WeeklyReport extends AppModel
+{
 
-	public $hasMany = array(
-            'WeeklyReportSchoolEntry' => array(
-                'dependent' => true
-            )   
-        );
+    public $hasMany = array(
+        'WeeklyReportSchoolEntry' => array(
+            'dependent' => true
+        )
+    );
 
 }
