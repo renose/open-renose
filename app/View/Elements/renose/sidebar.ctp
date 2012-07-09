@@ -25,7 +25,7 @@ $nav = array(
         'Main' => array(
             'Profil' => array('img' => 'icons/user.png', 'url' => '/profile'),
             'Stundenplan' => array('img' => 'icons/planner.png', 'url' => '/schedule'),
-//           'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/users/settings')
+            //'Einstellungen' => array('img' => 'icons/settings.png', 'url' => '/user_settings')
         ),
         'Berichte' => array(
             'Übersicht' => array('img' => 'icons/calendar.png', 'url' => '/reports/display'),

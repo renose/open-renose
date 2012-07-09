@@ -100,10 +100,7 @@ class UsersController extends AppController
                 }
                 catch(Exception $e)
                 {
-                    //pr($e);
-
                     $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
-                    //$this->redirect(array('controller' => 'users', 'action' => 'register'));
                     $this->redirect(array('controller' => 'users', 'action' => 'activate', $user['User']['email'], $user['User']['activationkey']));
                 }
 

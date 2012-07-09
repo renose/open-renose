@@ -1,6 +1,6 @@
 <?php
     $this->Html->addCrumb('Main');
-    $this->Html->addCrumb('Profil', array('action' =>'index'));
+    $this->Html->addCrumb('Profil', array('action' =>'view'));
 ?>
 <h1>
     <?php echo $this->Html->image('icons/user.png'); ?>

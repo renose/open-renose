@@ -70,9 +70,16 @@ class ReportsController extends AppController
         $week_reports = array();
         
         //weekly reports
-        if(true)
-        {
+        $this->loadModel('UserSetting');
+        $settings = $this->UserSetting->findByUserId($this->Auth->user('id'));
+        if(isset($settings['UserSetting']['report_type']))
+            $report_type = $settings['UserSetting']['report_type'];
+        else
             $report_type = 'weekly_reports';
+        
+        switch ($report_type)
+        {
+        case 'weekly_reports':
             $this->loadModel('WeeklyReport');
             $this->loadModel('WeeklyReportSchoolEntry');
 
@@ -113,10 +120,11 @@ class ReportsController extends AppController
                 
                 $week_reports[$year][$week] = $report['WeeklyReport'];
             }
-        }
-        else
-        {
-            throw new NotImplementedException();
+            break;
+            
+        default:
+            throw new NotImplementedException('Unknown report_type: ' . $report_type);
+            break;
         }
         
         //check for missing reports
