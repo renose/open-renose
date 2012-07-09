@@ -3,13 +3,14 @@ jQuery.fn.hide_element = function(url){
         $(this).find('.hide-checkbox').click(function () {
                 var element = $(this).parent().find('.hide-element');
                 var checked = $(this).is(':checked');
-                $(this).attr('data-value', (checked ? 1 : 0));
+                var data = $(this).data();
+                data.value = checked ? 1 : 0;
 
                 $.ajax({
                     url : url,
                     type: 'POST',
                     dataType: 'JSON',
-                    data: $(this).data(),
+                    data: data,
                     success : function(data)
                     {
                         if(data.status.code > 0)
