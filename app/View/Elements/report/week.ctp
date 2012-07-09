@@ -3,7 +3,7 @@
     <?= $header ?>
 </h2>
 
-<div class="edit-container <?= $field ?>" data-id="<?= $id ?>" data-field="<?= $field ?>">
+<div class="edit-container editbox" data-id="<?= $id ?>" data-field="<?= $field ?>">
 <?php if($data) : ?>
     <div class="edit-textbox" data-exists="true"><?= $data ?></div>
 <?php else: ?>

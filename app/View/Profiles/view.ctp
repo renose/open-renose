@@ -8,65 +8,97 @@
 </h1>
 <br/>
 
-<b>Vorname:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'first_name', 'data' => $profile['Profile']['first_name'])) ?>
-<b>Nachname:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'last_name', 'data' => $profile['Profile']['last_name'])) ?>
+<style type="text/css">
+    .clear {
+        clear: both;
+    }
+    .input-group div.input {
+        float: left;
+        width: 250px;
+        height: 50px;
+    }
+    
+    .input-group div.input input{
+        float: left;
+        width: 200px;
+    }
+</style>
+
+<div class="input-group">
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Vorname', 'field' => 'first_name', 'data' => $profile['Profile']['first_name'])) ?>
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Nachname', 'field' => 'last_name', 'data' => $profile['Profile']['last_name'])) ?>
+</div>
+<div class="clear"></div>
+
+<div class="input-group">
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'name' => 'Geburtstag', 'field' => 'birthday', 'data' => $profile['Profile']['birthday'])) ?>
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Geburtsort', 'field' => 'birthplace', 'data' => $profile['Profile']['birthplace'])) ?>
+</div>
+<div class="clear"></div>
 <br/>
 
-<b>Beruf:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'job_name', 'data' => $profile['Job']['name'])) ?>
+<div class="input-group">
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'number', 'name' => 'PLZ', 'field' => 'zip_code', 'data' => $profile['Profile']['zip_code'])) ?>
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Ort', 'field' => 'city', 'data' => $profile['Profile']['city'])) ?>
+    <div class="clear"></div>
+    
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Straße', 'field' => 'street', 'data' => $profile['Profile']['street'])) ?>
+</div>
+<div class="clear"></div>
 <br/>
 
-<b>Straße:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'street', 'data' => $profile['Profile']['street'])) ?>
-<b>Postleitzahl:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'zip_code', 'data' => $profile['Profile']['zip_code'])) ?>
-<b>Stadt:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'city', 'data' => $profile['Profile']['city'])) ?>
+<div class="input-group">
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Beruf', 'field' => 'job_name', 'data' => $profile['Job']['name'])) ?>
+    <div class="clear"></div>
+    
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Ausbildungsfirma', 'field' => 'company', 'data' => $profile['Profile']['company'])) ?>
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Geschäftszweig', 'field' => 'branch', 'data' => $profile['Profile']['branch'])) ?>
+</div>
+<div class="clear"></div>
 <br/>
 
-<b>Geburtstag:</b>
-<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'birthday', 'data' => $profile['Profile']['birthday'])) ?>
-<br/>
-<b>Geburtsort:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'birthplace', 'data' => $profile['Profile']['birthplace'])) ?>
-<br/>
-
-<b>Ausbildungsfirma:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'company', 'data' => $profile['Profile']['company'])) ?>
-<b>Geschäftszweig:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'branch', 'data' => $profile['Profile']['branch'])) ?>
+Vertragliche Ausbildungszeit von:
+<?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'start_training_period', 'data' => $profile['Profile']['start_training_period'])) ?>
+bis:
+<?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'end_training_period', 'data' => $profile['Profile']['end_training_period'])) ?>
 <br/>
 
-<b>Vertragliche Ausbildungszeit von:</b>
-<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'start_training_period', 'data' => $profile['Profile']['start_training_period'])) ?>
-<b>bis:</b>
-<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'end_training_period', 'data' => $profile['Profile']['end_training_period'])) ?>
+Vertrag abgeschlossen am:
+<?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_signed', 'data' => $profile['Profile']['contract_signed'])) ?>
+Eingetragen ins Verzeichnis der Berufsausbildungsregister:
+<?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_registered', 'data' => $profile['Profile']['contract_registered'])) ?>
 <br/>
 
-<b>Vertrag abgeschlossen am:</b>
-<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_signed', 'data' => $profile['Profile']['contract_signed'])) ?>
-<b>Eingetragen ins Verzeichnis der Berufsausbildungsregister:</b>
-<?= $this->element('report/inputfield', array('id' => $profile['Profile']['id'], 'type' => 'date', 'field' => 'contract_registered', 'data' => $profile['Profile']['contract_registered'])) ?>
-<br/><br/>
-
-<b>Zuständige IHK, z.B. 'Region Stuttgart':</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'assigned_board_of_trade', 'data' => $profile['Profile']['assigned_board_of_trade'])) ?>
+<div class="input-group">
+    <?= $this->element('editfields/inputfield', array('id' => $profile['Profile']['id'], 'name' => 'Zuständige IHK', 'field' => 'assigned_board_of_trade', 'data' => $profile['Profile']['assigned_board_of_trade'])) ?>
+</div>
+<div class="clear"></div>
 <br/>
 
-<b>Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung:</b>
-<?= $this->element('report/editfield', array('id' => $profile['Profile']['id'], 'field' => 'past', 'data' => $profile['Profile']['past'])) ?>
+Kurzbericht über Schulbildung und vorangegangene berufliche Tätigkeiten vor Antritt der Ausbildung:
+<div class="edit-container editbox" data-id="<?= $profile['Profile']['id'] ?>" data-field="past">
+<?php if($profile['Profile']['past']) : ?>
+    <div class="edit-textbox" data-exists="true"><?= $profile['Profile']['past'] ?></div>
+<?php else: ?>
+    <div class="edit-textbox" data-exists="false"></div>
+<?php
+    endif;
+    echo $this->Html->image('icons/delete.png', array('class' => 'edit-delete', 'alt' => 'löschen'));
+?>
+    
+    <div style="clear: both;"></div>
+</div>
 
 
 <script type="text/javascript">
     $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     $('.inputfield').inputfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    $('.editbox').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     var availableTags = [
         "<?php echo implode('", "', $jobs); ?>"
     ];
-    $( "#ProfileJobName" ).autocomplete({
+    $( "#job_name" ).autocomplete({
         source: availableTags
     });
 </script>

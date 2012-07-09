@@ -56,8 +56,10 @@
 .edit-container {
     padding: 6px;
     position: relative;
-    padding-right: 20px;
     cursor: text;
+}
+.delete-container {
+    padding-right: 20px;
 }
 
 .edit-textbox {

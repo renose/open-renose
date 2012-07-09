@@ -29,8 +29,8 @@
         bis <?= date('d.m.Y', strtotime($report['WeeklyReport']['to'])) ?>
         <br/><br/>
         
-        <b>Datum:</b>
-        <?= $this->element('report/inputfield', array(
+        <?= $this->element('editfields/inputfield', array(
+            'name' => 'Datum',
             'type' => 'date',
             'id' => $report['WeeklyReport']['id'],
             'field' => 'date',
@@ -39,7 +39,7 @@
         <br/>
 
         <b>Abteilung:</b>
-        <?= $this->element('report/editfield', array(
+        <?= $this->element('editfields/editfield', array(
             'id' => $report['WeeklyReport']['id'],
             'field' => 'department',
             'data' => $report['WeeklyReport']['department']
@@ -116,9 +116,7 @@
 <script type="text/javascript">
     $('.inputfield').inputfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
-    
-    $('#report .activity').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
-    $('#report .instruction').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
+    $('.editbox').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     $('#report .school .edit-container').tableeditfield(
         '<?php echo $this->Html->url(array('controller' => 'weekly_report_school_entries', 'action' => 'save')); ?>',
