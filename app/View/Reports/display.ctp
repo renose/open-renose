@@ -72,11 +72,11 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
                                 if (isset($reports[$week_year][$week]['id']))
                                 {
                                     if ($status == 'full')
-                                        echo "<td class='calendar-week calendar-week-view-full calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
+                                        echo "<td class='calendar-week calendar-week-view-full calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => 'Bericht '. $reports[$week_year][$week]['number'] .' bearbeiten')) . "</td>";
                                     else if ($status == 'half')
-                                        echo "<td class='calendar-week calendar-week-view-half calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
+                                        echo "<td class='calendar-week calendar-week-view-half calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => 'Bericht '. $reports[$week_year][$week]['number'] .' bearbeiten')) . "</td>";
                                     else
-                                        echo "<td class='calendar-week calendar-week-view-empty calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} editieren")) . "</td>";
+                                        echo "<td class='calendar-week calendar-week-view-empty calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'view', $week_year, $week), array('class' => 'calendar-week-link', 'title' => 'Bericht '. $reports[$week_year][$week]['number'] .' bearbeiten')) . "</td>";
                                 }
                                 else if($status == 'missing')
                                     echo "<td class='calendar-week calendar-week-missing calendar-week-nopadding'>" . $this->Html->link($week, array('controller' => $report_type, 'action' => 'add', $week_year, $week), array('class' => 'calendar-week-link', 'title' => "Woche {$week} hinzufügen")) . "</td>";
