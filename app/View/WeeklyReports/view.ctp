@@ -29,21 +29,8 @@
         bis <?= date('d.m.Y', strtotime($report['WeeklyReport']['to'])) ?>
         <br/><br/>
         
-        <?= $this->element('editfields/inputfield', array(
-            'name' => 'Datum',
-            'type' => 'date',
-            'id' => $report['WeeklyReport']['id'],
-            'field' => 'date',
-            'data' => $report['WeeklyReport']['date']
-        )) ?>
-        <br/>
-
-        <b>Abteilung:</b>
-        <?= $this->element('editfields/editfield', array(
-            'id' => $report['WeeklyReport']['id'],
-            'field' => 'department',
-            'data' => $report['WeeklyReport']['department']
-        )) ?>
+        <?= $this->Editfield->inputfield('Datum', 'date', $report['WeeklyReport']['id'], $report['WeeklyReport']['date'], array('type' => 'date')) ?>
+        <?= $this->Editfield->inputfield('Abteilung', 'department', $report['WeeklyReport']['id'], $report['WeeklyReport']['department']) ?>
     </div>
     <br/>
     
@@ -61,23 +48,17 @@
         <label for="vacation">Urlaub</label>
         
         <div class="hide-element">
-            <?php
-                echo $this->element('report/week', array(
-                    'header' => 'Tätigkeiten',
-                    'icon' => 'icons/manager.png',
-                    'id' => $report['WeeklyReport']['id'],
-                    'field' => 'activity',
-                    'data' => $report['WeeklyReport']['activity']
-                ));
-
-                echo $this->element('report/week', array(
-                    'header' => 'Unterweisungen',
-                    'icon' => 'icons/talk.png',
-                    'id' => $report['WeeklyReport']['id'],
-                    'field' => 'instruction',
-                    'data' => $report['WeeklyReport']['instruction']
-                ));
-            ?>
+            <h2>
+                <?= $this->Html->image('icons/manager.png'); ?>
+                Tätigkeiten
+            </h2>
+            <?= $this->Editfield->editbox('activity', $report['WeeklyReport']['id'], $report['WeeklyReport']['activity']) ?>
+            
+            <h2>
+                <?= $this->Html->image('icons/talk.png'); ?>
+                Unterweisungen
+            </h2>
+            <?= $this->Editfield->editbox('instruction', $report['WeeklyReport']['id'], $report['WeeklyReport']['instruction']) ?>
         </div>
     </div>
 
@@ -115,7 +96,6 @@
 
 <script type="text/javascript">
     $('.inputfield').inputfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
-    $('.editfield').editfield('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     $('.editbox').editbox('<?php echo $this->Html->url(array('action' => 'save')); ?>');
     
     $('#report .school .edit-container').tableeditfield(
