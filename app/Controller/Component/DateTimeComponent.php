@@ -12,14 +12,6 @@ class DateTimeComponent extends Component
     {
         return date('Y-m-d', strtotime($year . 'W' . str_pad($week, 2 ,'0', STR_PAD_LEFT) . $day));
     }
-    public function get_friday($year, $week)
-    {
-        return
-            $this->diff('W',
-                $training_start,
-                $year . 'W' . str_pad($week, 2 ,'0', STR_PAD_LEFT)
-            ) + 1;
-    }
     
     public function get_report_number($training_start, $year, $week)
     {

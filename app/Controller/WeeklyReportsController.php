@@ -40,6 +40,7 @@ class WeeklyReportsController extends AppController
         $this->loadModel('Profile');
         $profile = $this->Profile->findByUserId($this->Auth->user('id'));
         $training_start = $profile['Profile']['start_training_period'];
+        $training_end = $profile['Profile']['end_training_period'];
         
         //calc report number
         $report['WeeklyReport']['number'] = $this->DateTime->get_report_number($training_start, $year, $week);
@@ -50,7 +51,8 @@ class WeeklyReportsController extends AppController
         $this->loadModel('Schedule');
         $schedule = $this->Schedule->findByUserId($this->Auth->user('id'));
         $lessons = array();
-
+        
+        //school subjects
         if($schedule)
         {
             $this->loadModel('ScheduleLesson');
@@ -65,9 +67,26 @@ class WeeklyReportsController extends AppController
 
         foreach ($report['WeeklyReportSchoolEntry'] as $lesson)
             $lessons[$lesson['subject']] = $lesson['text'];
+        
+        //previous and next report
+        $report_previous = null;
+        if(strtotime($this->DateTime->get_date($year, $week-1, 1)) >= strtotime($training_start))
+        {
+            $report_previous['year'] = date('o', strtotime($this->DateTime->get_date($year, $week-1, 1)));
+            $report_previous['week'] = date('W', strtotime($this->DateTime->get_date($year, $week-1, 1)));
+        }
+        
+        $report_next = null;
+        if(strtotime($this->DateTime->get_date($year, $week+1, 1)) <= strtotime($training_end))
+        {
+            $report_next['year'] = date('o', strtotime($this->DateTime->get_date($year, $week+1, 1)));
+            $report_next['week'] = date('W', strtotime($this->DateTime->get_date($year, $week+1, 1)));
+        }
 
         $this->set('title_for_layout', 'Bericht Nr. ' . $report['WeeklyReport']['number']);
         $this->set('report', $report);
+        $this->set('report_previous', $report_previous);
+        $this->set('report_next', $report_next);
         $this->set('lessons', $lessons);
     }
     

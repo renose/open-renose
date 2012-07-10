@@ -6,14 +6,31 @@
 
 <nav id="content-toolbar">
     <a id="renose-print" href="<?= $this->Html->url(array('action' => 'export', $report['WeeklyReport']['id'])) ?>">
-        <?= $this->Html->image('icons/pdf.png', array('class' => 'icon-small')) ?>
+        <?= $this->Html->image('icons/pdf.png') ?>
         Export
     </a>
 
     <a href="<?= $this->Html->url(array('action' => 'delete', $report['WeeklyReport']['id'])) ?>">
-        <?= $this->Html->image('icons/delete.png', array('class' => 'icon-small')) ?>
+        <?= $this->Html->image('icons/delete.png') ?>
         Löschen
     </a>
+</nav>
+
+<br/>
+<nav id="content-toolbar">
+    <?php if($report_previous): ?>
+    <a href="<?= $this->Html->url(array('action' => 'view', $report_previous['year'], $report_previous['week'])) ?>">
+        <?= $this->Html->image('icons/left_circular.png') ?>
+        Bericht <?= $report['WeeklyReport']['number'] - 1 ?>
+    </a>
+    <?php endif; ?>
+    
+    <?php if($report_next): ?>
+    <a href="<?= $this->Html->url(array('action' => 'view', $report_next['year'], $report_next['week'])) ?>">
+        Bericht <?= $report['WeeklyReport']['number'] + 1 ?>
+        <?= $this->Html->image('icons/right_circular.png') ?>
+    </a>
+    <?php endif; ?>
 </nav>
 
 <h1>
