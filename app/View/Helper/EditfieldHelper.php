@@ -12,7 +12,8 @@ class EditfieldHelper extends AppHelper {
             'id' => 'inputfield-' . $field,
             'class' => 'input',
             'inner_class' => 'inputfield edit-container',
-            'type' => 'text'
+            'type' => 'text',
+            'required' => false
         ), $options);
         
         $inputfield .= $this->Html->div($options['class']);
@@ -31,7 +32,8 @@ class EditfieldHelper extends AppHelper {
             'type' => $options['type'],
             'data-id' => $id,
             'data-field' => $field,
-            'value' => $data
+            'value' => $data,
+            'required' => $options['required']
         ));
         
         $inputfield .= '</div>';

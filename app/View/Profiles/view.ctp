@@ -25,8 +25,8 @@
 </style>
 
 <div class="input-group">
-    <?= $this->Editfield->inputfield('Vorname', 'first_name', $profile['Profile']['id'], $profile['Profile']['first_name']) ?>
-    <?= $this->Editfield->inputfield('Nachname', 'last_name', $profile['Profile']['id'], $profile['Profile']['last_name']) ?>
+    <?= $this->Editfield->inputfield('Vorname', 'first_name', $profile['Profile']['id'], $profile['Profile']['first_name'], array('required' => true)) ?>
+    <?= $this->Editfield->inputfield('Nachname', 'last_name', $profile['Profile']['id'], $profile['Profile']['last_name'], array('required' => true)) ?>
 </div>
 <div class="clear"></div>
 
@@ -57,8 +57,8 @@
 <div class="clear"></div>
 <br/>
 
-<?= $this->Editfield->inputfield('Vertragliche Ausbildungszeit von', 'start_training_period', $profile['Profile']['id'], $profile['Profile']['start_training_period'], array('type' => 'date')) ?>
-<?= $this->Editfield->inputfield('bis', 'end_training_period', $profile['Profile']['id'], $profile['Profile']['end_training_period'], array('type' => 'date')) ?>
+<?= $this->Editfield->inputfield('Vertragliche Ausbildungszeit von', 'start_training_period', $profile['Profile']['id'], $profile['Profile']['start_training_period'], array('type' => 'date', 'required' => true)) ?>
+<?= $this->Editfield->inputfield('bis', 'end_training_period', $profile['Profile']['id'], $profile['Profile']['end_training_period'], array('type' => 'date', 'required' => true)) ?>
 <br/>
 
 <?= $this->Editfield->inputfield('Vertrag abgeschlossen am', 'date', $profile['Profile']['id'], $profile['Profile']['birthday'], array('type' => 'date')) ?>
