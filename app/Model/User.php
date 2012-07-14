@@ -62,9 +62,6 @@ class User extends AppModel
         )
     );
     public $hasMany = array(
-        'CalendarEntry' => array(
-            'dependent' => true
-        ),
         'WeeklyReport' => array(
             'dependent' => true
         )
