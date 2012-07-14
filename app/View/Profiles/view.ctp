@@ -61,8 +61,8 @@
 <?= $this->Editfield->inputfield('bis', 'end_training_period', $profile['Profile']['id'], $profile['Profile']['end_training_period'], array('type' => 'date', 'required' => true)) ?>
 <br/>
 
-<?= $this->Editfield->inputfield('Vertrag abgeschlossen am', 'date', $profile['Profile']['id'], $profile['Profile']['birthday'], array('type' => 'date')) ?>
-<?= $this->Editfield->inputfield('Eingetragen ins Verzeichnis der Berufsausbildungsregister', 'date', $profile['Profile']['id'], $profile['Profile']['birthday'], array('type' => 'date')) ?>
+<?= $this->Editfield->inputfield('Vertrag abgeschlossen am', 'contract_signed', $profile['Profile']['id'], $profile['Profile']['contract_signed'], array('type' => 'date')) ?>
+<?= $this->Editfield->inputfield('Eingetragen ins Verzeichnis der Berufsausbildungsregister', 'contract_registered', $profile['Profile']['id'], $profile['Profile']['contract_registered'], array('type' => 'date')) ?>
 <br/>
 
 <div class="input-group">
