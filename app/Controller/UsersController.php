@@ -163,41 +163,43 @@ class UsersController extends AppController
 
     public function forgot()
     {
-        App::uses('CakeEmail', 'Network/Email');
-        
-        $user = $this->User->findByEmailAndIsActive($this->request->data['User']['email'], 1);
-        
-        if(!$user)
+        if ($this->request->data)
         {
-            $this->Session->setFlash('User nicht gefunden.', 'flash_fail');
-            $this->redirect(array('controller' => 'users', 'action' => 'forgot'));
-        }
+            $user = $this->User->findByEmailAndIsActive($this->request->data['User']['email'], 1);
 
-        $newAuthKey = Security::generateAuthKey();
-        $this->User->id = $user['User']['id'];
-
-        if($this->User->saveField('activationkey', $newAuthKey))
-        {
-            $email = new CakeEmail('default');
-
-            $email->to($user['User']['email'])
-                        ->subject('open reNose | Passwort ändern')
-                        ->template('forgot')
-                        ->emailFormat('html')
-                        ->viewVars(array(
-                            'data' => $user,
-                            'newAuthKey' => $newAuthKey
-                            )
-                        );
-
-            try {
-                $email->send();
+            if(!$user)
+            {
+                $this->Session->setFlash('User nicht gefunden.', 'flash_fail');
+                $this->redirect(array('controller' => 'users', 'action' => 'forgot'));
             }
-            catch(Exception $e) {
-                $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
+
+            $newAuthKey = Security::generateAuthKey();
+            $this->User->id = $user['User']['id'];
+
+            if($this->User->saveField('activationkey', $newAuthKey))
+            {
+                App::uses('CakeEmail', 'Network/Email');
+                $email = new CakeEmail('default');
+
+                $email->to($user['User']['email'])
+                            ->subject('open reNose | Passwort ändern')
+                            ->template('forgot')
+                            ->emailFormat('html')
+                            ->viewVars(array(
+                                'data' => $user,
+                                'newAuthKey' => $newAuthKey
+                                )
+                            );
+
+                try {
+                    $email->send();
+                }
+                catch(Exception $e) {
+                    $this->Session->setFlash('Fehler beim Verschicken der Aktivierungs Mail.', 'flash_fail');
+                }
+                $this->Session->setFlash('E-Mail zur Passwortänderung wurde erfolgreich verschickt. Bitte prüfen Sie ihr E-Mail Postfach.', 'flash_success');
+                $this->redirect('/');
             }
-            $this->Session->setFlash('E-Mail zur Passwortänderung wurde erfolgreich verschickt. Bitte prüfen Sie ihr E-Mail Postfach.', 'flash_success');
-            $this->redirect('/');
         }
         
         $this->set('title_for_layout', 'Passwort vergessen');
@@ -216,7 +218,8 @@ class UsersController extends AppController
             )
         ));
 
-        if($user != false) {
+        if($user != false)
+        {
             $this->set('email', $user['User']['email']);
 
             if ($this->request->is('post') || $this->request->is('put')) {
@@ -249,7 +252,9 @@ class UsersController extends AppController
                 $this->request->data = $user;
             }
             //$this->render();
-        } else {
+        }
+        else
+        {
             $this->Session->setFlash('E-Mail Adresse oder Aktivierungsschlüssel ungültig.', 'flash_fail');
             $this->redirect('/');
         }
