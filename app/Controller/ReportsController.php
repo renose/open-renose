@@ -143,24 +143,7 @@ class ReportsController extends AppController
             }
         }        
 
-        //get calendar entries
-        $this->loadModel('CalendarEntry');
-        $calendar_entries = $this->CalendarEntry->find('all', array(
-            'recursive' => 0,
-            'conditions' => array(
-                'CalendarEntry.user_id = ' => $this->Auth->user('id'),
-                'CalendarEntry.day > ' => "$year-01-01",
-                'CalendarEntry.day < ' => "$year-12-31"),
-            'fields' => array('CalendarEntry.day', 'CalendarEntry.type')
-        ));
-        $calendar = array();
-        
-        //sort calendar entries
-        foreach($calendar_entries as $entry)
-            $calendar[$entry['CalendarEntry']['day']][] = $entry['CalendarEntry']['type'];
-
         $this->set('year', $year);
-        $this->set('calendar', $calendar);
         $this->set('reports', $week_reports);
         $this->set('report_type', $report_type);
     }

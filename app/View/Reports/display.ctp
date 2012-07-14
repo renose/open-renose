@@ -138,5 +138,4 @@ $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
 <?php
 pr($report_type);
 pr($reports);
-pr($calendar);
 ?>
