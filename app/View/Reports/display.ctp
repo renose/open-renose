@@ -3,8 +3,8 @@ $this->Html->addCrumb('Berichte');
 $this->Html->addCrumb('Übersicht', array('action' => 'display', $year));
 ?>
 <h1>
-    <?php echo $this->Html->image('icons/planner.png'); ?>
-    <?php echo $title_for_layout; ?>
+    <?php echo $this->Html->image('icons/calendar.png'); ?>
+    Übersicht
 </h1>
 
 <div class="calendar-year">

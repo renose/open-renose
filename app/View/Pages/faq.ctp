@@ -8,34 +8,27 @@
 </h1>
 <br/>
 
-<p>Seit wann macht ihr dieses Projekt?</p>
-<ul><li>Das Projekt ist seit dem 1. Februar 2011 in Google Code zu finden.</li></ul>
-<br/><br/>
+<p>
+	Meine Berichtsnummer oder das Datum wird falsch angezigt.
+	<ul><li>
+		Bitte prüfe ob du in deinem Profil alle Pflichtfelder ausgefüllt hast.<br/>
+		(Pflichtfelder werden rot hinterlegt)
+	</li></ul>
+</p>
+<br/>
 
-<p>Unter Welcher Lizenz habt ihr den Quellcode freigegeben?</p>
-<ul><li>open reNose ist unter der GNU GPLv3 freigegeben</li></ul>
-<br/><br/>
+<p>
+	Ich habe einen Fehler entdeckt oder möchte einen Wunsch oder Kritik äußern.
+	<ul><li>
+		Du kannst dich direkt bei uns mit einer Email an <i>info@renose.de</i> melden.<br/>
+		Wir werden versuchen deine Mail so schnell wie möglich zu beantworten.
+	</li></ul>
+</p>
+<br/>
 
-<p>Darf ich das Copyright auf meiner eigenen Kopie ändern?</p>
-<ul><li>
-    Die Lizenz erlaubt es, den Quellcode beliebig zu ändern, allerdings würde der Vermerk ein Zeichen sein, dass ihr das Projekt unterstützt.
-    Danke im Voraus!
-</li></ul>
-<br/><br/>
-
-<p>Kann ich das Script auf eurem Server laufen lassen?</p>
-<ul><li>Kurz und knapp: Nein, sorry!</li></ul>
-<br/><br/>
-
-<p>Welche Anforderungen hat das Script an den Server?</p>
-<ul><li>PHP 5 und eine mit cakePHP kompatible Datenbank (z.B. MySQL) sind erforderlich.</li></ul>
-<br/><br/>
-
-<p>Ich habe einen Bug entdeckt</p>
-<ul><li>
-    Dann sei so freundlich und schreibe diesen in den Bugtracker auf unserer Projektseite: renose.de oder sende eine Mail an info@renose.de
-</li></ul>
-<br/><br/>
-
-<p>Der Quellcode ist scheiße, ich würde es besser machen</p>
-<ul><li>Dann schreib ihn selber ;-)</li></ul>
+<p>
+	Der Quellcode ist scheiße, ich würde es besser machen!
+	<ul><li>
+		Dann schreib ihn selber ;)
+	</li></ul>
+</p>

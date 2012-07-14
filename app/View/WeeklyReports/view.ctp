@@ -5,10 +5,12 @@
 ?>
 
 <nav id="content-toolbar">
+	<!--
     <a id="renose-print" href="<?= $this->Html->url(array('action' => 'export', $report['WeeklyReport']['id'])) ?>">
         <?= $this->Html->image('icons/pdf.png') ?>
         Export
     </a>
+	!-->
 
     <a href="<?= $this->Html->url(array('action' => 'delete', $report['WeeklyReport']['id'])) ?>">
         <?= $this->Html->image('icons/delete.png') ?>
