@@ -83,13 +83,31 @@ class ReportsController extends AppController
             $this->loadModel('WeeklyReport');
             $this->loadModel('WeeklyReportSchoolEntry');
 
-            //get reprots
+            //reprot conditions
+            $first_week = $this->DateTime->mkdate(1, 1, $year);
+            $last_week = $this->DateTime->mkdate(31, 12, $year);
+            $conditions = array(
+                'WeeklyReport.user_id = ' => $this->Auth->user('id'),
+                'OR' => array(
+                    'WeeklyReport.year = ' => $year,
+                    array(
+                        'WeeklyReport.year = ' => date('o', $first_week),
+                        'WeeklyReport.week = ' => date('W', $first_week) * 1,
+                    ),
+                    array(
+                        'WeeklyReport.year = ' => date('o', $last_week),
+                        'WeeklyReport.week = ' => date('W', $last_week) * 1,
+                    )
+                )
+            );
+            
+            //get reports
             $reports = $this->WeeklyReport->find('all', array(
                 'order' => array('WeeklyReport.year ASC', 'WeeklyReport.week ASC'),
-                'conditions' => array(
-                    'WeeklyReport.user_id = ' => $this->Auth->user('id'),
-                    'WeeklyReport.year = ' => $year),
+                'conditions' => $conditions
             ));
+            
+            //$this->Json->response($reports);
             
             foreach ($reports as $report)
             {
