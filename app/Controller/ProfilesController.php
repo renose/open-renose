@@ -83,15 +83,24 @@ class ProfilesController extends AppController
         //job
         if($field === 'job_name')
         {
-            $job = $this->Job->findByName($job_name);
+            $this->loadModel('Job');
+            $job = $this->Job->findByName($value);
+            $field = 'job_id';
             
             if($job != null)
-            {
-                $field = 'job_id';
                 $value = $job['Job']['id'];
-            }
             else
-                throw new NotImplementedException();
+            {
+                $this->Job->create();
+                $job = array('Job' => array(
+                    'name' => $value
+                ));
+                
+                if(!$this->Job->save($job))
+                    $this->Json->error('Fehler beim Speichern.', -12, $this->request->data);
+                else
+                    $value = $this->Job->getInsertID();
+            }
         }
 
         if(isset($profile['Profile']['id']))

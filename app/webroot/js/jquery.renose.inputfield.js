@@ -5,6 +5,9 @@ jQuery.fn.inputfield = function(url){
             var data = $(that).data();
             data.value = $(that).val();
             
+            if(data.autocomplete)
+                data.autocomplete = null;
+            
             $.ajax({
                 url: url,
                 type: 'POST',
