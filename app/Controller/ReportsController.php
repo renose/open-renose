@@ -107,8 +107,6 @@ class ReportsController extends AppController
                 'conditions' => $conditions
             ));
             
-            //$this->Json->response($reports);
-            
             foreach ($reports as $report)
             {
                 $year = $report['WeeklyReport']['year'];
