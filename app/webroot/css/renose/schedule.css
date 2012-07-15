@@ -23,6 +23,5 @@
 }
 #schedule .lesson:hover {
     border: 1px solid #CCCCCC;
-    -moz-border-radius: 5px;
     border-radius: 5px;
 }

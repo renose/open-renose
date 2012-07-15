@@ -10,9 +10,12 @@ img.teaser-image {
 /* top navigation */
 div.navbar-inner {
     background-color: rgb(34,76,111);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
-    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
-
+    background-image: -moz-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -ms-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -o-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, color-stop(0.02, rgb(8,47,79)), color-stop(0.51, rgb(34,76,111)));
+    background-image: -webkit-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
 }
 
 .nav li img {

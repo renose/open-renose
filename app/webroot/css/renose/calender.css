@@ -1,25 +1,4 @@
 @charset "utf-8";
-/*
- * calender.css
- *
- * Copyright (c) 2011 open reNose team <info at renose.de>.
- * Simon Wörner and Patrick Hafner.
- *
- * This file is part of open reNose.
- *
- * open reNose is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * open reNose is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
-*/
 
 .calendar-year {
     width: 100%;
@@ -66,8 +45,6 @@
     color: #FFFFFF;
 
     background-color: rgb(34,76,111);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
-    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
     -moz-border-radius-topleft: 6px;
     -moz-border-radius-topright: 6px;
     -webkit-border-top-left-radius: 6px;
@@ -102,6 +79,9 @@
 .calendar-month tr td.calendar-week
 {
     font-weight: bold;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 .calendar-month tr td.calendar-week a:link, table.calendar-month tr td.calendar-week a:visited, table.calendar-month tr td.calendar-week a:active, table.calendar-month tr td.calendar-week a:hover
 {
@@ -115,129 +95,38 @@
 }
 .calendar-month tr td.calendar-week:hover
 {
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.16, rgb(147,162,207)),
-        color-stop(0.51, rgb(174,205,235))
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(147,162,207) 16%,
-        rgb(174,205,235) 51%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-}
-
-.calendar-month tr td.calendar-week-view
-{
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(128,199,77) 9%,
-        rgb(147,245,98) 78%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background-color: rgb(174,205,235);
+    background-image: -moz-linear-gradient(bottom, rgb(147,162,207) 16%, rgb(174,205,235) 51%);
+    background-image: -ms-linear-gradient(bottom, rgb(147,162,207) 16%, rgb(174,205,235) 51%);
+    background-image: -o-linear-gradient(bottom, rgb(147,162,207) 16%, rgb(174,205,235) 51%);
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, color-stop(0.16, rgb(147,162,207)), color-stop(0.51, rgb(174,205,235)));
+    background-image: -webkit-linear-gradient(bottom, rgb(147,162,207) 16%, rgb(174,205,235) 51%);
+    background-image: linear-gradient(bottom, rgb(147,162,207) 16%, rgb(174,205,235) 51%);
 }
 
 .calendar-month tr td.calendar-week-view-full
 {
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.6, rgb(147,245,98)),
-        color-stop(0.34, rgb(128,199,77))
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(147,245,98) 60%,
-        rgb(128,199,77) 34%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background-color: rgb(147,245,98);
 }
 
 .calendar-month tr td.calendar-week-view-half
 {
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.6, rgb(255,255,0)),
-        color-stop(0.34, rgb(205,215,0))
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(255,255,0) 34%,
-        rgb(205,215,0) 60%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background-color: rgb(255,255,0);
 }
 
 .calendar-month tr td.calendar-week-view-empty
 {
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.6, rgb(255,48,48)),
-        color-stop(0.34, rgb(205,38,38))
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        rgb(255,48,48) 34%,
-        rgb(205,38,38) 60%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background-color: rgb(255,128,0);
 }
 
 .calendar-month tr td.calendar-week-missing
 {
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.6, #3366FF),
-        color-stop(0.34, #3333CC)
-    );
-    background-image: -moz-linear-gradient(
-        center bottom,
-        #3366FF 34%,
-        #3333CC 60%
-    );
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background-color: rgb(255,60,0);
 }
 
 
 .calendar-day-today {
     border: 1px solid red;
-
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
 }
 .calendar-day-holiday {
     background-color: yellow;

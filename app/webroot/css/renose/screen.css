@@ -1,25 +1,4 @@
 @charset "utf-8";
-/*
- * style.css
- *
- * Copyright (c) 2011 open reNose team <info at renose.de>.
- * Simon Wörner and Patrick Hafner.
- *
- * This file is part of open reNose.
- *
- * open reNose is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * open reNose is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with open reNose.  If not, see <http ://www.gnu.org/licenses/>.
-*/
 
 html, body {
     font-family: 'Open Sans', sans-serif, Arial;
@@ -113,8 +92,12 @@ header {
     width: 100%;
     overflow: hidden;
     background-color: rgb(34,76,111);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
-    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -moz-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -ms-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -o-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, color-stop(0.02, rgb(8,47,79)), color-stop(0.51, rgb(34,76,111)));
+    background-image: -webkit-linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
+    background-image: linear-gradient(bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
     border-bottom: 1px solid gray;
 }
 
@@ -342,8 +325,6 @@ footer {
     width: 100%;
     color: #fff;
     background-color: rgb(34,76,111);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.02, rgb(8,47,79)),color-stop(0.51, rgb(34,76,111)));
-    background-image: -moz-linear-gradient(center bottom,rgb(8,47,79) 2%,rgb(34,76,111) 51%);
     font-size: 80%;
     border-top: 1px solid gray;
 }
