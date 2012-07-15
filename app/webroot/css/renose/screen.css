@@ -245,6 +245,20 @@ nav#sidebar li:hover {
     background-color: #DDD !important;
 }
 
+nav#sidebar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    padding: 18px;
+    -webkit-border-radius: 1ex;
+}
+nav#sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.5);
+    padding: 8px;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 1ex;
+}
+
 nav#breadcrumb {
     overflow: auto;
     position: absolute;
