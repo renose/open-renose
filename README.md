@@ -2,19 +2,19 @@
 
 
 ###Full supported browsers:
-![Chrome](https://github.com/renose/renose/raw/master/app/webroot/img/icons/chrome.png) Chrome
+![Chrome](http://img.ptz.so/chrome.png) Chrome
 
-![Firefox](https://github.com/renose/renose/raw/master/app/webroot/img/icons/firefox.png) Firefox
+![Firefox](http://img.ptz.so/firefox.png) Firefox
 
-![Safari](https://github.com/renose/renose/raw/master/app/webroot/img/icons/safari.png) Safari
+![Safari](http://img.ptz.so/safari.png) Safari
 
 ###Maybe supported browsers (won't be tested yet):
-![Internet Explorer](https://github.com/renose/renose/raw/master/app/webroot/img/icons/ie.png) Internet Explorer 9
+![Internet Explorer](http://img.ptz.so/ie.png) Internet Explorer 9
 
-![Opera](https://github.com/renose/renose/raw/master/app/webroot/img/icons/opera.png) Opera
+![Opera](http://img.ptz.so/opera.png) Opera
 
 ###NOT supported browsers (yet):
-![Internet Explorer](https://github.com/renose/renose/raw/master/app/webroot/img/icons/ie.png) Internet Explorer 6, 7, 8
+![Internet Explorer](http://img.ptz.so/ie.png) Internet Explorer 6, 7, 8
 
 ---
 No download available yet, please checkout from master.
